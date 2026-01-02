@@ -1,0 +1,6 @@
+packages:
+  - website
+  - backend
+  - contracts
+  - subgraph
+  - docs

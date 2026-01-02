@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "declaration": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "target": "es2020",
+    "resolveJsonModule": true,
+    "outDir": "./dist",
+    "skipLibCheck": true,
+    "sourceMap": false,
+    "strict": true
+  },
+  "files": [
+    "./hardhat.config.ts"
+  ],
+  "include": [
+    "packages/client",
+    "packages/tasks",
+    "packages/test",
+    "packages/commands",
+    "src",
+    "utils",
+    "types",
+    "test",
+    "types/client.types.ts"
+  ],
+  "exclude": [
+    "./typechain-types",
+    "./memo.test.js"
+  ]
+}

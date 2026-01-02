@@ -1,0 +1,25 @@
+{
+  "name": "fluxus",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@9.12.2",
+  "workspaces": [
+    "website",
+    "backend",
+    "contracts",
+    "subgraph",
+    "docs"
+  ],
+  "scripts": {
+    "build": "pnpm -r --if-present run build",
+    "lint": "pnpm -r --if-present run lint",
+    "test": "pnpm -r --if-present run test",
+    "dev": "pnpm --filter website dev",
+    "dev:backend": "pnpm --filter backend start:dev",
+    "dev:contracts": "pnpm --filter contracts run test",
+    "dev:subgraph": "pnpm --filter subgraph deploy-local",
+    "docs:dev": "pnpm --filter docs dev",
+    "docs:build": "pnpm --filter docs build",
+    "docs:serve": "pnpm --filter docs serve"
+  }
+}

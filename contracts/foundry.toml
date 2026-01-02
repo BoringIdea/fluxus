@@ -1,0 +1,21 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+optimizer = true
+optimizer_runs = 200
+via_ir = true
+cache = true
+solc_version = "0.8.26"
+gas_reports = ["*"]
+remappings = [
+    "@openzeppelin/openzeppelin-contracts/=lib/openzeppelin-contracts/",
+    "@openzeppelin/openzeppelin-contracts-upgradeable/=lib/openzeppelin-contracts-upgradeable/",
+    "@zetachain/protocol-contracts/=lib/protocol-contracts/",
+    "@zetachain/standard-contracts/=lib/standard-contracts/",
+    "@zetachain/toolkit/=lib/toolkit/",
+    "@uniswap/v2-core/=lib/v2-core/",
+    "@uniswap/v2-periphery/=lib/v2-periphery/"
+]
+
+# See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options

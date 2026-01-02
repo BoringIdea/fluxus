@@ -1,0 +1,227 @@
+specVersion: 1.3.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum # FeeVault
+    name: FeeVault
+    network: chapel 
+    source:
+      address: "0x9ae920cEd31CC3ECAFcE26e0812D34daf87099d5"
+      abi: FeeVault
+      startBlock: 67082378
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.9
+      language: wasm/assemblyscript
+      entities:
+        - AdminChanged
+        - FeeWithdrawn
+      abis:
+        - name: FeeVault
+          file: ./abis/FeeVault.json
+      eventHandlers:
+        - event: AdminChanged(indexed address,indexed address)
+          handler: handleAdminChanged
+        - event: FeeWithdrawn(indexed address,uint256)
+          handler: handleFeeWithdrawn
+      file: ./src/fee-vault.ts
+  - kind: ethereum # Registry
+    name: Registry
+    network: chapel
+    source:
+      address: "0x0ac9f07FEf3e53D3830e3478fD57F3519054dfDa"
+      abi: Registry
+      startBlock: 67082378
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.9
+      language: wasm/assemblyscript
+      entities:
+        - ContractRegistered
+      abis:
+        - name: Registry
+          file: ./abis/Registry.json
+      eventHandlers:
+        - event: ContractRegistered(address,address)
+          handler: handleContractRegistered
+      file: ./src/registry.ts
+  - kind: ethereum # Fluxus
+    name: Fluxus
+    network: chapel
+    source:
+      address: "0xFD47f53BeC9eBA1A8De7A8de48301CcAADAb0e9F"
+      abi: Fluxus
+      startBlock: 67082378
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.9
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - ApprovalForAll
+        - Initialized
+        - OwnershipTransferred
+        - TokenBought
+        - TokenMinted
+        - TokenSold
+        - Transfer
+        - Upgraded
+      abis:
+        - name: Fluxus
+          file: ./abis/Fluxus.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,indexed uint256)
+          handler: handleApproval
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handleApprovalForAll
+        - event: Initialized(uint64)
+          handler: handleInitialized
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: TokenBought(indexed address,indexed uint256,uint256,uint256)
+          handler: handleTokenBought
+        - event: TokenMinted(indexed address,indexed uint256,uint256,uint256)
+          handler: handleTokenMinted
+        - event: TokenSold(indexed address,indexed uint256,uint256,uint256)
+          handler: handleTokenSold
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+        - event: Upgraded(indexed address)
+          handler: handleUpgraded
+      file: ./src/fluxus.ts
+  - kind: ethereum # EVMFluxusCrossChain
+    name: EVMFluxusCrossChain
+    network: chapel
+    source:
+      address: "0xEF3AF08A65467fA080fdf402c0488feDe6044526"
+      abi: EVMFluxusCrossChain
+      startBlock: 67082378
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.9
+      language: wasm/assemblyscript
+      entities:
+        - EVMFluxusCrossChainApproval
+        - EVMFluxusCrossChainApprovalForAll
+        - BatchMetadataUpdate
+        - EVMFluxusCrossChainInitialized
+        - MetadataUpdate
+        - EVMFluxusCrossChainOwnershipTransferred
+        - EVMFluxusCrossChainTokenMinted
+        - TokenTransfer
+        - TokenTransferReceived
+        - TokenTransferReverted
+        - TokenTransferToDestination
+        - EVMFluxusCrossChainTransfer
+        - EVMFluxusCrossChainUpgraded
+      abis:
+        - name: EVMFluxusCrossChain
+          file: ./abis/EVMFluxusCrossChain.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,indexed uint256)
+          handler: handleApproval
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handleApprovalForAll
+        - event: BatchMetadataUpdate(uint256,uint256)
+          handler: handleBatchMetadataUpdate
+        - event: Initialized(uint64)
+          handler: handleInitialized
+        - event: MetadataUpdate(uint256)
+          handler: handleMetadataUpdate
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: TokenMinted(indexed address,indexed uint256,string)
+          handler: handleTokenMinted
+        - event: TokenTransfer(indexed address,indexed address,indexed uint256,string)
+          handler: handleTokenTransfer
+        - event: TokenTransferReceived(indexed address,indexed uint256,string)
+          handler: handleTokenTransferReceived
+        - event: TokenTransferReverted(indexed address,indexed uint256,string)
+          handler: handleTokenTransferReverted
+        - event: TokenTransferToDestination(indexed address,indexed address,indexed uint256,string)
+          handler: handleTokenTransferToDestination
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+        - event: Upgraded(indexed address)
+          handler: handleUpgraded
+      file: ./src/evm-fluxus-cross-chain.ts
+  - kind: ethereum # Factory
+    name: Factory
+    network: chapel
+    source:
+      address: "0xa0Ae112654E028B6612CD3972447681010F3Bc49"
+      abi: Factory
+      startBlock: 67082378
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.9
+      language: wasm/assemblyscript
+      entities:
+        - FluxusCreated
+        - FluxusCrossChainCreated
+        - SetGasLimit
+        - SetGateway
+        - SetUniversal
+      abis:
+        - name: Factory
+          file: ./abis/Factory.json
+      eventHandlers:
+        - event: FluxusCreated(indexed address,indexed
+            address,address,string,string,uint256,uint256,uint256,uint256,string)
+          handler: handleFluxusCreated
+        - event: FluxusCrossChainCreated(indexed address,indexed
+            address,address,string,string,uint256,uint256,uint256,uint256,string,address,uint256,bool)
+          handler: handleFluxusCrossChainCreated
+        - event: SetGasLimit(indexed address,uint256)
+          handler: handleSetGasLimit
+        - event: SetGateway(indexed address,address)
+          handler: handleSetGateway
+        - event: SetUniversal(indexed address,address)
+          handler: handleSetUniversal
+      file: ./src/factory.ts
+  - kind: ethereum # Trade
+    name: Trade
+    network: chapel
+    source:
+      address: "0x7356f68B445DfbcC46A6B94DBD71BD18060Dba36"
+      abi: Trade
+      startBlock: 67082378
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.9
+      language: wasm/assemblyscript
+      entities:
+        - Bought
+        - BulkBuyExecuted
+        - BulkMintExecuted
+        - BulkQuickBuyExecuted
+        - BulkSellExecuted
+        - Minted
+        - QuickBuyExecuted
+        - Sold
+        - TransferCrossChain
+      abis:
+        - name: Trade
+          file: ./abis/Trade.json
+      eventHandlers:
+        - event: Bought(indexed address,indexed address,indexed uint256,uint256)
+          handler: handleBought
+        - event: BulkBuyExecuted(indexed address,indexed address,uint256[],uint256)
+          handler: handleBulkBuyExecuted
+        - event: BulkMintExecuted(indexed address,indexed address,uint256[],uint256)
+          handler: handleBulkMintExecuted
+        - event: BulkQuickBuyExecuted(indexed address,indexed address,uint256[],uint256)
+          handler: handleBulkQuickBuyExecuted
+        - event: BulkSellExecuted(indexed address,indexed address,uint256[],uint256)
+          handler: handleBulkSellExecuted
+        - event: Minted(indexed address,indexed address,indexed uint256,uint256)
+          handler: handleMinted
+        - event: QuickBuyExecuted(indexed address,indexed address,indexed uint256,uint256)
+          handler: handleQuickBuyExecuted
+        - event: Sold(indexed address,indexed address,indexed uint256,uint256)
+          handler: handleSold
+        - event: TransferCrossChain(indexed address,indexed address,indexed uint256,address,address)
+          handler: handleTransferCrossChain
+      file: ./src/trade.ts

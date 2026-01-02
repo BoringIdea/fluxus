@@ -1,0 +1,76 @@
+{
+  "monad-testnet": {
+    "Contract": {
+      "address": "0xCD0be2E5e9C53Aa0aF4B4e8aFb6a953C8F002Cea",
+      "startBlock": 22920543
+    },
+    "Factory": {
+      "address": "0x582AEb4616F2D7AAdac262A14c88f2Bf1a6A3913"
+    },
+    "Trade": {
+      "address": "0x971BE052417f30418284C25b31164249cbd7Ac3f"
+    },
+    "FeeVault": {
+      "address": "0xAf0E0641c57B10b555DE481f65998Ca74107cABA"
+    },
+    "Registry": {
+      "address": "0x2a9C692FB7109493a88D8934fc1dF66f67D89461"
+    },
+    "Fluxus": {
+      "address": "0x1347339Ea9f06E8DF501DBAE346C3FFBBaD6B96b"
+    }
+  },
+  "base-sepolia": {
+    "Trade": {
+      "address": "0xDE20260728EBA6D8EacEECF3B56Bd8eDD5678af9"
+    },
+    "FeeVault": {
+      "address": "0x53B6a93DADA457FC8BF2e6F4f30Ec26Bda7d81Ab",
+      "startBlock": 29640912
+    },
+    "Registry": {
+      "address": "0x625468C624C2878C7413349584B93d6696DeA5e3",
+      "startBlock": 29640912
+    },
+    "Fluxus": {
+      "address": "0xafb267475caF612Bf275284C0cDB71A4562fEB1a",
+      "startBlock": 29640912
+    },
+    "Factory": {
+      "address": "0xDE20260728EBA6D8EacEECF3B56Bd8eDD5678af9"
+    },
+    "ZetaChainFluxusCrossChainOptimized": {
+      "address": "0xDE20260728EBA6D8EacEECF3B56Bd8eDD5678af9"
+    },
+    "ERC1967Proxy": {
+      "address": "0x4a2BAa35815e50726E109e6eBc07910002FDa722"
+    },
+    "EVMFluxusCrossChain": {
+      "address": "0xDE20260728EBA6D8EacEECF3B56Bd8eDD5678af9"
+    },
+    "Contract": {
+      "address": "0x0"
+    }
+  },
+  "megaeth-testnet": {
+    "Trade": {
+      "address": "0x971BE052417f30418284C25b31164249cbd7Ac3f",
+      "startBlock": 13098199
+    },
+    "FeeVault": {
+      "address": "0xAf0E0641c57B10b555DE481f65998Ca74107cABA",
+      "startBlock": 13096847
+    },
+    "Registry": {
+      "address": "0x2a9C692FB7109493a88D8934fc1dF66f67D89461",
+      "startBlock": 13096849
+    },
+    "Fluxus": {
+      "address": "0x1347339Ea9f06E8DF501DBAE346C3FFBBaD6B96b",
+      "startBlock": 13096854
+    },
+    "Factory": {
+      "address": "0x0ac9f07FEf3e53D3830e3478fD57F3519054dfDa"
+    }
+  }
+}

@@ -1,0 +1,572 @@
+type Bought @entity(immutable: true) {
+  id: Bytes!
+  fluxusContract: Bytes! # address
+  buyer: Bytes! # address
+  tokenId: BigInt! # uint256
+  price: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type BulkBuyExecuted @entity(immutable: true) {
+  id: Bytes!
+  fluxusContract: Bytes! # address
+  buyer: Bytes! # address
+  tokenIds: [BigInt!]! # uint256[]
+  totalPrice: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type BulkMintExecuted @entity(immutable: true) {
+  id: Bytes!
+  fluxusContract: Bytes! # address
+  buyer: Bytes! # address
+  tokenIds: [BigInt!]! # uint256[]
+  totalPrice: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type BulkQuickBuyExecuted @entity(immutable: true) {
+  id: Bytes!
+  fluxusContract: Bytes! # address
+  buyer: Bytes! # address
+  tokenIds: [BigInt!]! # uint256[]
+  totalPrice: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type BulkSellExecuted @entity(immutable: true) {
+  id: Bytes!
+  fluxusContract: Bytes! # address
+  seller: Bytes! # address
+  tokenIds: [BigInt!]! # uint256[]
+  totalPrice: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Minted @entity(immutable: true) {
+  id: Bytes!
+  fluxusContract: Bytes! # address
+  to: Bytes! # address
+  tokenId: BigInt! # uint256
+  price: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type QuickBuyExecuted @entity(immutable: true) {
+  id: Bytes!
+  fluxusContract: Bytes! # address
+  buyer: Bytes! # address
+  tokenId: BigInt! # uint256
+  price: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Sold @entity(immutable: true) {
+  id: Bytes!
+  fluxusContract: Bytes! # address
+  seller: Bytes! # address
+  tokenId: BigInt! # uint256
+  price: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type CollectionInfo @entity(immutable: false) {
+  id: Bytes! # collection address
+  address: String!
+  name: String!
+  symbol: String!
+  creator: String!
+  creator_fee: BigInt! # creator fee in wei
+  base_uri: String!
+  initial_price: BigInt! # initial price in wei
+  max_supply: Int!
+  max_price: BigInt! # max price in wei
+  price_contract: String!
+  is_registered: Boolean!
+  meta_data: String
+  support_crosschain: Boolean!
+  support_mint: Boolean!
+  connected: String # only for zetachain NFT collection
+  universal: String # only for EVM crosschain NFT colleciton
+  gateway: String # only for crosschain NFT collection
+  gas_limit: BigInt # only for crosschain NFT collection
+  created_at: BigInt! # creation timestamp
+  block_number: BigInt! # creation block number
+}
+
+type CollectionStats @entity(immutable: false) {
+  id: Bytes! # collection address
+  collection_info: CollectionInfo! # reference to CollectionInfo
+  current_supply: Int!
+  total_supply: Int!
+  owners: Int!
+  total_volume: BigInt! # total trading volume in wei
+  floor_price: BigInt # current floor price in wei
+  last_updated: BigInt! # last update timestamp
+  total_transactions: Int! # total number of transactions
+}
+
+type NFTOwnership @entity(immutable: false) {
+  id: Bytes!
+  collection_info: CollectionInfo! # reference to CollectionInfo
+  token_id: Int!
+  owner: String! # address
+}
+
+type OwnershipSummary @entity(immutable: false) {
+  id: Bytes! # collection_id + owner_address
+  collection_info: CollectionInfo! # reference to CollectionInfo
+  owner: String! # address
+  nft_count: Int! # number of NFTs owned by this owner in this collection
+  first_owned_at: BigInt! # timestamp when first NFT was acquired
+  last_updated: BigInt! # timestamp of last ownership change
+}
+
+type TradeBought @entity(immutable: true) {
+  id: Bytes!
+  fluxusContract: Bytes! # address
+  buyer: Bytes! # address
+  tokenId: BigInt! # uint256
+  price: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type TradeBulkBuyExecuted @entity(immutable: true) {
+  id: Bytes!
+  fluxusContract: Bytes! # address
+  buyer: Bytes! # address
+  tokenIds: [BigInt!]! # uint256[]
+  totalPrice: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type TradeBulkMintExecuted @entity(immutable: true) {
+  id: Bytes!
+  fluxusContract: Bytes! # address
+  buyer: Bytes! # address
+  tokenIds: [BigInt!]! # uint256[]
+  totalPrice: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type TradeBulkQuickBuyExecuted @entity(immutable: true) {
+  id: Bytes!
+  fluxusContract: Bytes! # address
+  buyer: Bytes! # address
+  tokenIds: [BigInt!]! # uint256[]
+  totalPrice: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type TradeBulkSellExecuted @entity(immutable: true) {
+  id: Bytes!
+  fluxusContract: Bytes! # address
+  seller: Bytes! # address
+  tokenIds: [BigInt!]! # uint256[]
+  totalPrice: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type TradeMinted @entity(immutable: true) {
+  id: Bytes!
+  fluxusContract: Bytes! # address
+  to: Bytes! # address
+  tokenId: BigInt! # uint256
+  price: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type TradeQuickBuyExecuted @entity(immutable: true) {
+  id: Bytes!
+  fluxusContract: Bytes! # address
+  buyer: Bytes! # address
+  tokenId: BigInt! # uint256
+  price: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type TradeSold @entity(immutable: true) {
+  id: Bytes!
+  fluxusContract: Bytes! # address
+  seller: Bytes! # address
+  tokenId: BigInt! # uint256
+  price: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+type AdminChanged @entity(immutable: true) {
+  id: Bytes!
+  previousAdmin: Bytes! # address
+  newAdmin: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type FeeWithdrawn @entity(immutable: true) {
+  id: Bytes!
+  recipient: Bytes! # address
+  amount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+type ContractRegistered @entity(immutable: true) {
+  id: Bytes!
+  creator: Bytes! # address
+  contractAddress: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+type Approval @entity(immutable: true) {
+  id: Bytes!
+  owner: Bytes! # address
+  approved: Bytes! # address
+  tokenId: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type ApprovalForAll @entity(immutable: true) {
+  id: Bytes!
+  owner: Bytes! # address
+  operator: Bytes! # address
+  approved: Boolean! # bool
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Initialized @entity(immutable: true) {
+  id: Bytes!
+  version: BigInt! # uint64
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type OwnershipTransferred @entity(immutable: true) {
+  id: Bytes!
+  previousOwner: Bytes! # address
+  newOwner: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type TokenBought @entity(immutable: true) {
+  id: Bytes!
+  buyer: Bytes! # address
+  tokenId: BigInt! # uint256
+  price: BigInt! # uint256
+  creatorFee: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type TokenMinted @entity(immutable: true) {
+  id: Bytes!
+  to: Bytes! # address
+  tokenId: BigInt! # uint256
+  price: BigInt! # uint256
+  creatorFee: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type TokenSold @entity(immutable: true) {
+  id: Bytes!
+  seller: Bytes! # address
+  tokenId: BigInt! # uint256
+  price: BigInt! # uint256
+  creatorFee: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Transfer @entity(immutable: true) {
+  id: Bytes!
+  from: Bytes! # address
+  to: Bytes! # address
+  tokenId: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Upgraded @entity(immutable: true) {
+  id: Bytes!
+  implementation: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type FluxusCreated @entity(immutable: true) {
+  id: Bytes!
+  creator: Bytes! # address
+  fluxusAddress: Bytes! # address
+  priceAddress: Bytes! # address
+  name: String! # string
+  symbol: String! # string
+  initialPrice: BigInt! # uint256
+  maxSupply: BigInt! # uint256
+  maxPrice: BigInt! # uint256
+  creatorFeePercent: BigInt! # uint256
+  baseURI: String! # string
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type FluxusCrossChainCreated @entity(immutable: true) {
+  id: Bytes!
+  creator: Bytes! # address
+  fluxusAddress: Bytes! # address
+  priceAddress: Bytes! # address
+  name: String! # string
+  symbol: String! # string
+  initialPrice: BigInt! # uint256
+  maxSupply: BigInt! # uint256
+  maxPrice: BigInt! # uint256
+  creatorFeePercent: BigInt! # uint256
+  baseURI: String! # string
+  gatewayAddress: Bytes! # address
+  gasLimit: BigInt! # uint256
+  supportMint: Boolean! # bool
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Txs @entity(immutable: false) {
+  id: Bytes! # tx_hash as primary key
+  collection_info: CollectionInfo! # reference to CollectionInfo
+  tx_type: Int! # 1: mint, 2: buy, 3: sell, 4: bulkBuy, 5: bulkSell, 6: bulkMint, 7: quickBuy
+  sender: Bytes! # address
+  price: BigInt! # price in wei
+  token_ids: [BigInt!]! # array of token ids (for both single and bulk operations)
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+}
+
+type EVMFluxusCrossChainApproval @entity(immutable: true) {
+  id: Bytes!
+  owner: Bytes! # address
+  approved: Bytes! # address
+  tokenId: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type EVMFluxusCrossChainApprovalForAll @entity(immutable: true) {
+  id: Bytes!
+  owner: Bytes! # address
+  operator: Bytes! # address
+  approved: Boolean! # bool
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type BatchMetadataUpdate @entity(immutable: true) {
+  id: Bytes!
+  _fromTokenId: BigInt! # uint256
+  _toTokenId: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type EVMFluxusCrossChainInitialized @entity(immutable: true) {
+  id: Bytes!
+  version: BigInt! # uint64
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type MetadataUpdate @entity(immutable: true) {
+  id: Bytes!
+  _tokenId: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type EVMFluxusCrossChainOwnershipTransferred @entity(immutable: true) {
+  id: Bytes!
+  previousOwner: Bytes! # address
+  newOwner: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SetConnected @entity(immutable: true) {
+  id: Bytes!
+  zrc20: Bytes! # address
+  contractAddress: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type EVMFluxusCrossChainTokenMinted @entity(immutable: true) {
+  id: Bytes!
+  to: Bytes! # address
+  tokenId: BigInt! # uint256
+  uri: String! # string
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type TokenTransfer @entity(immutable: true) {
+  id: Bytes!
+  destination: Bytes! # address
+  receiver: Bytes! # address
+  tokenId: BigInt! # uint256
+  uri: String! # string
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type TokenTransferReceived @entity(immutable: true) {
+  id: Bytes!
+  receiver: Bytes! # address
+  tokenId: BigInt! # uint256
+  uri: String! # string
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type TokenTransferReverted @entity(immutable: true) {
+  id: Bytes!
+  sender: Bytes! # address
+  tokenId: BigInt! # uint256
+  uri: String! # string
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type TokenTransferToDestination @entity(immutable: true) {
+  id: Bytes!
+  destination: Bytes! # address
+  sender: Bytes! # address
+  tokenId: BigInt! # uint256
+  uri: String! # string
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type EVMFluxusCrossChainTransfer @entity(immutable: true) {
+  id: Bytes!
+  from: Bytes! # address
+  to: Bytes! # address
+  tokenId: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type EVMFluxusCrossChainUpgraded @entity(immutable: true) {
+  id: Bytes!
+  implementation: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SetGasLimit @entity(immutable: true) {
+  id: Bytes!
+  fluxus: Bytes! # address
+  gasLimit: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SetGateway @entity(immutable: true) {
+  id: Bytes!
+  fluxus: Bytes! # address
+  gateway: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SetUniversal @entity(immutable: true) {
+  id: Bytes!
+  fluxus: Bytes! # address
+  universal: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type TransferCrossChain @entity(immutable: true) {
+  id: Bytes!
+  fluxusContract: Bytes! # address
+  sender: Bytes! # address
+  tokenId: BigInt! # uint256
+  receiver: Bytes! # address
+  destination: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type CrossChainStatus @entity(immutable: true) {
+  id: Bytes!
+  fluxusContract: Bytes! # address
+  sender: Bytes! # address
+  tokenId: BigInt! # uint256
+  receiver: Bytes! # address
+  destination: Bytes! # address
+  isTransfered: Boolean!
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
