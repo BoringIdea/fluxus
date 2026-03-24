@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 
@@ -90,8 +89,6 @@ export default function Litepaper() {
 
   return (
     <>
-      <Head>
-      </Head>
       <main className="flex justify-center px-2 py-8 pt-20 sm:px-6 lg:px-8">
         <div className="max-w-5xl w-full">
           <div className="border border-black/10 bg-[color:var(--bg-surface)] p-4 sm:p-8">
