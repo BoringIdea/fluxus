@@ -671,3 +671,103 @@ a {
     transform: scale(1.5);
   }
 }
+
+
+@layer base {
+  :root {
+    --bg-primary: 42 24% 96%;
+    --bg-secondary: 42 20% 93%;
+    --bg-tertiary: 40 18% 90%;
+    --bg-card: 0 0% 100%;
+    --bg-card-hover: 40 20% 94%;
+    --bg-glass: 0 0% 100%;
+    --bg-overlay: 40 20% 12% / 0.18;
+
+    --color-primary: 142 68% 34%;
+    --color-primary-dark: 142 68% 28%;
+    --color-secondary: 40 8% 42%;
+    --color-accent: 145 52% 42%;
+    --color-warning: 32 90% 52%;
+
+    --text-primary: 24 10% 10%;
+    --text-secondary: 28 8% 22%;
+    --text-muted: 32 8% 44%;
+    --text-disabled: 30 6% 60%;
+
+    --border-primary: 28 10% 12%;
+    --border-secondary: 32 10% 82%;
+    --border-accent: 142 30% 72%;
+
+    --shadow-sm: 0 1px 2px 0 rgb(17 17 17 / 0.04);
+    --shadow-md: 0 8px 24px -12px rgb(17 17 17 / 0.08);
+    --shadow-lg: 0 16px 40px -20px rgb(17 17 17 / 0.12);
+
+    --background: var(--bg-primary);
+    --foreground: var(--text-secondary);
+    --card: var(--bg-card);
+    --card-foreground: var(--text-secondary);
+    --primary: var(--color-primary);
+    --primary-foreground: 0 0% 100%;
+    --border: var(--border-secondary);
+    --ring: var(--border-primary);
+  }
+
+  html,
+  body {
+    background: hsl(var(--bg-primary));
+    color: hsl(var(--text-secondary));
+    font-family: var(--font-primary), sans-serif;
+  }
+
+  body {
+    min-height: 100vh;
+  }
+}
+
+@layer components {
+  .flux-shell {
+    background:
+      radial-gradient(circle at top left, rgb(22 163 74 / 0.05), transparent 28%),
+      linear-gradient(180deg, hsl(var(--bg-primary)), hsl(var(--bg-secondary)));
+  }
+
+  .flux-panel {
+    border: 1px solid rgb(17 17 17 / 0.08);
+    background: hsl(var(--bg-card));
+    box-shadow: var(--shadow-sm);
+  }
+
+  .flux-panel-muted {
+    border: 1px solid rgb(17 17 17 / 0.06);
+    background: hsl(var(--bg-secondary));
+  }
+
+  .flux-kicker {
+    font-family: var(--font-primary), sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: hsl(var(--text-muted));
+  }
+
+  .flux-title {
+    font-family: var(--font-heading), sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4.75rem);
+    line-height: 0.92;
+    letter-spacing: -0.05em;
+    color: hsl(var(--text-primary));
+  }
+
+  .flux-h2 {
+    font-family: var(--font-heading), sans-serif;
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    line-height: 0.96;
+    letter-spacing: -0.04em;
+    color: hsl(var(--text-primary));
+  }
+
+  .flux-copy {
+    color: hsl(var(--text-secondary));
+    line-height: 1.7;
+  }
+}

@@ -81,59 +81,59 @@ export default function NFTDetailPage() {
   const collectionName = collection?.name || 'Collection';
 
   return (
-    <div className="w-full min-h-screen bg-black text-primary">
-      <div className="max-w-6xl mx-auto px-4 sm:px-8 py-8 space-y-6">
+    <div className="min-h-screen w-full text-primary">
+      <div className="mx-auto max-w-6xl space-y-6 px-4 py-8 sm:px-8">
         <button
           onClick={() => router.back()}
-          className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.35em] text-secondary hover:text-white"
+          className="inline-flex items-center gap-2 font-primary text-[10px] uppercase tracking-[0.18em] text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)]"
         >
           <span className="text-lg">&lt;</span>
           Back
         </button>
 
-        <div className="border border-border bg-bg-card/40 p-4 sm:p-6 flex flex-col lg:flex-row gap-6">
-          <div className="lg:w-1/2 space-y-4">
-            <div className="border border-border bg-black/40 aspect-square flex items-center justify-center overflow-hidden">
+        <div className="flex flex-col gap-6 border border-black/10 bg-[color:var(--bg-surface)] p-4 sm:flex-row sm:p-6">
+          <div className="space-y-4 lg:w-1/2">
+            <div className="flex aspect-square items-center justify-center overflow-hidden border border-black/10 bg-[color:var(--bg-muted)]">
               {imageUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={imageUrl} alt={tokenLabel} className="w-full h-full object-cover" />
               ) : (
-                <div className="text-secondary uppercase tracking-[0.3em] text-xs">
+                <div className="font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">
                   No Image
                 </div>
               )}
             </div>
-            <div className="border border-border bg-black/40 p-4 space-y-3">
+            <div className="space-y-3 border border-black/10 bg-[color:var(--bg-muted)] p-4">
               <div>
-                <p className="text-[11px] uppercase tracking-[0.35em] text-secondary">Token</p>
-                <h1 className="text-2xl sm:text-3xl font-bold text-white">{tokenLabel}</h1>
-                <p className="text-xs text-secondary tracking-[0.25em] uppercase">
+                <p className="mb-2 font-primary text-[10px] uppercase tracking-[0.18em] text-[color:var(--text-muted)]">Token</p>
+                <h1 className="font-heading text-[34px] leading-none text-[color:var(--text-primary)]">{tokenLabel}</h1>
+                <p className="mt-2 font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">
                   {collectionName} • ID #{tokenId}
                 </p>
               </div>
               <div className="flex flex-wrap items-baseline gap-2">
-                <p className="text-[11px] uppercase tracking-[0.3em] text-secondary">
+                <p className="font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">
                   Floor Price
                 </p>
-                <span className="text-xl font-semibold text-white">{floorText}</span>
+                <span className="font-heading text-[24px] leading-none text-[color:var(--text-primary)]">{floorText}</span>
               </div>
               <Button
                 onClick={handleBuyNow}
                 disabled={!buyPrice || isPending}
-                className="w-full border border-fluxus-primary bg-fluxus-primary text-black hover:bg-[#1FB455]"
+                className="w-full"
               >
                 {isPending ? 'Processing...' : 'Buy Now'}
               </Button>
             </div>
           </div>
 
-          <div className="lg:w-1/2 flex flex-col gap-4">
-            <div className="border border-border bg-black/40 p-4">
-              <p className="text-[11px] uppercase tracking-[0.35em] text-secondary mb-2">Traits</p>
+          <div className="flex flex-col gap-4 lg:w-1/2">
+            <div className="border border-black/10 bg-[color:var(--bg-muted)] p-4">
+              <p className="flux-kicker mb-2">Traits</p>
               <NFTTraits traits={traits as any[]} />
             </div>
-            <div className="border border-border bg-black/40 p-4 flex-1">
-              <p className="text-[11px] uppercase tracking-[0.35em] text-secondary mb-2">Activity</p>
+            <div className="flex-1 border border-black/10 bg-[color:var(--bg-muted)] p-4">
+              <p className="flux-kicker mb-2">Activity</p>
               <NFTActivity collectionAddress={address} tokenId={tokenId} />
             </div>
           </div>

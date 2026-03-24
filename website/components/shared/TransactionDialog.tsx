@@ -30,10 +30,10 @@ export function TransactionDialog({
 }: TransactionDialogProps) {
   return (
     <AlertDialog open={isOpen} onOpenChange={onOpenChange}>
-      <AlertDialogContent className="bg-black text-white">
+      <AlertDialogContent className="border-black/10 !bg-white text-[color:var(--text-primary)]">
         <AlertDialogHeader>
-          <AlertDialogTitle>Transaction Status</AlertDialogTitle>
-          <AlertDialogDescription className="whitespace-pre-wrap break-all">
+          <AlertDialogTitle className="font-primary text-[11px] uppercase tracking-[0.18em]">Transaction Status</AlertDialogTitle>
+          <AlertDialogDescription className="whitespace-pre-wrap break-all text-[color:var(--text-secondary)]">
             {status === 'pending' && 'Transaction in progress...'}
             {status === 'confirming' && (
               <>
@@ -43,7 +43,7 @@ export function TransactionDialog({
                   href={`${getExplorerUrl(chainId)}/tx/${hash}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-500 hover:underline"
+                  className="text-[color:var(--color-primary)] hover:underline"
                 >
                   View on Explorer: {hash}
                 </a>
@@ -57,7 +57,7 @@ export function TransactionDialog({
                   href={`${getExplorerUrl(chainId)}/tx/${hash}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-500 hover:underline"
+                  className="text-[color:var(--color-primary)] hover:underline"
                 >
                   View details on Explorer: {hash}
                 </a>
@@ -69,7 +69,7 @@ export function TransactionDialog({
         <AlertDialogFooter>
           <AlertDialogAction 
             onClick={() => onOpenChange(false)}
-            className="bg-green-400 hover:bg-green-300 text-black font-bold"
+            className="border border-black/10 bg-[color:var(--bg-muted)] font-primary text-[11px] uppercase tracking-[0.16em] text-[color:var(--text-primary)] hover:bg-[color:var(--bg-card-hover)]"
           >
             OK
           </AlertDialogAction>
@@ -80,5 +80,3 @@ export function TransactionDialog({
 }
 
 export default TransactionDialog;
-
-

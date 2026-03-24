@@ -46,19 +46,18 @@ export default function CollectionDetailPage() {
   ] as const;
 
   return (
-    <div className="w-full max-w-full overflow-x-hidden px-2 sm:px-12 py-4 sm:py-10 pb-24 sm:pb-0">
+    <div className="w-full max-w-full overflow-x-hidden px-2 py-4 pb-24 sm:px-12 sm:py-10 sm:pb-0">
       <div className="w-full space-y-6">
         <CollectionInfo collection={collection} />
-        <div className="border border-border bg-bg-card">
-          {/* Desktop Tab Bar */}
-          <div className="hidden sm:flex w-full justify-between border-b border-border bg-background rounded-none">
+        <div className="border border-black/10 bg-[color:var(--bg-surface)]">
+          <div className="hidden w-full justify-between border-b border-black/10 bg-[color:var(--bg-surface)] sm:flex">
             {desktopTabs.map((tab) => (
               <button
                 key={tab.key}
-                className={`flex-1 px-6 py-4 text-xs font-bold uppercase tracking-[0.2em] border-b-2 transition-colors ${
+                className={`flex-1 border-b px-6 py-4 font-primary text-[10px] uppercase tracking-[0.18em] transition-colors ${
                   activeTab === tab.key
-                    ? 'text-fluxus-primary border-fluxus-primary'
-                    : 'text-secondary border-transparent'
+                    ? 'border-[color:var(--fg-strong)] text-[color:var(--text-primary)]'
+                    : 'border-transparent text-[color:var(--text-muted)]'
                 }`}
                 onClick={() => setActiveTab(tab.key)}
               >
@@ -67,27 +66,26 @@ export default function CollectionDetailPage() {
             ))}
           </div>
 
-          {/* Mobile TabBar */}
           <div className="sm:hidden">
-            <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-border bg-background/95">
+            <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-black/10 bg-[color:var(--bg-surface)]/95 backdrop-blur">
               <div className="grid grid-cols-4 w-full">
                 {[
-                  { key: 'mint', label: 'Mint', icon: '🎨' },
-                  { key: 'trade', label: 'Trade', icon: '💱' },
-                  { key: 'crosschain', label: 'Cross', icon: '🌉' },
-                  { key: 'chat', label: 'Chat', icon: '💬' },
+                  { key: 'mint', label: 'Mint', icon: 'MN' },
+                  { key: 'trade', label: 'Trade', icon: 'TR' },
+                  { key: 'crosschain', label: 'Cross', icon: 'CC' },
+                  { key: 'chat', label: 'Chat', icon: 'AI' },
                 ].map((tab) => (
                   <button
                     key={tab.key}
                     aria-label={tab.label}
-                    className={`flex flex-col items-center justify-center gap-1 py-3 text-[10px] font-bold uppercase tracking-[0.2em] border-t-2 ${
+                    className={`flex flex-col items-center justify-center gap-1 border-t py-3 font-primary text-[10px] uppercase tracking-[0.16em] ${
                       activeTab === tab.key
-                        ? 'text-fluxus-primary border-fluxus-primary bg-bg-card'
-                        : 'text-secondary border-transparent'
+                        ? 'border-[color:var(--fg-strong)] bg-[color:var(--bg-muted)] text-[color:var(--text-primary)]'
+                        : 'border-transparent text-[color:var(--text-muted)]'
                     }`}
                     onClick={() => setActiveTab(tab.key as typeof activeTab)}
                   >
-                    <span className="text-lg leading-none">{tab.icon}</span>
+                    <span className="text-[10px] leading-none">{tab.icon}</span>
                     <span className="leading-none">{tab.label}</span>
                   </button>
                 ))}
@@ -106,7 +104,6 @@ export default function CollectionDetailPage() {
             )}
           </div>
         </div>
-        {/* Bottom spacer for mobile to avoid overlap with fixed TabBar */}
         <div className="sm:hidden h-20" />
       </div>
     </div>

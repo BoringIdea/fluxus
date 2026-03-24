@@ -81,7 +81,7 @@ export default function PriceChart({ collection, chainId, className }: PriceChar
         {
           label: 'Mint Price',
           data: prices,
-          borderColor: '#fff',
+          borderColor: PrimaryColor,
           tension: 0.1,
           borderWidth: 2,
           fill: false,
@@ -116,7 +116,7 @@ export default function PriceChart({ collection, chainId, className }: PriceChar
     <div className={cn("w-full h-full flex flex-col gap-3", className)}>
       <div className="flex items-center gap-6 text-[11px] uppercase tracking-[0.3em] text-secondary">
         <span className="flex items-center gap-2 text-secondary">
-          <span className="w-6 h-[2px] bg-white" />
+          <span className="w-6 h-[2px]" style={{ backgroundColor: PrimaryColor }} />
           Mint Price
         </span>
         <span className="flex items-center gap-2 text-secondary">
@@ -151,13 +151,13 @@ export default function PriceChart({ collection, chainId, className }: PriceChar
                 type: 'linear',
                 min: 0,
                 ticks: {
-                  color: '#aaa',
+                  color: '#1f1f1f',
                   callback: (value) => Number(value).toFixed(2),
                 },
                 title: {
                   display: true,
                   text: `PRICE (${getChainSymbol(chainId)})`,
-                  color: '#fff',
+                  color: '#1f1f1f',
                 },
                 grid: {
                   color: 'rgba(22, 163, 74, 0.2)',
@@ -166,11 +166,11 @@ export default function PriceChart({ collection, chainId, className }: PriceChar
               },
               x: {
                 ticks: {
-                  color: '#aaa',
+                  color: '#1f1f1f',
                 },
                 title: {
                   display: true,
-                  color: '#fff',
+                  color: '#1f1f1f',
                   text: 'CURRENT SUPPLY',
                 },
                 grid: {

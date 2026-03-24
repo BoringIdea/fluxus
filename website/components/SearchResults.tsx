@@ -46,23 +46,23 @@ export default function SearchResults({
   };
 
   return (
-    <div className="absolute top-full left-0 right-0 mt-1 bg-[#0f1115] border border-[#2a2f37] rounded-md shadow-lg z-50 max-h-96 overflow-y-auto">
+    <div className="absolute left-0 right-0 top-full z-50 mt-2 max-h-96 overflow-y-auto border border-black/10 bg-[color:var(--bg-surface)] shadow-[0_18px_40px_rgba(17,24,39,0.08)]">
       {loading && (
-        <div className="p-4 text-center text-gray-400">
-          <div className="animate-spin w-5 h-5 border-2 border-[#16A34A] border-t-transparent rounded-full mx-auto mb-2"></div>
+        <div className="p-4 text-center font-primary text-[10px] uppercase tracking-[0.18em] text-[color:var(--text-muted)]">
+          <div className="mx-auto mb-2 h-5 w-5 animate-spin border-2 border-[color:var(--color-primary)] border-t-transparent"></div>
           Searching...
         </div>
       )}
 
       {error && (
-        <div className="p-4 text-center text-red-400">
+        <div className="p-4 text-center font-primary text-[10px] uppercase tracking-[0.18em] text-red-600">
           <Search className="w-5 h-5 mx-auto mb-2" />
           {error}
         </div>
       )}
 
       {!loading && !error && results.length === 0 && (
-        <div className="p-4 text-center text-gray-400">
+        <div className="p-4 text-center font-primary text-[10px] uppercase tracking-[0.18em] text-[color:var(--text-muted)]">
           <Search className="w-5 h-5 mx-auto mb-2" />
           No collections found
         </div>
@@ -75,15 +75,15 @@ export default function SearchResults({
               key={collection.id}
               href={`/collection/${collection.address}`}
               onClick={onClose}
-              className="block px-4 py-3 hover:bg-[#1a1d24] transition-colors border-b border-[#2a2f37] last:border-b-0"
+              className="block border-b border-black/10 px-4 py-3 transition-colors last:border-b-0 hover:bg-[color:var(--bg-muted)]"
             >
               <div className="flex items-start gap-3">
-                <div className="w-10 h-10 bg-[#2a2f37] rounded-md flex items-center justify-center flex-shrink-0">
+                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center overflow-hidden border border-black/10 bg-[color:var(--bg-muted)]">
                   {collection.base_uri ? (
                     <img
                       src={collection.base_uri}
                       alt={collection.name}
-                      className="w-full h-full object-cover rounded-md"
+                      className="h-full w-full object-cover"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
                         target.style.display = 'none';
@@ -91,22 +91,22 @@ export default function SearchResults({
                       }}
                     />
                   ) : null}
-                  <div className={`w-full h-full flex items-center justify-center text-xs font-bold text-[#16A34A] ${collection.base_uri ? 'hidden' : ''}`}>
+                  <div className={`flex h-full w-full items-center justify-center font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--color-primary)] ${collection.base_uri ? 'hidden' : ''}`}>
                     {collection.symbol?.slice(0, 2).toUpperCase() || 'N/A'}
                   </div>
                 </div>
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
-                    <h3 className="font-medium text-white truncate">
+                    <h3 className="truncate font-heading text-[22px] leading-none text-[color:var(--text-primary)]">
                       {collection.name}
                     </h3>
-                    <span className="text-xs text-gray-400 bg-[#2a2f37] px-2 py-0.5 rounded">
+                    <span className="border border-black/10 bg-[color:var(--bg-muted)] px-2 py-1 font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-muted)]">
                       {collection.symbol}
                     </span>
                   </div>
 
-                  <div className="flex items-center gap-4 text-xs text-gray-400">
+                  <div className="flex items-center gap-4 font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-muted)]">
                     <div className="flex items-center gap-1">
                       <TrendingUp className="w-3 h-3" />
                       <span>Floor: {formatPrice(collection.floor_price || collection.initial_price)} ETH</span>
@@ -118,18 +118,18 @@ export default function SearchResults({
                   </div>
 
                   <div className="flex items-center gap-2 mt-1">
-                    <span className="text-xs text-gray-500 font-mono">
+                    <span className="font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-muted)]">
                       {collection.address.slice(0, 6)}...{collection.address.slice(-4)}
                     </span>
-                    <ExternalLink className="w-3 h-3 text-gray-500" />
+                    <ExternalLink className="h-3 w-3 text-[color:var(--text-muted)]" />
                   </div>
                 </div>
 
                 <div className="text-right flex-shrink-0">
-                  <div className="text-xs text-gray-400">
+                  <div className="font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-muted)]">
                     Vol: {formatVolume(collection.total_volume)} ETH
                   </div>
-                  <div className="text-xs text-gray-500">
+                  <div className="font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-muted)]">
                     {collection.current_supply}/{collection.max_supply}
                   </div>
                 </div>

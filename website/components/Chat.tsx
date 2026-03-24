@@ -368,24 +368,24 @@ export default function Chat({ contractAddress, collection, chainId }: ChatProps
 
   if (!address) {
     return (
-      <div className="flex flex-col items-center justify-center h-64 border border-border bg-bg-card px-4 text-center">
-        <p className="text-primary text-lg font-bold mb-2">Connect your wallet to join the chat</p>
-        <p className="text-secondary text-sm">You need to connect your wallet to participate in the chat.</p>
+      <div className="flex h-64 flex-col items-center justify-center border border-black/10 bg-[color:var(--bg-surface)] px-4 text-center">
+        <p className="mb-2 font-heading text-[28px] leading-none text-[color:var(--text-primary)]">Connect your wallet to join the chat</p>
+        <p className="text-sm text-[color:var(--text-secondary)]">You need to connect your wallet to participate in the chat.</p>
       </div>
     );
   }
 
   if (!isAuthenticated) {
     return (
-      <div className="flex flex-col items-center justify-center h-64 border border-border bg-bg-card px-4 text-center gap-4">
+      <div className="flex h-64 flex-col items-center justify-center gap-4 border border-black/10 bg-[color:var(--bg-surface)] px-4 text-center">
         <div>
-          <h3 className="text-lg font-bold text-primary mb-2">Join Collection Chat</h3>
-          <p className="text-secondary text-sm">
+          <h3 className="mb-2 font-heading text-[26px] leading-none text-[color:var(--text-primary)]">Join Collection Chat</h3>
+          <p className="text-sm text-[color:var(--text-secondary)]">
             Sign a message to verify you own NFTs from this collection.
           </p>
         </div>
         {error && (
-          <div className="text-red-400 text-sm p-3 border border-red-500 bg-red-500/10 w-full max-w-md">
+          <div className="w-full max-w-md border border-red-200 bg-red-50 p-3 text-sm text-red-600">
             {error}
           </div>
         )}
@@ -397,17 +397,17 @@ export default function Chat({ contractAddress, collection, chainId }: ChatProps
   }
 
   return (
-    <div className="flex flex-col h-[600px] border border-border bg-bg-card overflow-hidden">
-      <div className="flex items-center justify-between p-4 border-b border-border bg-background">
+    <div className="flex h-[600px] flex-col overflow-hidden border border-black/10 bg-[color:var(--bg-surface)]">
+      <div className="flex items-center justify-between border-b border-black/10 bg-[color:var(--bg-muted)] p-4">
         <div>
-          <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-secondary">Collection Chat</h3>
-          <p className="text-xs text-secondary">
+          <h3 className="font-primary text-[10px] uppercase tracking-[0.18em] text-[color:var(--text-muted)]">Collection Chat</h3>
+          <p className="text-sm text-[color:var(--text-secondary)]">
             {onlineUsers.length} member{onlineUsers.length !== 1 ? 's' : ''} online
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-2 h-2 bg-fluxus-primary rounded-none" />
-          <span className="text-xs text-secondary">Connected</span>
+          <div className="h-2 w-2 bg-[color:var(--color-primary)]" />
+          <span className="font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">Connected</span>
         </div>
       </div>
 
@@ -423,11 +423,11 @@ export default function Chat({ contractAddress, collection, chainId }: ChatProps
         )}
 
         {isLoadingHistory && messages.length === 0 ? (
-          <div className="text-center text-gray-400 py-8">
+          <div className="py-8 text-center font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">
             <p>Loading chat history...</p>
           </div>
         ) : messages.length === 0 ? (
-          <div className="text-center text-gray-400 py-8">
+          <div className="py-8 text-center font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">
             <p>No messages yet. Start the conversation!</p>
           </div>
         ) : (
@@ -436,22 +436,22 @@ export default function Chat({ contractAddress, collection, chainId }: ChatProps
             return (
               <div key={message.id} className={`flex items-start ${isOwnMessage ? 'justify-end' : 'justify-start'}`}>
                 <div className={`flex items-start space-x-3 max-w-[80%] ${isOwnMessage ? 'flex-row-reverse space-x-reverse' : ''}`}>
-                  <div className="w-8 h-8 bg-fluxus-primary text-black flex items-center justify-center font-semibold text-sm flex-shrink-0">
+                  <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center bg-[color:var(--bg-muted)] font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--color-primary)]">
                     {getDefaultAvatar(message.walletAddress)}
                   </div>
                   <div className={`flex-1 ${isOwnMessage ? 'text-right' : 'text-left'}`}>
                     <div className={`flex items-center space-x-2 mb-1 ${isOwnMessage ? 'justify-end' : 'justify-start'}`}>
-                      <span className="text-sm font-medium text-primary">
+                      <span className="font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-primary)]">
                         {formatWalletAddress(message.walletAddress)}
                       </span>
-                      <span className="text-xs text-secondary">
+                      <span className="font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-muted)]">
                         {new Date(message.createdAt).toLocaleTimeString()}
                       </span>
                     </div>
-                    <div className={`inline-block p-3 rounded-none border border-border ${
+                    <div className={`inline-block border border-black/10 p-3 ${
                       isOwnMessage 
-                        ? 'bg-fluxus-primary text-black' 
-                        : 'bg-bg-tertiary text-primary'
+                        ? 'bg-[color:var(--color-primary)] text-white' 
+                        : 'bg-[color:var(--bg-muted)] text-[color:var(--text-primary)]'
                     }`}>
                       <p className="text-sm">{message.content}</p>
                     </div>
@@ -465,7 +465,7 @@ export default function Chat({ contractAddress, collection, chainId }: ChatProps
       </div>
 
       {/* Message Input */}
-      <div className="p-4 pt-6 pb-12 border-t border-border bg-background">
+      <div className="border-t border-black/10 bg-[color:var(--bg-muted)] p-4 pb-12 pt-6">
         <div className="flex space-x-2">
           <Input
             value={newMessage}
@@ -483,7 +483,7 @@ export default function Chat({ contractAddress, collection, chainId }: ChatProps
             Send
           </Button>
         </div>
-        <div className="text-xs text-secondary mt-1">
+        <div className="mt-1 font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-muted)]">
           {newMessage.length}/500 characters
         </div>
       </div>

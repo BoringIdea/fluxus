@@ -79,8 +79,8 @@ export const NFTItemCardSell = ({ token, collectionSymbol, contractAddress, isPe
   return (
     <Card
       className={cn(
-        "group relative flex flex-col gap-0 cursor-pointer transition-colors duration-150 hover:bg-bg-card-hover",
-        isSelected && "outline outline-2 outline-fluxus-primary/80"
+        "group relative flex cursor-pointer flex-col gap-0 border-black/10 bg-[color:var(--bg-surface)] transition-colors duration-150 hover:bg-[color:var(--bg-card-hover)]",
+        isSelected && "outline outline-2 outline-[color:var(--color-primary)]/70"
       )}
       ref={ref}
       onClick={handleCardClick}
@@ -89,8 +89,8 @@ export const NFTItemCardSell = ({ token, collectionSymbol, contractAddress, isPe
         type="button"
         aria-pressed={isSelected}
         className={cn(
-          "absolute top-3 right-3 z-10 h-5 w-5 border border-fluxus-primary text-fluxus-primary flex items-center justify-center rounded-none bg-background focus:outline-none focus:ring-2 focus:ring-fluxus-primary/60",
-          isSelected && "bg-fluxus-primary text-black"
+          "absolute right-3 top-3 z-10 flex h-5 w-5 items-center justify-center border border-[color:var(--color-primary)] text-[color:var(--color-primary)] bg-[color:var(--bg-surface)] focus:outline-none focus:ring-2 focus:ring-[color:var(--color-primary)]/40",
+          isSelected && "bg-[color:var(--color-primary)] text-white"
         )}
         onClick={(event) => {
           event.stopPropagation();
@@ -100,8 +100,8 @@ export const NFTItemCardSell = ({ token, collectionSymbol, contractAddress, isPe
         <CheckIcon className="h-3.5 w-3.5" />
       </button>
 
-      <CardContent className="flex-grow p-0 border-b border-border">
-        <div className="aspect-square w-full bg-bg-tertiary">
+      <CardContent className="flex-grow border-b border-black/10 p-0">
+        <div className="aspect-square w-full bg-[color:var(--bg-muted)]">
           <img
             src={img}
             alt={`${token.name} #${token.tokenId}`}
@@ -111,9 +111,9 @@ export const NFTItemCardSell = ({ token, collectionSymbol, contractAddress, isPe
         </div>
       </CardContent>
       <CardFooter className="flex flex-col gap-2 px-4 py-3">
-        <CardTitle className="text-xs font-bold text-secondary uppercase tracking-[0.2em] flex items-center justify-between">
+        <CardTitle className="flex items-center justify-between font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">
           <span>{collectionSymbol ?? 'NFT'}</span>
-          <span className="text-primary tracking-tight font-black">#{token.tokenId}</span>
+          <span className="font-heading text-[18px] leading-none text-[color:var(--text-primary)]">#{token.tokenId}</span>
         </CardTitle>
         <Button
           disabled={isPending}
@@ -121,7 +121,7 @@ export const NFTItemCardSell = ({ token, collectionSymbol, contractAddress, isPe
             event.stopPropagation();
             onSell(token.tokenId);
           }}
-          className="w-full text-xs tracking-[0.2em]"
+          className="w-full text-[10px] tracking-[0.18em]"
         >
           {buttonLabel}
         </Button>

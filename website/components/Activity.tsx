@@ -14,19 +14,19 @@ const PAGE_SIZE = 10;
 function getActionDisplay(type: number) {
   switch (type) {
     case 1:
-      return { text: "Mint", badge: "bg-blue-500 text-black" };
+      return { text: "Mint", badge: "border border-black/10 bg-[color:var(--bg-muted)] text-[color:var(--text-secondary)]" };
     case 2:
-      return { text: "Buy", badge: "bg-[#16A34A] text-black" };
+      return { text: "Buy", badge: "border border-[color:var(--color-primary)]/20 bg-[color:var(--color-primary)]/8 text-[color:var(--color-primary-dark)]" };
     case 3:
-      return { text: "Sell", badge: "bg-red-500 text-black" };
+      return { text: "Sell", badge: "border border-black/10 bg-[color:var(--bg-muted)] text-[color:var(--text-secondary)]" };
     case 4:
-      return { text: "Bulk Buy", badge: "bg-[#16A34A] text-black" };
+      return { text: "Bulk Buy", badge: "border border-[color:var(--color-primary)]/20 bg-[color:var(--color-primary)]/8 text-[color:var(--color-primary-dark)]" };
     case 5:
-      return { text: "Bulk Sell", badge: "bg-red-500 text-black" };
+      return { text: "Bulk Sell", badge: "border border-black/10 bg-[color:var(--bg-muted)] text-[color:var(--text-secondary)]" };
     case 6:
-      return { text: "Bulk Mint", badge: "bg-blue-500 text-black" };
+      return { text: "Bulk Mint", badge: "border border-black/10 bg-[color:var(--bg-muted)] text-[color:var(--text-secondary)]" };
     default:
-      return { text: "Other", badge: "bg-secondary text-black" };
+      return { text: "Other", badge: "border border-black/10 bg-[color:var(--bg-muted)] text-[color:var(--text-muted)]" };
   }
 }
 
@@ -125,7 +125,7 @@ export default function Activity({ collectionAddress }: { collectionAddress: str
   const filterButton = (
     <div className="relative w-full sm:w-auto" ref={filterRef}>
       <button
-        className={`flex items-center justify-center gap-2 border border-border px-3 py-2 text-xs font-bold uppercase tracking-[0.2em] ${filter !== "All" ? 'text-fluxus-primary bg-bg-tertiary' : 'text-secondary'}`}
+        className={`flex items-center justify-center gap-2 border border-black/10 px-3 py-2 font-primary text-[10px] uppercase tracking-[0.18em] ${filter !== "All" ? 'bg-[color:var(--bg-muted)] text-[color:var(--color-primary)]' : 'text-[color:var(--text-muted)]'}`}
         onClick={() => setFilterOpen(prev => !prev)}
         aria-expanded={filterOpen}
       >
@@ -133,26 +133,26 @@ export default function Activity({ collectionAddress }: { collectionAddress: str
         Filter
       </button>
       {filterOpen && (
-        <div className="absolute right-0 mt-2 w-64 border border-border bg-bg-card p-4 z-50 space-y-3">
-          <p className="text-sm font-bold text-primary">Filter Actions</p>
+        <div className="absolute right-0 z-50 mt-2 w-64 space-y-3 border border-black/10 bg-[color:var(--bg-surface)] p-4">
+          <p className="font-primary text-[10px] uppercase tracking-[0.18em] text-[color:var(--text-primary)]">Filter Actions</p>
           <div className="space-y-2">
             {actionOptions.map(option => (
-              <label key={option} className="flex items-center gap-3 text-sm text-secondary cursor-pointer select-none">
+              <label key={option} className="flex cursor-pointer select-none items-center gap-3 text-sm text-[color:var(--text-secondary)]">
                 <input
                   type="checkbox"
                   checked={checkedActions.includes(option)}
                   onChange={() => handleCheck(option)}
-                  className="accent-fluxus-primary h-4 w-4 border border-border bg-bg-tertiary"
+                  className="h-4 w-4 accent-[color:var(--color-primary)]"
                 />
                 <span>{option}</span>
               </label>
             ))}
           </div>
-          <div className="flex justify-end gap-2 text-xs">
-            <button className="px-3 py-2 text-secondary border border-border" onClick={resetFilter}>
+          <div className="flex justify-end gap-2 font-primary text-[10px] uppercase tracking-[0.16em]">
+            <button className="border border-black/10 px-3 py-2 text-[color:var(--text-muted)]" onClick={resetFilter}>
               Reset
             </button>
-            <button className="px-3 py-2 bg-fluxus-primary text-black" onClick={applyFilter}>
+            <button className="border border-[color:var(--color-primary)]/20 bg-[color:var(--color-primary)]/8 px-3 py-2 text-[color:var(--color-primary-dark)]" onClick={applyFilter}>
               Apply
             </button>
           </div>
@@ -164,15 +164,15 @@ export default function Activity({ collectionAddress }: { collectionAddress: str
   const renderRows = (rows: CollectionTx[], isMobile = false) => {
     if (isLoading) {
       return (
-        <div className="flex flex-col items-center justify-center py-12 text-secondary gap-3">
-          <div className="w-8 h-8 border-2 border-fluxus-primary border-t-transparent rounded-full animate-spin" />
+        <div className="flex flex-col items-center justify-center gap-3 py-12 text-[color:var(--text-muted)]">
+          <div className="h-8 w-8 animate-spin border-2 border-[color:var(--color-primary)] border-t-transparent" />
           <span>Loading transactions...</span>
         </div>
       );
     }
     if (rows.length === 0) {
       return (
-        <div className="flex flex-col items-center justify-center py-12 text-secondary gap-3">
+        <div className="flex flex-col items-center justify-center gap-3 py-12 text-[color:var(--text-muted)]">
           <div className="text-4xl">📊</div>
           <span>No transactions found</span>
         </div>
@@ -183,33 +183,33 @@ export default function Activity({ collectionAddress }: { collectionAddress: str
       return rows.map((row: CollectionTx, idx: number) => {
         const actionDisplay = getActionDisplay(row.txType);
         return (
-          <div key={row.txHash || idx} className="border border-border bg-bg-card p-4 space-y-3">
+          <div key={row.txHash || idx} className="space-y-3 border border-black/10 bg-[color:var(--bg-surface)] p-4">
             <div className="flex items-start justify-between">
               <span className={`px-3 py-1 text-xs font-bold uppercase tracking-[0.2em] ${actionDisplay.badge}`}>
                 {actionDisplay.text}
               </span>
-              <span className="text-xs text-secondary">{formatTime(row.createdAt.toString())}</span>
+              <span className="font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">{formatTime(row.createdAt.toString())}</span>
             </div>
             <div className="grid grid-cols-2 gap-3 text-sm">
               <div>
-                <p className="text-xs text-secondary uppercase tracking-[0.2em] mb-1">Items</p>
-                <p className="font-mono text-primary">
+                <p className="mb-1 font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">Items</p>
+                <p className="font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-primary)]">
                   {Array.isArray(row.tokenIds) ? row.tokenIds.join(', ') : row.tokenIds}
                 </p>
               </div>
               <div>
-                <p className="text-xs text-secondary uppercase tracking-[0.2em] mb-1">Price</p>
-                <p className="font-bold text-primary">{formatPrice(row.price, chainId)}</p>
+                <p className="mb-1 font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">Price</p>
+                <p className="font-serif text-[16px] font-semibold leading-none tracking-[-0.01em] text-[color:var(--text-secondary)]">{formatPrice(row.price, chainId)}</p>
               </div>
             </div>
             <div className="flex items-center justify-between text-sm">
-              <span className="font-mono text-secondary">{sliceAddress(row.sender)}</span>
+              <span className="font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-muted)]">{sliceAddress(row.sender)}</span>
               <button
-                className="p-1 border border-border text-secondary"
+                className="border border-black/10 p-1 text-[color:var(--text-muted)]"
                 onClick={() => handleCopy(row.sender, idx)}
                 aria-label="Copy address"
               >
-                {copiedIdx === idx ? <CheckIcon className="w-4 h-4 text-fluxus-primary" /> : <CopyIcon className="w-4 h-4" />}
+                {copiedIdx === idx ? <CheckIcon className="h-4 w-4 text-[color:var(--color-primary)]" /> : <CopyIcon className="h-4 w-4" />}
               </button>
             </div>
           </div>
@@ -220,43 +220,43 @@ export default function Activity({ collectionAddress }: { collectionAddress: str
     return (
       <Table>
         <TableHeader>
-          <TableRow className="border-border">
-            <TableHead className="text-primary">Action</TableHead>
-            <TableHead className="text-primary text-center">Items</TableHead>
-            <TableHead className="text-primary text-right">Price</TableHead>
-            <TableHead className="text-primary text-center">Wallet</TableHead>
-            <TableHead className="text-primary text-right">Time</TableHead>
+          <TableRow className="border-black/10">
+            <TableHead>Action</TableHead>
+            <TableHead className="text-center">Items</TableHead>
+            <TableHead className="text-right">Price</TableHead>
+            <TableHead className="text-center">Wallet</TableHead>
+            <TableHead className="text-right">Time</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {rows.map((row: CollectionTx, idx: number) => {
             const actionDisplay = getActionDisplay(row.txType);
             return (
-              <TableRow key={row.txHash || idx} className="border-border">
+              <TableRow key={row.txHash || idx} className="border-black/10">
                 <TableCell>
-                  <span className={`inline-flex px-3 py-1 text-xs font-bold uppercase tracking-[0.2em] ${actionDisplay.badge}`}>
+                  <span className={`inline-flex px-3 py-1 font-primary text-[10px] uppercase tracking-[0.16em] ${actionDisplay.badge}`}>
                     {actionDisplay.text}
                   </span>
                 </TableCell>
-                <TableCell className="text-center font-mono text-secondary">
+                <TableCell className="text-center font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-muted)]">
                   {Array.isArray(row.tokenIds) ? row.tokenIds.join(', ') : row.tokenIds}
                 </TableCell>
-                <TableCell className="text-right font-bold text-primary">
+                <TableCell className="text-right font-serif text-[16px] font-semibold leading-none tracking-[-0.01em] text-[color:var(--text-secondary)]">
                   {formatPrice(row.price, chainId)}
                 </TableCell>
                 <TableCell className="text-center">
                   <div className="flex items-center justify-center gap-2">
-                    <span className="font-mono text-secondary text-sm">{sliceAddress(row.sender)}</span>
+                    <span className="font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-muted)]">{sliceAddress(row.sender)}</span>
                     <button
-                      className="p-1 border border-border text-secondary"
+                      className="border border-black/10 p-1 text-[color:var(--text-muted)]"
                       onClick={(e) => { e.stopPropagation(); handleCopy(row.sender, idx); }}
                       aria-label="Copy address"
                     >
-                      {copiedIdx === idx ? <CheckIcon className="w-4 h-4 text-fluxus-primary" /> : <CopyIcon className="w-4 h-4" />}
+                      {copiedIdx === idx ? <CheckIcon className="h-4 w-4 text-[color:var(--color-primary)]" /> : <CopyIcon className="h-4 w-4" />}
                     </button>
                   </div>
                 </TableCell>
-                <TableCell className="text-right text-secondary text-sm">
+                <TableCell className="text-right font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-muted)]">
                   {formatTime(row.createdAt.toString())}
                 </TableCell>
               </TableRow>
@@ -268,18 +268,18 @@ export default function Activity({ collectionAddress }: { collectionAddress: str
   };
 
   return (
-    <div className="w-full px-2 sm:px-4 py-6 pb-24 space-y-6">
+    <div className="w-full space-y-6 px-2 py-6 pb-24 sm:px-4">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div>
-          <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-secondary">Activity</h2>
-          <p className="text-xs text-secondary">Latest on-chain interactions for this collection.</p>
+          <h2 className="flux-kicker mb-2">Activity</h2>
+          <p className="text-sm text-[color:var(--text-secondary)]">Latest on-chain interactions for this collection.</p>
         </div>
         <div className="w-full sm:w-auto flex justify-end">
           {filterButton}
         </div>
       </div>
 
-      <div className="hidden sm:block border border-border bg-bg-card">
+      <div className="hidden border border-black/10 bg-[color:var(--bg-surface)] sm:block">
         {renderRows(pagedData)}
       </div>
 

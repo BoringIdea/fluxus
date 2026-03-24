@@ -1,15 +1,7 @@
 import { Collection } from '@/src/api/types';
 import { ethers } from 'ethers';
 import Image from 'next/image';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
-
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useChainId } from 'wagmi';
 import { getChainSymbol } from '@/src/utils';
 
@@ -21,93 +13,77 @@ interface NFTTableProps {
 
 export const NFTTable = ({ collections, onRowClick, collectionsImages }: NFTTableProps) => {
   const chainId = useChainId();
+
+  const formatValue = (value?: string | number | bigint | null) => {
+    if (!value) return '0';
+    return `${Number(ethers.formatEther(BigInt(value.toString()))).toFixed(4).replace(/\.?0+$/, '')} ${getChainSymbol(chainId)}`;
+  };
+
   return (
-    <div className="w-full overflow-x-auto px-0 sm:px-4 pb-4">
-      {/* 桌面端表格 */}
-      <div className="rounded-lg min-w-[480px] sm:min-w-0 overflow-hidden border border-[#171a1f] hidden sm:block">
+    <div className="w-full px-0 pb-4 sm:px-0">
+      <div className="hidden overflow-hidden border border-black/10 bg-[color:var(--bg-surface)] sm:block">
         <Table>
-          <TableHeader className="bg-[#171a1f]">
+          <TableHeader className="bg-[color:var(--bg-muted)]">
             <TableRow className="border-0 hover:bg-transparent">
-              <TableHead className="text-gray-400 font-normal text-sm sm:text-base">COLLECTION</TableHead>
-              <TableHead className="text-gray-400 font-normal text-sm sm:text-base hidden sm:table-cell">FLOOR PRICE</TableHead>
-              <TableHead className="text-gray-400 font-normal text-sm sm:text-base hidden sm:table-cell">VOLUME</TableHead>
-              <TableHead className="text-gray-400 font-normal text-sm sm:text-base hidden sm:table-cell">OWNERS</TableHead>
-              <TableHead className="text-gray-400 font-normal text-sm sm:text-base">MINTED</TableHead>
+              <TableHead className="text-[color:var(--text-secondary)]">Collection</TableHead>
+              <TableHead className="hidden text-[color:var(--text-secondary)] sm:table-cell">Floor Price</TableHead>
+              <TableHead className="hidden text-[color:var(--text-secondary)] sm:table-cell">Volume</TableHead>
+              <TableHead className="hidden text-[color:var(--text-secondary)] sm:table-cell">Owners</TableHead>
+              <TableHead className="text-[color:var(--text-secondary)]">Minted</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {collections?.map((collection, index) => (
-              <TableRow
-                key={collection.address}
-                className="border-t border-[#171a1f] hover:bg-[#171a1f]/50 cursor-pointer"
-                onClick={() => onRowClick(collection.address)}
-              >
-                <TableCell className="text-gray-400 font-normal text-sm sm:text-base">
-                  <div className="flex flex-row items-center gap-3">
-                    <div className="w-[50px] h-[50px] rounded-lg overflow-hidden">
+              <TableRow key={collection.address} className="cursor-pointer border-t border-black/10" onClick={() => onRowClick(collection.address)}>
+                <TableCell className="text-[color:var(--text-secondary)]">
+                  <div className="flex items-center gap-3">
+                    <div className="h-[50px] w-[50px] overflow-hidden border border-black/10 bg-[color:var(--bg-muted)]">
                       <Image
                         src={collectionsImages[index] || '/fluxus.svg'}
                         alt={collection?.name || ''}
                         width={50}
                         height={50}
-                        className="w-full h-full object-cover"
+                        className="h-full w-full object-cover"
                       />
                     </div>
-                    <div className="flex flex-col">
-                      <span>{collection?.name || ''}</span>
-                      <span className="sm:hidden text-xs mt-1">
-                        Floor: {collection?.floor_price
-                          ? `${Number(ethers.formatEther(BigInt(collection.floor_price.toString()))).toFixed(4).replace(/\.?0+$/, '')} ${getChainSymbol(chainId)}`
-                          : '0'
-                        }
+                    <div className="flex flex-col gap-1">
+                      <span className="font-serif text-[18px] font-semibold leading-none tracking-[-0.02em] text-[color:var(--text-primary)]">{collection?.name || ''}</span>
+                      <span className="font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)] sm:hidden">
+                        Floor {formatValue(collection?.floor_price)}
                       </span>
                     </div>
                   </div>
                 </TableCell>
-                <TableCell className="text-gray-400 font-normal text-sm sm:text-base hidden sm:table-cell">
-                  {collection?.floor_price
-                    ? `${Number(ethers.formatEther(BigInt(collection.floor_price.toString()))).toFixed(4).replace(/\.?0+$/, '')} ${getChainSymbol(chainId)}`
-                    : '0'
-                  }
-                </TableCell>
-                <TableCell className="text-gray-400 font-normal text-sm sm:text-base hidden sm:table-cell">
-                  {collection?.period_volume
-                    ? `${Number(ethers.formatEther(BigInt(collection.period_volume.toString()))).toFixed(4).replace(/\.?0+$/, '')} ${getChainSymbol(chainId)}`
-                    : '0'
-                  }
-                </TableCell>
-                <TableCell className="text-gray-400 font-normal text-sm sm:text-base hidden sm:table-cell">{collection?.owners || '0'}</TableCell>
-                <TableCell className="text-gray-400 font-normal text-sm sm:text-base">{collection?.total_supply || '0'} / {collection?.max_supply || '0'}</TableCell>
+                <TableCell className="hidden font-medium text-[color:var(--text-secondary)] sm:table-cell">{formatValue(collection?.floor_price)}</TableCell>
+                <TableCell className="hidden font-medium text-[color:var(--text-secondary)] sm:table-cell">{formatValue(collection?.period_volume)}</TableCell>
+                <TableCell className="hidden font-medium text-[color:var(--text-secondary)] sm:table-cell">{collection?.owners || '0'}</TableCell>
+                <TableCell className="font-medium text-[color:var(--text-secondary)]">{collection?.total_supply || '0'} / {collection?.max_supply || '0'}</TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </div>
-      {/* 移动端卡片列表 */}
+
       <div className="flex flex-col gap-2 sm:hidden">
         {collections?.map((collection, index) => (
-          <div
-            key={collection.address}
-            className="rounded-lg border border-[#171a1f] bg-[#181a1f] p-4 shadow hover:bg-[#23272f] transition cursor-pointer"
-            onClick={() => onRowClick(collection.address)}
-          >
-            <div className="flex flex-row items-center gap-3 mb-2">
-              <div className="w-[40px] h-[40px] rounded-lg overflow-hidden">
+          <div key={collection.address} className="border border-black/10 bg-[color:var(--bg-surface)] p-4" onClick={() => onRowClick(collection.address)}>
+            <div className="mb-3 flex items-center gap-3">
+              <div className="h-[40px] w-[40px] overflow-hidden border border-black/10 bg-[color:var(--bg-muted)]">
                 <Image
                   src={collectionsImages[index] || '/fluxus.svg'}
                   alt={collection?.name || ''}
                   width={40}
                   height={40}
-                  className="w-full h-full object-cover"
+                  className="h-full w-full object-cover"
                 />
               </div>
-              <div className="font-semibold text-white text-base mb-2">{collection?.name || ''}</div>
+              <div className="font-serif text-[18px] font-semibold leading-none tracking-[-0.02em] text-[color:var(--text-primary)]">{collection?.name || ''}</div>
             </div>
-            <div className="flex flex-wrap gap-y-1 text-xs text-gray-400">
-              <div className="w-1/2">FLOOR PRICE: <span className="text-white">{collection?.floor_price ? `${Number(ethers.formatEther(BigInt(collection.floor_price.toString()))).toFixed(4).replace(/\.?0+$/, '')} ${getChainSymbol(chainId)}` : '0'}</span></div>
-              <div className="w-1/2">VOLUME: <span className="text-white">{collection?.period_volume ? `${Number(ethers.formatEther(BigInt(collection.period_volume.toString()))).toFixed(4).replace(/\.?0+$/, '')} ${getChainSymbol(chainId)}` : '0'}</span></div>
-              <div className="w-1/2">OWNERS: <span className="text-white">{collection?.owners || '0'}</span></div>
-              <div className="w-1/2">MINTED: <span className="text-white">{collection?.total_supply || '0'} / {collection?.max_supply || '0'}</span></div>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-2 font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-muted)]">
+              <div>Floor: <span className="font-medium text-[color:var(--text-secondary)]">{formatValue(collection?.floor_price)}</span></div>
+              <div>Volume: <span className="font-medium text-[color:var(--text-secondary)]">{formatValue(collection?.period_volume)}</span></div>
+              <div>Owners: <span className="font-medium text-[color:var(--text-secondary)]">{collection?.owners || '0'}</span></div>
+              <div>Minted: <span className="font-medium text-[color:var(--text-secondary)]">{collection?.total_supply || '0'} / {collection?.max_supply || '0'}</span></div>
             </div>
           </div>
         ))}

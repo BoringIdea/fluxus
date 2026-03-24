@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { Collection, Pagination as PaginationType } from '@/src/api/types';
@@ -13,7 +13,6 @@ import { isHideHomeAndLaunchPage } from '../utils';
 import Pagination from '@/components/ui/pagination';
 import Loading from '@/components/ui/Loading';
 import { fetchCollectionImage } from '@/lib/utils';
-import { string } from 'zod';
 
 const DEFAULT_PAGE_SIZE = 10;
 
@@ -21,7 +20,6 @@ const Home: NextPage = () => {
   const chainId = useChainId();
   const router = useRouter();
   const [trendingFilter, setTrendingFilter] = useState<'trending' | 'top'>('trending');
-  const [activeFilter, setActiveFilter] = useState<'trending' | 'top'>('trending');
   const [activeTimeFilter, setActiveTimeFilter] = useState<'1h' | '24h' | '7d'>('24h');
   const [selectedChain, setSelectedChain] = useState<string>('all');
   const [pagination, setPagination] = useState<PaginationType>({
@@ -33,19 +31,23 @@ const Home: NextPage = () => {
   const { data: recommendedCollection } = useRecommendedCollection(chainId);
   const { data: collections, isLoading: isLoadingCollections } = useCollections(chainId, pagination.offset, pagination.limit, activeTimeFilter);
   const [collectionsImages, setCollectionsImages] = useState<string[]>([]);
+  const collectionItems = Array.isArray(collections?.data) ? collections.data : [];
+
   useEffect(() => {
-    if (collections) {
+    if (collectionItems.length > 0) {
       const fetchImages = async () => {
         const images = await Promise.all(
-          collections.data.map(async (collection) => {
+          collectionItems.map(async (collection) => {
             return await fetchCollectionImage(collection) || '/fluxus.svg';
           })
         );
         setCollectionsImages(images);
       };
       fetchImages();
+    } else {
+      setCollectionsImages([]);
     }
-  }, [collections]);
+  }, [collectionItems]);
   const chains = [
     { id: 'all', name: 'ALL CHAINS' },
   ];
@@ -60,9 +62,8 @@ const Home: NextPage = () => {
       <ComingSoon />
     ) : (
       <div className="container w-full max-w-full overflow-x-hidden px-2 sm:px-6 lg:px-8 pb-8 sm:pb-16 pt-8 sm:pt-20">
-        <div className='mb-10 sm:mb-20'>
+        <div className='mb-10 sm:mb-16'>
           <RecommendCollection collections={recommendedCollection?.data || []} />
-          {/* <RecommendCollection collections={[...recommendedCollection, ...recommendedCollection, ...recommendedCollection, ...recommendedCollection, ...recommendedCollection]} /> */}
         </div>
         <Filter
           trendingFilter={trendingFilter}
@@ -78,10 +79,10 @@ const Home: NextPage = () => {
         {
           isLoadingCollections ? (
             <Loading />
-          ) : collections && collections.data.length > 0 && (
-            <div className="overflow-x-auto">
+          ) : collectionItems.length > 0 && (
+            <div className="overflow-x-auto pt-2 sm:pt-3">
               <NFTTable
-                collections={collections.data}
+                collections={collectionItems}
                 onRowClick={handleRowClick}
                 collectionsImages={collectionsImages}
               />

@@ -1,4 +1,3 @@
-import { Button } from '@/components/ui/button';
 import { Pagination as PaginationType } from '@/src/api/types';
 import { Tabs, TabsList, TabsTrigger } from '../ui/tabs';
 
@@ -19,52 +18,54 @@ export const Filter = ({
   activeTimeFilter,
   selectedChain,
   chains,
-  pagination,
   onTrendingFilterChange,
   onTimeFilterChange,
   onChainChange,
-  onPageChange,
 }: FilterProps) => {
   return (
-    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-4 mb-2 sm:mb-4 px-1 sm:px-4">
-      <Tabs value={trendingFilter} className="w-full sm:w-auto">
-        <TabsList className="bg-[#171a1f] p-0 h-auto w-full sm:w-auto text-xs sm:text-base">
-          <TabsTrigger
-            value="trending"
-            onClick={() => onTrendingFilterChange('trending')}
-            className="flex-1 sm:flex-none px-4 py-1.5 rounded-xs data-[state=active]:bg-[#16A34A] data-[state=active]:text-black text-sm sm:text-base"
-          >
-            TRENDING
-          </TabsTrigger>
-          <TabsTrigger
-            value="top"
-            onClick={() => onTrendingFilterChange('top')}
-            className="flex-1 sm:flex-none px-4 py-1.5 rounded-xs data-[state=active]:bg-[#16A34A] data-[state=active]:text-black text-sm sm:text-base"
-          >
-            TOP
-          </TabsTrigger>
-        </TabsList>
-      </Tabs>
-      <div className="flex flex-col sm:flex-row gap-1 sm:gap-2 w-full sm:w-auto">
-        <div className="flex w-full sm:w-auto">
-          {["1h", "24h", "7d"].map((time) => (
-            <button
-              key={time}
-              className={`flex-1 sm:flex-none px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm ${activeTimeFilter === time ? "bg-[#2f343e] text-white" : "bg-[#171a1f] text-gray-400"}`}
-              onClick={() => onTimeFilterChange(time as '1h' | '24h' | '7d')}
-            >
-              {time.toUpperCase()}
-            </button>
-          ))}
+    <div className="mb-4 flex flex-col gap-3 border border-black/10 bg-[color:var(--bg-surface)] px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+        <div>
+          <div className="flux-kicker mb-2">Rank</div>
+          <Tabs value={trendingFilter} className="w-full sm:w-auto">
+            <TabsList className="w-full sm:w-auto">
+              <TabsTrigger value="trending" onClick={() => onTrendingFilterChange('trending')}>
+                Trending
+              </TabsTrigger>
+              <TabsTrigger value="top" onClick={() => onTrendingFilterChange('top')}>
+                Top
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
         </div>
 
+        <div>
+          <div className="flux-kicker mb-2">Window</div>
+          <div className="flex border border-black/10 bg-[color:var(--bg-muted)]">
+            {['1h', '24h', '7d'].map((time) => (
+              <button
+                key={time}
+                className={`px-3 py-2 font-primary text-[11px] uppercase tracking-[0.16em] transition-colors ${activeTimeFilter === time ? 'border border-black/10 bg-[color:var(--bg-surface)] text-[color:var(--text-primary)]' : 'text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)]'}`}
+                onClick={() => onTimeFilterChange(time as '1h' | '24h' | '7d')}
+              >
+                {time}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div className="flux-kicker mb-2">Chain</div>
         <select
           value={selectedChain}
           onChange={(e) => onChainChange(e.target.value)}
-          className="w-full sm:w-auto h-9 sm:h-10 appearance-none bg-[#171a1f] border border-[#2f343e] rounded-lg px-3 sm:px-4 cursor-pointer hover:border-[#16A34A] focus:outline-none focus:border-[#16A34A] text-white text-xs sm:text-base"
+          className="h-10 min-w-[180px] appearance-none border border-black/10 bg-[color:var(--bg-surface)] px-3 font-primary text-[11px] uppercase tracking-[0.16em] text-[color:var(--text-primary)] outline-none transition-colors hover:bg-[color:var(--bg-card-hover)] focus:border-black/20"
         >
           {chains.map((chain) => (
-            <option key={chain.id} value={chain.id} className="bg-[#171a1f] text-white">{chain.name}</option>
+            <option key={chain.id} value={chain.id}>
+              {chain.name}
+            </option>
           ))}
         </select>
       </div>

@@ -289,12 +289,12 @@ export default function Sell({ contractAddress, collection }: { contractAddress:
   return (
     <div className="flex flex-col pb-32">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-border px-3 sm:px-4 py-4 bg-bg-card">
+      <div className="flex flex-col justify-between gap-2 border-b border-black/10 bg-[color:var(--bg-muted)] px-3 py-4 sm:flex-row sm:items-center sm:px-4">
         <div>
-          <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-secondary">Holding NFTs</p>
-          <p className="text-lg font-black text-primary">{balance?.toString() || '0'}</p>
+          <p className="font-primary text-[10px] uppercase tracking-[0.18em] text-[color:var(--text-muted)]">Holding NFTs</p>
+          <p className="font-heading text-[26px] leading-none text-[color:var(--text-primary)]">{balance?.toString() || '0'}</p>
         </div>
-        <p className="text-xs text-secondary max-w-md">
+        <p className="max-w-md text-sm text-[color:var(--text-secondary)]">
           Select items to sell individually or sweep multiple at once.
         </p>
       </div>

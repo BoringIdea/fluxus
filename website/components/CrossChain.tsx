@@ -103,11 +103,11 @@ function TabsTrigger({
   const context = React.useContext(TabsContext);
   if (!context) return null;
   const isActive = context.value === value;
-  const activeClasses = isActive ? "text-fluxus-primary bg-bg-tertiary border-l-2 border-fluxus-primary" : "text-secondary border-l-2 border-transparent";
+  const activeClasses = isActive ? "border-[color:var(--fg-strong)] bg-[color:var(--bg-muted)] text-[color:var(--text-primary)]" : "border-transparent text-[color:var(--text-muted)]";
   return (
     <button
       type="button"
-      className={cn("w-full text-left uppercase tracking-[0.3em] text-[11px] px-4 py-4", activeClasses, className)}
+      className={cn("w-full border-l-2 px-4 py-4 text-left font-primary text-[10px] uppercase tracking-[0.18em]", activeClasses, className)}
       onClick={() => context.onValueChange(value)}
     >
       {children}
@@ -443,10 +443,10 @@ export default function CrossChain({ contractAddress, collection }: CrossChainPr
   };
   
   return (
-    <div className="px-3 sm:px-6 pb-24 mt-4">
+    <div className="mt-4 px-3 pb-24 sm:px-6">
       <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as 'transfer' | 'history')}>
-        <div className="border border-border bg-bg-card flex flex-col lg:flex-row">
-          <TabsList className="lg:w-40 border-b lg:border-b-0 lg:border-r border-border flex lg:flex-col">
+        <div className="flex flex-col border border-black/10 bg-[color:var(--bg-surface)] lg:flex-row">
+          <TabsList className="flex border-b border-black/10 lg:w-40 lg:flex-col lg:border-b-0 lg:border-r">
             {tabs.map((tab) => (
               <TabsTrigger key={tab.key} value={tab.key}>
                 {tab.label}
@@ -458,22 +458,22 @@ export default function CrossChain({ contractAddress, collection }: CrossChainPr
             {/* Main Content */}
             <div className="flex flex-col lg:flex-row gap-6 mt-3">
               {/* Left Section: Operation Controls */}
-              <div className="lg:w-1/2 w-full flex justify-center lg:justify-start">
+              <div className="flex w-full justify-center lg:w-1/2 lg:justify-start">
                 <div className="w-full max-w-md">
-                  <div className="p-5 space-y-6 border border-border/80 bg-gradient-to-b from-black/80 via-bg-card to-bg-card/90 overflow-hidden">
+                  <div className="space-y-6 overflow-hidden border border-black/10 bg-[color:var(--bg-muted)] p-5">
                     {/* Source Chain Selection */}
                     <div className="space-y-3">
-                      <div className="flex items-center justify-between text-[11px] font-semibold uppercase tracking-[0.35em] text-secondary">
+                      <div className="flex items-center justify-between font-primary text-[10px] uppercase tracking-[0.18em] text-[color:var(--text-muted)]">
                         <span>Source Chain</span>
                         {address && sourceChain?.id && chainId !== sourceChain.id && (
-                          <span className="text-[10px] text-yellow-300 bg-yellow-500/10 px-3 py-1 tracking-[0.25em]">
+                          <span className="bg-[color:var(--bg-surface)] px-3 py-1 text-[10px] tracking-[0.16em] text-[color:var(--color-primary)]">
                             Switch required
                           </span>
                         )}
                       </div>
-                      <div className="space-y-3 rounded border border-fluxus-primary/40 bg-black/30 p-4">
+                      <div className="space-y-3 border border-black/10 bg-[color:var(--bg-surface)] p-4">
                         <button
-                          className="w-full flex items-center justify-between px-4 py-3 border border-fluxus-primary/50 bg-black/40 text-left uppercase tracking-[0.2em] text-primary/80 cursor-not-allowed"
+                          className="flex w-full cursor-not-allowed items-center justify-between border border-black/10 bg-[color:var(--bg-muted)] px-4 py-3 text-left font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-primary)]/80"
                           disabled
                           aria-disabled="true"
                           title="Source chain selection is temporarily disabled"
@@ -482,36 +482,35 @@ export default function CrossChain({ contractAddress, collection }: CrossChainPr
                             <span className="text-xl">{sourceChain.icon}</span>
                             <span className="text-sm text-primary tracking-[0.2em]">{sourceChain.name}</span>
                             {isSwitchingChain && (
-                              <div className="w-4 h-4 border border-fluxus-primary border-t-transparent rounded-full animate-spin" />
+                              <div className="h-4 w-4 animate-spin border border-[color:var(--color-primary)] border-t-transparent" />
                             )}
                           </div>
-                          <ChevronDownIcon className="w-4 h-4 text-secondary" />
+                          <ChevronDownIcon className="h-4 w-4 text-[color:var(--text-muted)]" />
                         </button>
 
-                        {/* Source Chain Contract Address */}
-                        <div className="text-[11px] uppercase tracking-[0.3em] text-secondary">Contract Address</div>
+                        <div className="font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">Contract Address</div>
                         {sourceChainLoading ? (
-                          <div className="px-3 py-2 border border-border/70 bg-black/40 text-[11px] text-yellow-400 tracking-[0.2em]">
+                          <div className="border border-black/10 bg-[color:var(--bg-muted)] px-3 py-2 font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">
                             Loading...
                           </div>
                         ) : sourceChainError ? (
-                          <div className="px-3 py-2 border border-red-500/30 bg-red-500/5 text-[11px] text-red-400 tracking-[0.2em]">
+                          <div className="border border-red-200 bg-red-50 px-3 py-2 font-primary text-[10px] uppercase tracking-[0.16em] text-red-600">
                             Error: Failed to calculate address
                           </div>
                         ) : sourceChainContractAddress ? (
-                          <div className="flex items-center gap-2 px-3 py-2 border border-fluxus-primary/40 bg-black/40">
-                            <span className="text-xs text-white font-mono break-all flex-1">
+                          <div className="flex items-center gap-2 border border-black/10 bg-[color:var(--bg-muted)] px-3 py-2">
+                            <span className="flex-1 break-all font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-primary)]">
                               {sourceChainContractAddress as string}
                             </span>
                             <button
                               onClick={() => navigator.clipboard.writeText(sourceChainContractAddress as string)}
-                              className="text-[10px] uppercase tracking-[0.3em] text-fluxus-primary px-3 py-1 border border-fluxus-primary/50 bg-fluxus-primary/10 hover:bg-fluxus-primary/20 transition-colors"
+                              className="border border-black/10 bg-[color:var(--bg-surface)] px-3 py-1 font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--color-primary)] transition-colors hover:bg-[color:var(--bg-card-hover)]"
                             >
                               Copy
                             </button>
                           </div>
                         ) : (
-                          <div className="px-3 py-2 border border-border/70 bg-black/40 text-[11px] tracking-[0.2em] text-secondary">
+                          <div className="border border-black/10 bg-[color:var(--bg-muted)] px-3 py-2 font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">
                             Not available
                           </div>
                         )}
@@ -522,7 +521,7 @@ export default function CrossChain({ contractAddress, collection }: CrossChainPr
                     <div className="flex justify-center">
                       <button
                         onClick={(e) => e.preventDefault()}
-                        className="w-12 h-12 border border-fluxus-primary/30 bg-black/40 text-fluxus-primary text-xl flex items-center justify-center tracking-[0.3em] cursor-not-allowed"
+                        className="flex h-12 w-12 cursor-not-allowed items-center justify-center border border-black/10 bg-[color:var(--bg-muted)] text-xl tracking-[0.3em] text-[color:var(--text-muted)]"
                         disabled
                         aria-disabled="true"
                         title="Chain swap is temporarily disabled"
@@ -533,40 +532,40 @@ export default function CrossChain({ contractAddress, collection }: CrossChainPr
 
                     {/* Target Chain Selection */}
                     <div className="space-y-3">
-                      <div className="text-[11px] font-semibold uppercase tracking-[0.35em] text-secondary">Target Chain</div>
-                      <div className="space-y-3 rounded border border-fluxus-primary/40 bg-black/30 p-4">
+                      <div className="font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">Target Chain</div>
+                      <div className="space-y-3 border border-black/10 bg-[color:var(--bg-surface)] p-4">
                         <button
-                          className="w-full flex items-center justify-between px-4 py-3 border border-fluxus-primary/50 bg-black/40 text-left uppercase tracking-[0.2em] text-primary/80 cursor-not-allowed"
+                          className="flex w-full cursor-not-allowed items-center justify-between border border-black/10 bg-[color:var(--bg-muted)] px-4 py-3 text-left uppercase tracking-[0.16em] text-[color:var(--text-primary)]/80"
                           disabled
                           aria-disabled="true"
                           title="Target chain selection is temporarily disabled"
                         >
                           <div className="flex items-center gap-3">
                             <span className="text-xl">{targetChain.icon}</span>
-                            <span className="text-sm text-primary tracking-[0.2em]">{targetChain.name}</span>
+                            <span className="font-primary text-xs tracking-[0.16em] text-[color:var(--text-primary)]">{targetChain.name}</span>
                           </div>
-                          <ChevronDownIcon className="w-4 h-4 text-secondary" />
+                          <ChevronDownIcon className="h-4 w-4 text-[color:var(--text-muted)]" />
                         </button>
 
-                        <div className="text-[11px] uppercase tracking-[0.3em] text-secondary">Contract Address</div>
+                        <div className="font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">Contract Address</div>
                         {targetChainLoading ? (
-                          <div className="px-3 py-2 border border-border/70 bg-black/40 text-[11px] text-yellow-400 tracking-[0.2em]">
+                          <div className="border border-black/10 bg-[color:var(--bg-muted)] px-3 py-2 font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--accent-primary)]">
                             Loading...
                           </div>
                         ) : targetChainContractAddress ? (
-                          <div className="flex items-center gap-2 px-3 py-2 border border-fluxus-primary/40 bg-black/40">
-                            <span className="text-xs text-white font-mono break-all flex-1">
+                          <div className="flex items-center gap-2 border border-black/10 bg-[color:var(--bg-muted)] px-3 py-2">
+                            <span className="flex-1 break-all font-mono text-xs text-[color:var(--text-primary)]">
                               {targetChainContractAddress as string}
                             </span>
                             <button
                               onClick={() => navigator.clipboard.writeText(targetChainContractAddress as string)}
-                              className="text-[10px] uppercase tracking-[0.3em] text-fluxus-primary px-3 py-1 border border-fluxus-primary/50 bg-fluxus-primary/10 hover:bg-fluxus-primary/20 transition-colors"
+                              className="border border-black/10 px-3 py-1 font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--accent-primary)] transition-colors hover:bg-[color:var(--bg-surface-elevated)]"
                             >
                               Copy
                             </button>
                           </div>
                         ) : (
-                          <div className="px-3 py-2 border border-border/70 bg-black/40 text-[11px] tracking-[0.2em] text-secondary">
+                          <div className="border border-black/10 bg-[color:var(--bg-muted)] px-3 py-2 font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">
                             Not available
                           </div>
                         )}
@@ -575,10 +574,10 @@ export default function CrossChain({ contractAddress, collection }: CrossChainPr
 
                     {/* Token ID Selection */}
                     <div className="space-y-3">
-                      <div className="text-[11px] font-semibold uppercase tracking-[0.35em] text-secondary">Select NFT</div>
+                      <div className="font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">Select NFT</div>
                       <div className="relative" ref={tokenDropdownRef}>
                         <button
-                          className="w-full flex items-center justify-between px-4 py-3 border border-border/70 bg-black/40 hover:border-fluxus-primary/50 transition-colors"
+                          className="flex w-full items-center justify-between border border-black/10 bg-[color:var(--bg-muted)] px-4 py-3 transition-colors hover:border-[color:var(--accent-primary)]/30"
                           disabled={sourceChainLoading || isLoadingTokens}
                           onClick={() => !sourceChainLoading && !isLoadingTokens && setTokenDropdownOpen(prev => !prev)}
                           type="button"
@@ -587,27 +586,27 @@ export default function CrossChain({ contractAddress, collection }: CrossChainPr
                             {(() => {
                               const selected = userNFTs.find((n: any) => n.tokenId === selectedTokenId);
                               return selected?.image ? (
-                                <div className="w-7 h-7 bg-bg-card overflow-hidden flex-shrink-0 border border-border/70">
+                                <div className="h-7 w-7 flex-shrink-0 overflow-hidden border border-black/10 bg-[color:var(--bg-surface)]">
                                   <img src={selected.image} alt={`NFT #${selectedTokenId}`} className="w-full h-full object-cover" />
                                 </div>
                               ) : (
                                 <span className="text-lg">🎨</span>
                               );
                             })()}
-                            <span className="text-primary font-medium text-sm tracking-[0.1em]">
+                            <span className="font-primary text-sm tracking-[0.12em] text-[color:var(--text-primary)]">
                               {selectedTokenId ? `NFT #${selectedTokenId}` : 'Select NFT to transfer'}
                             </span>
                           </div>
-                          <ChevronDownIcon className="w-4 h-4 text-secondary" />
+                          <ChevronDownIcon className="h-4 w-4 text-[color:var(--text-muted)]" />
                         </button>
                         {tokenDropdownOpen && (
-                          <div className="absolute z-50 mt-2 w-full max-h-60 overflow-y-auto border border-border bg-black/95 p-2 space-y-2">
+                          <div className="absolute z-50 mt-2 max-h-60 w-full space-y-2 overflow-y-auto border border-black/10 bg-[color:var(--bg-surface-elevated)] p-2">
                             {sourceChainLoading || isLoadingTokens ? (
-                              <div className="p-4 text-center text-secondary">
+                              <div className="p-4 text-center text-[color:var(--text-muted)]">
                                 <Loading />
                               </div>
                             ) : userNFTs.length === 0 ? (
-                              <div className="p-4 text-center text-secondary text-sm tracking-[0.2em] uppercase">
+                              <div className="p-4 text-center font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">
                                 No NFTs found
                               </div>
                             ) : (
@@ -618,19 +617,19 @@ export default function CrossChain({ contractAddress, collection }: CrossChainPr
                                     handleTokenSelect(nft.tokenId);
                                     setTokenDropdownOpen(false);
                                   }}
-                                  className="w-full flex items-center gap-3 p-3 border border-border/60 bg-black/40 text-left hover:border-fluxus-primary/40 hover:bg-black/60 transition-colors"
+                                  className="flex w-full items-center gap-3 border border-black/10 bg-[color:var(--bg-muted)] p-3 text-left transition-colors hover:border-[color:var(--accent-primary)]/30 hover:bg-[color:var(--bg-surface)]"
                                   type="button"
                                 >
                                   {nft.image ? (
-                                    <div className="w-9 h-9 border border-border/70 bg-bg-card overflow-hidden flex-shrink-0">
+                                    <div className="h-9 w-9 flex-shrink-0 overflow-hidden border border-black/10 bg-[color:var(--bg-surface)]">
                                       <img src={nft.image} alt={nft.name} className="w-full h-full object-cover" />
                                     </div>
                                   ) : (
                                     <span className="text-lg">🎨</span>
                                   )}
                                   <div>
-                                    <div className="text-sm text-primary font-medium">{nft.name || `NFT #${nft.tokenId}`}</div>
-                                    <div className="text-[11px] text-secondary tracking-[0.2em]">#{nft.tokenId}</div>
+                                    <div className="font-primary text-sm text-[color:var(--text-primary)]">{nft.name || `NFT #${nft.tokenId}`}</div>
+                                    <div className="font-mono text-[11px] tracking-[0.12em] text-[color:var(--text-muted)]">#{nft.tokenId}</div>
                                   </div>
                                 </button>
                               ))
@@ -642,26 +641,26 @@ export default function CrossChain({ contractAddress, collection }: CrossChainPr
 
                     {/* Receiver Address Input */}
                     <div className="space-y-3">
-                      <div className="text-[11px] font-semibold uppercase tracking-[0.35em] text-secondary">Receiver Address</div>
-                      <div className="rounded border border-border/70 bg-black/30 p-3 space-y-3 overflow-hidden">
+                      <div className="font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">Receiver Address</div>
+                      <div className="space-y-3 overflow-hidden border border-black/10 bg-[color:var(--bg-surface)] p-3">
                         <div className="flex flex-col sm:flex-row gap-2 min-w-0">
                           <input
                             type="text"
                             value={receiverAddress}
                             onChange={handleReceiverChange}
                             placeholder="Enter receiver address (0x...)"
-                            className="flex-1 px-3 py-2 border border-border/60 bg-black/40 text-primary placeholder-secondary focus:border-fluxus-primary focus:outline-none min-w-0"
+                            className="min-w-0 flex-1 border border-black/10 bg-[color:var(--bg-muted)] px-3 py-2 text-[color:var(--text-primary)] placeholder:text-[color:var(--text-muted)] focus:border-[color:var(--accent-primary)]/30 focus:outline-none"
                           />
                           <Button
                             variant="outline"
                             onClick={fillSelfAddress}
                             disabled={!address}
-                            className="px-4 py-2 text-[11px] tracking-[0.25em] uppercase bg-black/40 border-fluxus-primary/40 text-primary hover:bg-black/60 w-full sm:w-auto"
+                            className="w-full border-black/10 bg-[color:var(--bg-muted)] px-4 py-2 font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-primary)] hover:bg-[color:var(--bg-surface-elevated)] sm:w-auto"
                           >
                             Use My Address
                           </Button>
                         </div>
-                        <div className="text-[11px] tracking-[0.2em] text-secondary break-words leading-relaxed">
+                        <div className="break-words font-mono text-[11px] leading-relaxed tracking-[0.08em] text-[color:var(--text-muted)]">
                           {receiverAddress ? (
                             <>NFT will be sent to: {receiverAddress}</>
                           ) : (
@@ -673,26 +672,26 @@ export default function CrossChain({ contractAddress, collection }: CrossChainPr
 
                     {/* Transfer Summary */}
                     {selectedTokenId && (
-                      <div className="p-4 border border-fluxus-primary/30 bg-gradient-to-b from-black/50 to-bg-card/30 space-y-2 text-sm tracking-[0.08em] uppercase text-secondary">
-                        <div className="flex items-center justify-between text-[11px] tracking-[0.3em]">
+                      <div className="space-y-2 border border-black/10 bg-[color:var(--bg-surface)] p-4 text-sm uppercase tracking-[0.08em] text-[color:var(--text-muted)]">
+                        <div className="flex items-center justify-between font-primary text-[10px] tracking-[0.16em]">
                           <span>Transfer Summary</span>
-                          <span className="text-fluxus-primary">Ready</span>
+                          <span className="text-[color:var(--accent-primary)]">Ready</span>
                         </div>
-                        <div className="grid grid-cols-2 gap-3 text-xs text-primary">
+                        <div className="grid grid-cols-2 gap-3 text-xs text-[color:var(--text-primary)]">
                           <div>
-                            <p className="text-secondary/70 text-[10px] tracking-[0.2em] mb-1">From</p>
+                            <p className="mb-1 font-primary text-[10px] tracking-[0.16em] text-[color:var(--text-muted)]">From</p>
                             <p>{sourceChain.name}</p>
                           </div>
                           <div>
-                            <p className="text-secondary/70 text-[10px] tracking-[0.2em] mb-1">To</p>
+                            <p className="mb-1 font-primary text-[10px] tracking-[0.16em] text-[color:var(--text-muted)]">To</p>
                             <p>{targetChain.name}</p>
                           </div>
                           <div>
-                            <p className="text-secondary/70 text-[10px] tracking-[0.2em] mb-1">Token</p>
+                            <p className="mb-1 font-primary text-[10px] tracking-[0.16em] text-[color:var(--text-muted)]">Token</p>
                             <p>#{selectedTokenId}</p>
                           </div>
                           <div>
-                            <p className="text-secondary/70 text-[10px] tracking-[0.2em] mb-1">Receiver</p>
+                            <p className="mb-1 font-primary text-[10px] tracking-[0.16em] text-[color:var(--text-muted)]">Receiver</p>
                             <p>
                               {(() => {
                                 const finalReceiver = receiverAddress || address || '';
@@ -701,8 +700,8 @@ export default function CrossChain({ contractAddress, collection }: CrossChainPr
                             </p>
                           </div>
                         </div>
-                        <div className="text-[10px] tracking-[0.3em] text-secondary/80">
-                          Estimated time: <span className="text-primary ml-2">2-5 minutes</span>
+                        <div className="font-primary text-[10px] tracking-[0.16em] text-[color:var(--text-muted)]">
+                          Estimated time: <span className="ml-2 text-[color:var(--text-primary)]">2-5 minutes</span>
                         </div>
                       </div>
                     )}
@@ -711,21 +710,21 @@ export default function CrossChain({ contractAddress, collection }: CrossChainPr
                     <Button
                       onClick={handleCrossChainTransfer}
                       disabled={!selectedTokenId || isTransferring || isApproving || isPending || !address || isSwitchingChain}
-                      className="w-full border border-fluxus-primary/60 bg-fluxus-primary text-black hover:bg-[#1FB455]"
+                      className="w-full"
                     >
                       {isSwitchingChain ? (
                         <div className="flex items-center gap-2">
-                          <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin"></div>
+                          <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
                           Switching Network...
                         </div>
                       ) : isApproving || (isPending && pendingApprovalTokenId !== null) ? (
                         <div className="flex items-center gap-2">
-                          <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin"></div>
+                          <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
                           Approving...
                         </div>
                       ) : isTransferring || (isPending && pendingApprovalTokenId === null) ? (
                         <div className="flex items-center gap-2">
-                          <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin"></div>
+                          <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
                           Transferring...
                         </div>
                       ) : address && sourceChain?.id && chainId !== sourceChain.id ? (
@@ -737,7 +736,7 @@ export default function CrossChain({ contractAddress, collection }: CrossChainPr
 
                     {/* Connect Wallet Notice */}
                     {!address && (
-                      <div className="text-center p-3 border border-yellow-500/40 bg-yellow-500/5 text-[11px] uppercase tracking-[0.25em] text-yellow-300">
+                      <div className="border border-black/10 bg-[color:var(--bg-muted)] p-3 text-center font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">
                         Connect wallet to enable transfers
                       </div>
                     )}
@@ -748,14 +747,14 @@ export default function CrossChain({ contractAddress, collection }: CrossChainPr
               {/* Right Section: Latest Transaction History (Desktop only) */}
               <div className="hidden lg:block lg:w-1/2">
                 <div className="w-full">
-                  <div className="p-4 space-y-3 border border-border bg-bg-card min-h-[600px]">
+                  <div className="min-h-[600px] space-y-3 border border-black/10 bg-[color:var(--bg-surface)] p-4">
                     <div className="flex items-center justify-between">
-                      <h3 className="text-sm font-medium text-gray-300">
+                      <h3 className="font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">
                         YOUR CROSS-CHAIN TRANSACTION HISTORY
                       </h3>
                       {isTrackingCctx && (
-                        <div className="flex items-center gap-2 text-xs text-blue-400">
-                          <div className="w-3 h-3 border-2 border-blue-400 border-t-transparent rounded-full animate-spin"></div>
+                        <div className="flex items-center gap-2 font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--accent-primary)]">
+                          <div className="h-3 w-3 animate-spin rounded-full border-2 border-[color:var(--accent-primary)] border-t-transparent"></div>
                           Tracking...
                         </div>
                       )}
@@ -765,21 +764,26 @@ export default function CrossChain({ contractAddress, collection }: CrossChainPr
                     {(cctxData || cctxHistory.length > 0) ? (
                       <div className="space-y-3 max-h-[500px] overflow-y-auto">
                         {(cctxHistory.length > 0 ? cctxHistory : (cctxData ? [cctxData] : [])).map((transaction, index) => (
-                          <div key={transaction.transactionHash || index} className={`p-3 rounded-lg border ${
-                            index === 0 ? 'border-blue-500/50 bg-blue-500/5' : 'border-[#555] bg-[#1a1b1e]'
-                          }`}>
+                          <div
+                            key={transaction.transactionHash || index}
+                            className={`border p-3 ${
+                              index === 0
+                                ? 'border-[color:var(--accent-primary)]/30 bg-[color:var(--bg-muted)]'
+                                : 'border-black/10 bg-[color:var(--bg-surface-elevated)]'
+                            }`}
+                          >
                             {/* Transaction Header */}
                             <div className="flex items-center justify-between mb-2">
-                              <div className="text-xs text-gray-400">
+                              <div className="font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">
                                 {index === 0 && 'Latest Transaction'}
                                 {index > 0 && `Transaction #${index + 1}`}
                               </div>
-                              <div className={`px-2 py-1 rounded text-xs font-medium ${
+                              <div className={`border px-2 py-1 font-primary text-[10px] uppercase tracking-[0.16em] ${
                                 transaction.status === 'Aborted' 
-                                  ? 'bg-red-500/20 text-red-400 border border-red-500/30' 
+                                  ? 'border-red-500/20 bg-red-500/8 text-red-500' 
                                   : transaction.status === 'OutboundMined'
-                                  ? 'bg-green-500/20 text-green-400 border border-green-500/30'
-                                  : 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'
+                                  ? 'border-[color:var(--accent-primary)]/20 bg-[color:var(--accent-primary)]/8 text-[color:var(--accent-primary)]'
+                                  : 'border-black/10 bg-[color:var(--bg-muted)] text-[color:var(--text-muted)]'
                               }`}>
                                 {transaction.status === 'Aborted' && '❌ '}
                                 {transaction.status === 'OutboundMined' && '✅ '}
@@ -790,8 +794,8 @@ export default function CrossChain({ contractAddress, collection }: CrossChainPr
                             
                             {/* Transaction Hash */}
                             <div className="space-y-1 mb-2">
-                              <div className="text-xs text-gray-400">Transaction Hash</div>
-                              <div className="font-mono text-xs text-primary bg-bg-tertiary p-2 border border-border break-all overflow-hidden">
+                              <div className="font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">Transaction Hash</div>
+                              <div className="break-all overflow-hidden border border-black/10 bg-[color:var(--bg-surface)] p-2 font-mono text-xs text-[color:var(--text-primary)]">
                                 {transaction.transactionHash}
                               </div>
                             </div>
@@ -799,8 +803,8 @@ export default function CrossChain({ contractAddress, collection }: CrossChainPr
                             {/* Status Message */}
                             {transaction.status_message && (
                               <div className="space-y-1 mb-2">
-                                <div className="text-xs text-gray-400">Message</div>
-                                <div className="text-xs text-orange-400 bg-orange-500/10 p-2 rounded border border-orange-500/30">
+                                <div className="font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">Message</div>
+                                <div className="border border-black/10 bg-[color:var(--bg-surface)] p-2 text-xs text-[color:var(--text-primary)]">
                                   {transaction.status_message}
                                 </div>
                               </div>
@@ -809,14 +813,14 @@ export default function CrossChain({ contractAddress, collection }: CrossChainPr
                             {/* Chain Information */}
                             <div className="grid grid-cols-2 gap-3 mb-2">
                               <div className="space-y-1">
-                                <div className="text-xs text-gray-400">From Chain</div>
-                                <div className="text-xs text-white font-medium">
+                                <div className="font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">From Chain</div>
+                                <div className="font-primary text-xs text-[color:var(--text-primary)]">
                                   {getChainName(transaction.sender_chain_id)}
                                 </div>
                               </div>
                               <div className="space-y-1">
-                                <div className="text-xs text-gray-400">To Chain</div>
-                                <div className="text-xs text-white font-medium">
+                                <div className="font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">To Chain</div>
+                                <div className="font-primary text-xs text-[color:var(--text-primary)]">
                                   {getChainName(transaction.receiver_chainId)}
                                 </div>
                               </div>
@@ -825,8 +829,8 @@ export default function CrossChain({ contractAddress, collection }: CrossChainPr
                             {/* Outbound Transaction */}
                             {transaction.outbound_tx_hash && (
                               <div className="space-y-1 mb-2">
-                                <div className="text-xs text-gray-400">Outbound Transaction</div>
-                                <div className="font-mono text-xs text-purple-400 bg-purple-500/10 p-2 rounded border border-purple-500/30 break-all overflow-hidden">
+                                <div className="font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-muted)]">Outbound Transaction</div>
+                                <div className="break-all overflow-hidden border border-black/10 bg-[color:var(--bg-surface)] p-2 font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-primary)]">
                                   {transaction.outbound_tx_hash}
                                 </div>
                               </div>
@@ -844,8 +848,8 @@ export default function CrossChain({ contractAddress, collection }: CrossChainPr
                             
                             {/* Timestamp */}
                             {transaction.blockTimestamp && (
-                              <div className="pt-2 border-t border-border">
-                                <div className="text-xs text-gray-500">
+                              <div className="border-t border-black/10 pt-2">
+                                <div className="font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-muted)]">
                                   Last updated: {(() => {
                                     const date = new Date(transaction.blockTimestamp);
                                     return isNaN(date.getTime()) ? 'Unknown' : date.toLocaleTimeString();
@@ -859,8 +863,8 @@ export default function CrossChain({ contractAddress, collection }: CrossChainPr
                     ) : (
                       <div className="flex flex-col items-center justify-center py-12 text-center">
                         <div className="text-4xl mb-2">🌉</div>
-                        <div className="text-gray-400 text-sm">No cross-chain transactions yet</div>
-                        <div className="text-gray-500 text-xs mt-2">Start a transfer to see it here</div>
+                        <div className="text-sm text-[color:var(--text-muted)]">No cross-chain transactions yet</div>
+                        <div className="mt-2 font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-muted)]">Start a transfer to see it here</div>
                       </div>
                     )}
                   </div>
@@ -870,15 +874,15 @@ export default function CrossChain({ contractAddress, collection }: CrossChainPr
               {/* Mobile Transaction History */}
               <div className="lg:hidden w-full flex justify-center">
                 {(cctxData || cctxHistory.length > 0) && (
-                  <div className="w-full max-w-md mt-4">
-                    <div className="p-4 space-y-3 border border-border bg-bg-card">
+                  <div className="mt-4 w-full max-w-md">
+                    <div className="space-y-3 border border-black/10 bg-[color:var(--bg-surface)] p-4">
                       <div className="flex items-center justify-between">
-                        <h3 className="text-sm font-medium text-gray-300">
+                        <h3 className="font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">
                           {cctxHistory.length > 1 ? 'Your Cross-Chain Transaction History' : 'Your Latest Cross-Chain Transaction'}
                         </h3>
                         {isTrackingCctx && (
-                          <div className="flex items-center gap-2 text-xs text-blue-400">
-                            <div className="w-3 h-3 border-2 border-blue-400 border-t-transparent rounded-full animate-spin"></div>
+                          <div className="flex items-center gap-2 font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--color-primary)]">
+                            <div className="h-3 w-3 animate-spin border-2 border-[color:var(--color-primary)] border-t-transparent"></div>
                             Tracking...
                           </div>
                         )}
@@ -891,16 +895,16 @@ export default function CrossChain({ contractAddress, collection }: CrossChainPr
                           if (!latestTransaction) return null;
                           
                           return (
-                            <div className="p-3 rounded-lg border border-blue-500/50 bg-blue-500/5">
+                            <div className="border border-[color:var(--color-primary)]/30 bg-[color:var(--color-primary)]/6 p-3">
                               {/* Transaction Header */}
                               <div className="flex items-center justify-between mb-2">
-                                <div className="text-xs text-gray-400">Latest Transaction</div>
-                                <div className={`px-2 py-1 rounded text-xs font-medium ${
+                                <div className="font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-muted)]">Latest Transaction</div>
+                                <div className={`border px-2 py-1 font-primary text-[10px] uppercase tracking-[0.14em] ${
                                   latestTransaction.status === 'Aborted' 
-                                    ? 'bg-red-500/20 text-red-400 border border-red-500/30' 
+                                    ? 'border-red-200 bg-red-50 text-red-600' 
                                     : latestTransaction.status === 'OutboundMined'
-                                    ? 'bg-green-500/20 text-green-400 border border-green-500/30'
-                                    : 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'
+                                    ? 'border-[color:var(--color-primary)]/30 bg-[color:var(--color-primary)]/8 text-[color:var(--color-primary)]'
+                                    : 'border-black/10 bg-[color:var(--bg-surface)] text-[color:var(--text-muted)]'
                                 }`}>
                                   {latestTransaction.status === 'Aborted' && '❌ '}
                                   {latestTransaction.status === 'OutboundMined' && '✅ '}
@@ -911,8 +915,8 @@ export default function CrossChain({ contractAddress, collection }: CrossChainPr
                               
                               {/* Transaction Hash */}
                               <div className="space-y-1 mb-2">
-                                <div className="text-xs text-gray-400">Transaction Hash</div>
-                                <div className="font-mono text-xs text-primary bg-bg-tertiary p-2 border border-border break-all overflow-hidden">
+                                <div className="font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-muted)]">Transaction Hash</div>
+                                <div className="break-all overflow-hidden border border-black/10 bg-[color:var(--bg-surface)] p-2 font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-primary)]">
                                   {latestTransaction.transactionHash}
                                 </div>
                               </div>
@@ -920,8 +924,8 @@ export default function CrossChain({ contractAddress, collection }: CrossChainPr
                               {/* Status Message */}
                               {latestTransaction.status_message && (
                                 <div className="space-y-1 mb-2">
-                                  <div className="text-xs text-gray-400">Message</div>
-                                  <div className="text-xs text-orange-400 bg-orange-500/10 p-2 rounded border border-orange-500/30">
+                                  <div className="font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-muted)]">Message</div>
+                                  <div className="border border-black/10 bg-[color:var(--bg-surface)] p-2 text-xs text-[color:var(--text-secondary)]">
                                     {latestTransaction.status_message}
                                   </div>
                                 </div>
@@ -930,24 +934,24 @@ export default function CrossChain({ contractAddress, collection }: CrossChainPr
                               {/* Chain Information */}
                               <div className="grid grid-cols-2 gap-3 mb-2">
                                 <div className="space-y-1">
-                                  <div className="text-xs text-gray-400">From Chain</div>
-                                  <div className="text-xs text-white font-medium">
+                                  <div className="font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-muted)]">From Chain</div>
+                                  <div className="text-xs text-[color:var(--text-primary)]">
                                     {getChainName(latestTransaction.sender_chain_id)}
                                   </div>
                                 </div>
                                 <div className="space-y-1">
-                                  <div className="text-xs text-gray-400">To Chain</div>
-                                  <div className="text-xs text-white font-medium">
+                                  <div className="font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-muted)]">To Chain</div>
+                                  <div className="text-xs text-[color:var(--text-primary)]">
                                     {getChainName(latestTransaction.receiver_chainId)}
                                   </div>
                                 </div>
                               </div>
                               
                               {/* Confirmation Status */}
-                              <div className="flex items-center justify-between mb-2">
-                                <div className="text-xs text-gray-400">Confirmed on Destination</div>
-                                <div className={`text-xs font-medium ${
-                                  latestTransaction.confirmed_on_destination ? 'text-green-400' : 'text-red-400'
+                              <div className="mb-2 flex items-center justify-between">
+                                <div className="font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-muted)]">Confirmed on Destination</div>
+                                <div className={`font-primary text-[10px] uppercase tracking-[0.14em] ${
+                                  latestTransaction.confirmed_on_destination ? 'text-[color:var(--color-primary)]' : 'text-red-600'
                                 }`}>
                                   {latestTransaction.confirmed_on_destination ? '✅ Yes' : '❌ No'}
                                 </div>
@@ -955,8 +959,8 @@ export default function CrossChain({ contractAddress, collection }: CrossChainPr
                               
                               {/* Timestamp */}
                               {latestTransaction.blockTimestamp && (
-                                <div className="pt-2 border-t border-border">
-                                  <div className="text-xs text-gray-500">
+                                <div className="border-t border-black/10 pt-2">
+                                  <div className="font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-muted)]">
                                     Last updated: {(() => {
                                       const date = new Date(latestTransaction.blockTimestamp);
                                       return isNaN(date.getTime()) ? 'Unknown' : date.toLocaleTimeString();

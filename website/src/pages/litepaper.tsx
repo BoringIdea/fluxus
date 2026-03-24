@@ -1,4 +1,3 @@
-import Header from '@/components/Header';
 import Head from 'next/head';
 import { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
@@ -92,25 +91,22 @@ export default function Litepaper() {
   return (
     <>
       <Head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet" />
       </Head>
-      <main className="flex justify-center px-2 sm:px-6 lg:px-8 py-8 pt-20 bg-black">
+      <main className="flex justify-center px-2 py-8 pt-20 sm:px-6 lg:px-8">
         <div className="max-w-5xl w-full">
-          <div className="border border-border bg-bg-card/70 rounded-3xl p-4 sm:p-8">
+          <div className="border border-black/10 bg-[color:var(--bg-surface)] p-4 sm:p-8">
             <div className="flex justify-between items-center mb-8">
-              <div className="flex items-center gap-3 text-secondary">
+              <div className="flex items-center gap-3">
                 <span
                   onClick={() => setLanguage('en')}
-                  className={`cursor-pointer text-sm sm:text-base font-semibold tracking-[0.4em] ${language === 'en' ? 'text-white underline underline-offset-4 decoration-fluxus-primary/70' : 'text-secondary hover:text-white/80'}`}
+                  className={`cursor-pointer font-primary text-[10px] uppercase tracking-[0.18em] ${language === 'en' ? 'text-[color:var(--text-primary)] underline underline-offset-4 decoration-[color:var(--color-primary)]' : 'text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)]'}`}
                 >
                   EN
                 </span>
-                <span className="text-secondary text-sm sm:text-base">|</span>
+                <span className="font-primary text-[10px] uppercase tracking-[0.18em] text-[color:var(--text-muted)]">|</span>
                 <span
                   onClick={() => setLanguage('zh')}
-                  className={`cursor-pointer text-sm sm:text-base font-semibold tracking-[0.4em] ${language === 'zh' ? 'text-white underline underline-offset-4 decoration-fluxus-primary/70' : 'text-secondary hover:text-white/80'}`}
+                  className={`cursor-pointer font-primary text-[10px] uppercase tracking-[0.18em] ${language === 'zh' ? 'text-[color:var(--text-primary)] underline underline-offset-4 decoration-[color:var(--color-primary)]' : 'text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)]'}`}
                 >
                   中文
                 </span>
@@ -119,13 +115,13 @@ export default function Litepaper() {
                 href="https://www.docs.fluxusnft.xyz/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-secondary text-sm sm:text-base font-semibold uppercase tracking-[0.3em] border border-border px-3 py-2 rounded hover:border-fluxus-primary/60"
+                className="inline-flex h-10 items-center border border-black/10 bg-[color:var(--bg-muted)] px-3 font-primary text-[10px] uppercase tracking-[0.18em] text-[color:var(--text-primary)] transition-colors hover:bg-[color:var(--bg-card-hover)]"
               >
                 {language === 'en' ? 'More Details' : '查看详情'}
               </a>
             </div>
 
-            <div className={`fluxus-typo space-y-12 leading-relaxed prose max-w-full text-white prose-h1:text-white prose-h2:text-white prose-h3:text-white prose-p:text-white/90 prose-li:text-white/80 prose-strong:text-white prose-h1:text-3xl sm:prose-h1:text-5xl prose-h1:font-bold prose-h1:tracking-tight prose-h2:text-2xl sm:prose-h2:text-3xl prose-h2:font-semibold prose-h2:tracking-wide prose-h3:text-xl sm:prose-h3:text-2xl prose-h3:font-medium prose-p:text-base sm:prose-p:text-lg prose-p:font-light prose-p:leading-8 prose-li:text-base sm:prose-li:text-lg prose-li:font-light prose-li:leading-7 [--tw-prose-borders:rgba(255,255,255,0.15)] prose-code:text-white/80 prose-code:bg-[#141414] prose-pre:bg-[#0d0d0d] prose-pre:text-white/80`}>
+            <div className={`prose max-w-full space-y-12 leading-relaxed prose-h1:font-heading prose-h1:text-[color:var(--text-primary)] prose-h2:font-heading prose-h2:text-[color:var(--text-primary)] prose-h3:font-heading prose-h3:text-[color:var(--text-primary)] prose-p:text-[color:var(--text-secondary)] prose-li:text-[color:var(--text-secondary)] prose-strong:text-[color:var(--text-primary)] prose-code:bg-[color:var(--bg-muted)] prose-code:px-1 prose-code:py-0.5 prose-code:text-[color:var(--text-primary)] prose-pre:border prose-pre:border-black/10 prose-pre:bg-[color:var(--bg-muted)] prose-pre:text-[color:var(--text-primary)] prose-a:text-[color:var(--color-primary)]`}>
               <ReactMarkdown>
                 {content[language].title}
               </ReactMarkdown>
@@ -186,7 +182,7 @@ export default function Litepaper() {
                 {content[language].whyFluxus}
               </ReactMarkdown>
 
-              <div className="my-16 border-t border-[#4CAF50]/30" />
+              <div className="my-16 border-t border-black/10" />
 
               <ReactMarkdown>
                 {content[language].roadmap}
@@ -196,27 +192,6 @@ export default function Litepaper() {
           </div>
         </div>
       </main>
-      <style jsx global>{`
-      /* Base font for the article area */
-      .fluxus-typo {
-        font-family: 'Sora', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      }
-      /* Headings: stronger display font */
-      .fluxus-typo h1, .fluxus-typo h2, .fluxus-typo h3 {
-        font-family: 'Space Grotesk', 'Sora', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-        font-weight: 700;
-        letter-spacing: -0.01em;
-      }
-      /* Paragraphs and lists */
-      .fluxus-typo p, .fluxus-typo li, .fluxus-typo td, .fluxus-typo th, .fluxus-typo span {
-        font-family: 'Sora', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-        font-weight: 300;
-        letter-spacing: 0.01em;
-      }
-      .fluxus-typo strong { font-weight: 600; }
-      /* Code blocks keep monospace but align with theme */
-      .fluxus-typo code, .fluxus-typo pre { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
-    `}</style>
     </>
   );
 };

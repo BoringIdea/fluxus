@@ -22,7 +22,7 @@ async function bootstrap() {
     origin: [
       'http://localhost:3000',
       'http://localhost:3001',
-      'https://fluxus-trade.vercel.app'
+      'https://fluxus-trade.vercel.app',
       process.env.FRONTEND_URL || 'http://localhost:3000',
     ].filter(Boolean),
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',

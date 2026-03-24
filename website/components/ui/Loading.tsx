@@ -3,7 +3,7 @@ import React from 'react';
 export const Loading: React.FC<{ className?: string }> = ({ className = '' }) => (
   <div className={`flex flex-col items-center justify-center py-8 ${className}`} role="status">
     <svg
-      className="animate-spin h-10 w-10 text-green-500"
+      className="h-10 w-10 animate-spin text-[color:var(--color-primary)]"
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
@@ -22,7 +22,7 @@ export const Loading: React.FC<{ className?: string }> = ({ className = '' }) =>
         d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
       />
     </svg>
-    <span className="mt-4 text-green-600 text-sm font-medium">Loading...</span>
+    <span className="mt-4 font-primary text-[10px] uppercase tracking-[0.18em] text-[color:var(--text-muted)]">Loading</span>
   </div>
 );
 

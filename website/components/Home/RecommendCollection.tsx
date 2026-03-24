@@ -14,13 +14,14 @@ export const RecommendCollection = ({ collections }: RecommendCollectionProps) =
   const chainId = useChainId();
   const router = useRouter();
   const [collection, setCollection] = useState<Collection | undefined>(collections[0]);
-  const handleViewCollection = () => {
-    router.push(`/collection/${collection?.address}`);
-  };
 
   useEffect(() => {
     setCollection(collections[0]);
   }, [collections]);
+
+  const handleViewCollection = () => {
+    router.push(`/collection/${collection?.address}`);
+  };
 
   const stats = [
     {
@@ -43,42 +44,39 @@ export const RecommendCollection = ({ collections }: RecommendCollectionProps) =
   ];
 
   return (
-    <div className="px-4 sm:px-6 md:px-10">
-      <div className="relative w-full overflow-hidden border border-border bg-black/40 rounded-3xl">
-        <img
-          src={collection?.meta_data?.banner_image || "/Drug-banner.png"}
-          className="absolute inset-0 w-full h-full object-cover"
-          alt={collection?.name || 'Featured Collection'}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/10" />
-        <div className="relative z-10 p-6 md:p-10 flex flex-col gap-6 text-primary">
+    <section className="border border-black/10 bg-[color:var(--bg-surface)] p-6 sm:p-8">
+      <div className="grid gap-8 lg:grid-cols-[1fr_0.95fr] lg:items-end">
+        <div className="space-y-5">
+          <div className="flux-kicker">Featured Collection</div>
           <div>
-            <p className="text-[11px] uppercase tracking-[0.35em] text-secondary mb-1">Featured Collection</p>
-            <h2 className="text-3xl sm:text-4xl font-bold text-white">{collection?.name || 'Collection'}</h2>
-            <p className="text-secondary text-sm tracking-[0.2em]">
-              {collection?.symbol?.toUpperCase()} • {collection?.max_supply || 0} Supply
+            <h2 className="flux-h2">{collection?.name || 'Collection'}</h2>
+            <p className="mt-3 font-primary text-[11px] uppercase tracking-[0.18em] text-[color:var(--text-muted)]">
+              {collection?.symbol?.toUpperCase()} • {collection?.max_supply || 0} supply
             </p>
           </div>
-          <div className="flex flex-col lg:flex-row items-start lg:items-center gap-4">
-            <div className="flex-1 grid grid-cols-2 lg:grid-cols-4 gap-3">
-              {stats.map((stat) => (
-                <div key={stat.label} className="border border-white/20 bg-black/20 px-4 py-3 backdrop-blur">
-                  <p className="text-[10px] uppercase tracking-[0.3em] text-secondary">{stat.label}</p>
-                  <p className="text-white text-lg font-semibold">{stat.value}</p>
-                </div>
-              ))}
-            </div>
-            <div>
-              <Button
-                onClick={handleViewCollection}
-                className="bg-fluxus-primary text-black border border-fluxus-primary px-6 py-6 rounded-none hover:bg-[#1FB455]"
-              >
-                View Collection →
-              </Button>
-            </div>
+          <div className="overflow-hidden border border-black/10 bg-[color:var(--bg-muted)]">
+            <img
+              src={collection?.meta_data?.banner_image || '/Drug-banner.png'}
+              className="h-[220px] w-full object-cover"
+              alt={collection?.name || 'Featured Collection'}
+            />
           </div>
         </div>
+
+        <div className="space-y-4">
+          <div className="grid gap-3 sm:grid-cols-2">
+            {stats.map((stat) => (
+              <div key={stat.label} className="border border-black/10 bg-[color:var(--bg-surface)] px-4 py-4">
+                <p className="font-primary text-[10px] uppercase tracking-[0.18em] text-[color:var(--text-muted)]">{stat.label}</p>
+                <p className="mt-2 font-heading text-[24px] leading-none text-[color:var(--text-primary)]">{stat.value}</p>
+              </div>
+            ))}
+          </div>
+          <Button onClick={handleViewCollection} className="h-11 w-full sm:w-auto px-6">
+            View Collection
+          </Button>
+        </div>
       </div>
-    </div>
+    </section>
   );
 };

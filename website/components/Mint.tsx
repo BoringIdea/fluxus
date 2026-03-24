@@ -175,27 +175,27 @@ export default function Mint({ contractAddress, collection }: MintProps) {
   );
 
   return (
-    <div className="flex flex-col lg:flex-row w-full gap-6 border border-border bg-bg-card/30 p-4 sm:p-6">
+    <div className="flex w-full flex-col gap-6 border border-black/10 bg-[color:var(--bg-surface)] p-4 sm:flex-row sm:p-6">
       {/* Left Section */}
-      <div className="flex flex-col lg:w-1/2 gap-6 pb-12">
-        <div className="border border-border bg-black/40 p-4 flex items-center justify-center">
+      <div className="flex flex-col gap-6 pb-12 lg:w-1/2">
+        <div className="flex items-center justify-center border border-black/10 bg-[color:var(--bg-muted)] p-4">
           {collectionImage ? (
             <div className="w-[240px] h-[240px] sm:w-[300px] sm:h-[300px] overflow-hidden">
               <img src={collectionImage} alt={collection?.name} className="w-full h-full object-cover" />
             </div>
           ) : (
-            <div className="text-secondary uppercase tracking-[0.3em] text-xs">No preview</div>
+            <div className="font-primary text-[10px] uppercase tracking-[0.18em] text-[color:var(--text-muted)]">No preview</div>
           )}
         </div>
 
-        <div className="border border-border bg-black/60 p-5 flex flex-col gap-4">
+        <div className="flex flex-col gap-4 border border-black/10 bg-[color:var(--bg-muted)] p-5">
           <div>
-            <p className="text-[11px] uppercase tracking-[0.35em] text-secondary">Mint Price</p>
+            <p className="font-primary text-[10px] uppercase tracking-[0.18em] text-[color:var(--text-muted)]">Mint Price</p>
             <div className="flex flex-wrap items-baseline gap-2">
-              <span className="text-3xl font-bold text-white">{formattedMintPrice}</span>
-              <span className="text-sm text-secondary">{getChainSymbol(chainId)}</span>
+              <span className="font-heading text-[34px] leading-none text-[color:var(--text-primary)]">{formattedMintPrice}</span>
+              <span className="text-sm text-[color:var(--text-secondary)]">{getChainSymbol(chainId)}</span>
             </div>
-            <p className="text-[10px] uppercase tracking-[0.25em] text-secondary mt-1">
+            <p className="mt-2 font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">
               Includes Fee:{" "}
               {collection?.creator_fee
                 ? (Number(ethers.formatEther(collection?.creator_fee.toString())) * 100).toFixed(2)
@@ -207,33 +207,33 @@ export default function Mint({ contractAddress, collection }: MintProps) {
           <Button
             onClick={() => mint()}
             disabled={isPending}
-            className="w-full h-12 text-black bg-fluxus-primary border border-fluxus-primary hover:bg-[#1FB455]"
+            className="h-12 w-full"
           >
             {isPending ? "Processing..." : "Mint"}
           </Button>
 
           <div className="flex flex-col gap-3">
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div className="flex items-center border border-border">
+            <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+              <div className="flex items-center border border-black/10 bg-[color:var(--bg-surface)]">
                 <button
-                  className="px-4 py-2 text-xl text-secondary hover:text-white"
+                  className="px-4 py-2 text-xl text-[color:var(--text-muted)] transition-colors hover:text-[color:var(--text-primary)]"
                   onClick={() => setMintAmount((prev) => Math.max(1, prev - 1))}
                 >
                   -
                 </button>
-                <span className="px-6 py-2 text-2xl font-semibold text-white border-x border-border">
+                <span className="border-x border-black/10 px-6 py-2 font-heading text-[28px] leading-none text-[color:var(--text-primary)]">
                   {mintAmount}
                 </span>
                 <button
-                  className="px-4 py-2 text-xl text-secondary hover:text-white"
+                  className="px-4 py-2 text-xl text-[color:var(--text-muted)] transition-colors hover:text-[color:var(--text-primary)]"
                   onClick={() => setMintAmount((prev) => Math.min(20, prev + 1))}
                 >
                   +
                 </button>
               </div>
-              <div className="border border-border bg-black/30 px-4 py-3 w-full sm:w-auto">
-                <p className="text-[11px] uppercase tracking-[0.3em] text-secondary mb-1">Expected Cost</p>
-                <p className="text-lg font-semibold text-white">
+              <div className="w-full border border-black/10 bg-[color:var(--bg-surface)] px-4 py-3 sm:w-auto">
+                <p className="mb-1 font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">Expected Cost</p>
+                <p className="font-heading text-[24px] leading-none text-[color:var(--text-primary)]">
                   {mintAmount > 1
                     ? formatNumberWithMaxDecimalsAndRounding(
                         Number(
@@ -251,7 +251,7 @@ export default function Mint({ contractAddress, collection }: MintProps) {
                         Number((mintPrice ?? fallbackMintPrice ?? 0).toString()) / 1e18,
                         2
                       )}{" "}
-                  <span className="text-sm text-secondary">{getChainSymbol(chainId)}</span>
+                  <span className="text-sm text-[color:var(--text-secondary)]">{getChainSymbol(chainId)}</span>
                 </p>
               </div>
             </div>
@@ -262,20 +262,20 @@ export default function Mint({ contractAddress, collection }: MintProps) {
               max="20"
               value={mintAmount}
               onChange={(e) => setMintAmount(Number(e.target.value))}
-              className="w-full h-2 bg-black/60 border border-border appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-fluxus-primary [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-fluxus-primary"
+              className="h-2 w-full cursor-pointer appearance-none border border-black/10 bg-[color:var(--bg-surface)] [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:bg-[color:var(--color-primary)] [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:bg-[color:var(--color-primary)]"
             />
           </div>
         </div>
 
-        <div className="border border-border bg-black/40 p-4">
+        <div className="border border-black/10 bg-[color:var(--bg-muted)] p-4">
           <Progress 
             value={progress} 
-            className="w-full h-3 bg-neutral-800" 
-            indicatorClassName="bg-green-400"
+            className="h-3 w-full bg-[color:var(--bg-surface)]" 
+            indicatorClassName="bg-[color:var(--color-primary)]"
           />
-          <p className="text-xs sm:text-sm text-gray-600 mt-2">
+          <p className="mt-2 font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)] sm:text-[11px]">
             MINTED: {collection?.total_supply?.toString()} / {collection?.max_supply?.toString()}
-            <span className="ml-2 text-gray-400">
+            <span className="ml-2 text-[color:var(--text-muted)]">
               (
               {collection?.max_supply && Number(collection?.max_supply) > 0
                 ? (
@@ -290,15 +290,15 @@ export default function Mint({ contractAddress, collection }: MintProps) {
         </div>
       </div>
 
-      <div className="w-full lg:w-1/2 flex flex-col gap-4">
-        <div className="border border-border bg-black/40 p-4">
-          <p className="text-[11px] uppercase tracking-[0.35em] text-secondary">Analytics</p>
-          <h2 className="text-2xl font-semibold text-white">MINT PRICE CURVE</h2>
-          <p className="text-sm text-secondary mt-2">
+      <div className="flex w-full flex-col gap-4 lg:w-1/2">
+        <div className="border-b border-black/10 pb-4">
+          <p className="flux-kicker mb-2">Analytics</p>
+          <h2 className="flux-h2">Mint Price Curve</h2>
+          <p className="mt-2 text-sm text-[color:var(--text-secondary)]">
             Based on the set price, supply, and current mint position.
           </p>
         </div>
-        <div className="h-[620px] flex flex-col sm:mb-12 border border-border bg-black/20 overflow-hidden p-4">
+        <div className="flex h-[620px] flex-col overflow-hidden border border-black/10 bg-[color:var(--bg-muted)] p-4 sm:mb-12">
           <div className="relative w-full flex-1">
             <div className="absolute inset-0 overflow-hidden pr-2 pb-6">
               <PriceChart

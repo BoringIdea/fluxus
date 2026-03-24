@@ -5,18 +5,18 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap border border-border bg-transparent px-5 py-2 text-sm font-bold uppercase tracking-[0.08em] text-primary transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-40 rounded-none",
+  "inline-flex items-center justify-center whitespace-nowrap border border-border bg-transparent px-5 py-2 font-primary text-[11px] uppercase tracking-[0.18em] text-foreground transition-colors duration-150 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-border focus-visible:ring-offset-0 disabled:pointer-events-none disabled:opacity-40 rounded-none",
   {
     variants: {
       variant: {
         default:
-          "bg-fluxus-primary text-black hover:bg-[#1FB455] focus-visible:ring-border focus-visible:ring-offset-background",
+          "border-transparent bg-fluxus-primary text-white hover:bg-fluxus-primary-dark",
         secondary:
-          "text-primary hover:bg-bg-tertiary/80",
+          "bg-bg-secondary text-foreground hover:bg-bg-card-hover",
         outline:
-          "bg-transparent text-primary border border-border hover:bg-bg-card-hover",
+          "bg-transparent text-foreground border border-border hover:bg-bg-card-hover",
         ghost:
-          "border-transparent text-secondary hover:text-primary hover:bg-bg-card-hover/80",
+          "border-transparent text-secondary hover:text-foreground hover:bg-bg-card-hover/80",
         danger:
           "border-[#FB7185] bg-[#FB7185] text-black hover:bg-[#F43F5E]",
         link: "border-transparent px-0 py-0 text-primary underline-offset-4 hover:underline",

@@ -1,127 +1,60 @@
 "use client"
 
-import type React from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { ReactNode, useState } from "react"
+import { useRouter } from "next/router"
 import { cn } from "@/lib/utils"
-import { PrimaryColor } from "@/src/utils"
-
-const inactiveStroke = "#4B4B4B";
+import { BarChart3, Rocket, BookOpen, FileText } from "lucide-react"
 
 interface Route {
   path: string
-  icon: React.ElementType
   label: string
+  icon: React.ComponentType<{ className?: string }>
 }
 
-
-
 export default function Sidebar() {
+  const router = useRouter()
+  const pathname = router.pathname
 
   const routes: Route[] = [
-    {
-      path: "/",
-      icon: HomeIcon,
-      label: "Home",
-    },
-    {
-      path: "/collection/create",
-      icon: LaunchIcon,
-      label: "Launch",
-    },
-    {
-      path: "/docs/creation-guide",
-      icon: GuideIcon,
-      label: "Guide",
-    },
-    {
-      path: "/litepaper",
-      icon: DocIcon,
-      label: "Docs",
-    },
+    { path: "/", label: "Market", icon: BarChart3 },
+    { path: "/collection/create", label: "Launch", icon: Rocket },
+    { path: "/docs/creation-guide", label: "Guide", icon: BookOpen },
+    { path: "/litepaper", label: "Docs", icon: FileText },
   ]
-  const pathname = usePathname()
-  const [hoveredPath, setHoveredPath] = useState<string | null>(null)
 
   return (
-    <div className="hidden sm:flex w-[80px] bg-background flex-col items-center border-r border-primary fixed left-0 top-0 bottom-0 z-20">
-      <div className="flex flex-col items-center w-full border-b border-primary py-6 gap-3">
-        <div className="w-9 h-9 border border-primary bg-fluxus-primary" />
-        <div className="text-fluxus-primary text-[11px] font-bold uppercase tracking-[0.4em]">
-          Beta
+    <aside className="fixed bottom-0 left-0 top-0 z-20 hidden w-20 border-r border-black/10 bg-[color:var(--bg-page)] sm:flex sm:flex-col sm:items-center">
+      <div className="flex w-full flex-col items-center gap-3 border-b border-black/10 px-4 py-6">
+        <div className="flex h-10 w-10 items-center justify-center border border-[#16A34A]/20 bg-[#16A34A] font-heading text-[18px] text-white">
+          F
         </div>
       </div>
 
-      <div className="flex flex-col gap-6 items-center mt-10">
+      <div className="mt-8 flex flex-col gap-4">
         {routes.map((route) => {
           const isActive = pathname === route.path
-          const isHovered = hoveredPath === route.path
-
+          const Icon = route.icon
           return (
-            <div key={route.path} className="relative group">
-              <Link
-                href={route.path}
-                className="block"
-                onMouseEnter={() => setHoveredPath(route.path)}
-                onMouseLeave={() => setHoveredPath(null)}
-              >
+            <div key={route.path} className="group relative">
+              <Link href={route.path} className="block">
                 <div
                   className={cn(
-                    "w-12 h-12 border border-border flex items-center justify-center transition-colors duration-150 rounded-none",
-                    isActive ? "bg-bg-card outline outline-2 outline-fluxus-primary/80" : isHovered ? "bg-bg-card-hover" : "bg-background",
+                    "flex h-12 w-12 items-center justify-center border font-primary text-[11px] uppercase tracking-[0.18em] transition-colors",
+                    isActive
+                      ? "border-black/12 bg-[color:var(--bg-muted)] text-[color:var(--text-primary)]"
+                      : "border-black/10 bg-[color:var(--bg-surface)] text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)]"
                   )}
                 >
-                  <route.icon isActive={isActive} />
+                  <Icon className="h-4 w-4" />
                 </div>
               </Link>
-
-              {/* Tooltip */}
-              <div className="absolute left-full ml-2 px-2 py-1 bg-background border border-border text-[11px] font-semibold uppercase tracking-[0.2em] whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 text-secondary">
+              <div className="invisible absolute left-full top-1/2 ml-3 -translate-y-1/2 border border-black/10 bg-[color:var(--bg-surface)] px-2 py-1 font-primary text-[10px] uppercase tracking-[0.18em] text-[color:var(--text-muted)] opacity-0 transition-all duration-150 group-hover:visible group-hover:opacity-100">
                 {route.label}
               </div>
             </div>
           )
         })}
       </div>
-    </div>
-  )
-}
-
-const HomeIcon = ({ isActive }: { icon: ReactNode; isActive: boolean }) => {
-  return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={isActive ? PrimaryColor : inactiveStroke} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M4 12L12 4L20 12" />
-      <path d="M6 12V20H18V12" />
-      <path d="M9 20V14H15V20" />
-    </svg>
-  )
-}
-const LaunchIcon = ({ isActive }: { icon: ReactNode; isActive: boolean }) => {
-  return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={isActive ? PrimaryColor : inactiveStroke} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M12 21L15 16L19 15L12 2L5 15L9 16L12 21Z" />
-      <path d="M7 11H17" />
-      <path d="M12 11V6" />
-    </svg>
-  )
-}
-const GuideIcon = ({ isActive }: { icon: ReactNode; isActive: boolean }) => {
-  return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={isActive ? PrimaryColor : inactiveStroke} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M12 6C9.23858 6 7 8.23858 7 11C7 13.7614 9.23858 16 12 16C14.7614 16 17 13.7614 17 11C17 8.23858 14.7614 6 12 6Z" />
-      <path d="M12 15V18" />
-      <path d="M12 20H12.01" />
-    </svg>
-  )
-}
-const DocIcon = ({ isActive }: { icon: ReactNode; isActive: boolean }) => {
-  return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={isActive ? PrimaryColor : inactiveStroke} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M7 22H17C18.1046 22 19 21.1046 19 20V6C19 4.89543 18.1046 4 17 4H13L7 10V20C7 21.1046 7.89543 22 9 22Z" />
-      <path d="M7 10H13V4" />
-      <path d="M9 15H15" />
-      <path d="M9 18H15" />
-    </svg>
+    </aside>
   )
 }

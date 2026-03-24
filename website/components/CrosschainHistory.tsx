@@ -140,13 +140,13 @@ const mockHistoryData: CrosschainHistoryItem[] = [
 function getStatusDisplay(status: string) {
   switch (status) {
     case 'completed':
-      return { text: "Completed", color: "text-green-400", bgColor: "bg-green-400/10", icon: "✅" };
+      return { text: "Completed", color: "text-[color:var(--accent-primary)]", bgColor: "bg-[color:var(--accent-primary)]/8", icon: "✅" };
     case 'pending':
-      return { text: "Pending", color: "text-yellow-400", bgColor: "bg-yellow-400/10", icon: "⏳" };
+      return { text: "Pending", color: "text-[color:var(--text-muted)]", bgColor: "bg-[color:var(--bg-muted)]", icon: "⏳" };
     case 'failed':
-      return { text: "Failed", color: "text-red-400", bgColor: "bg-red-400/10", icon: "❌" };
+      return { text: "Failed", color: "text-red-500", bgColor: "bg-red-500/8", icon: "❌" };
     default:
-      return { text: "Unknown", color: "text-gray-400", bgColor: "bg-gray-400/10", icon: "❓" };
+      return { text: "Unknown", color: "text-[color:var(--text-muted)]", bgColor: "bg-[color:var(--bg-muted)]", icon: "❓" };
   }
 }
 
@@ -534,67 +534,67 @@ export default function CrosschainHistory({
 
   return (
     <div className="space-y-4">
-      <div className="border border-border bg-bg-card px-4 py-4 flex flex-col gap-1 text-xs">
+      <div className="flex flex-col gap-1 border border-black/10 bg-[color:var(--bg-surface)] px-4 py-4 text-xs">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-secondary">History</p>
+            <p className="font-primary text-[10px] uppercase tracking-[0.18em] text-[color:var(--text-muted)]">History</p>
           </div>
-          <div className="flex flex-col items-end gap-1 text-secondary">
+          <div className="flex flex-col items-end gap-1 text-[color:var(--text-muted)]">
             {(isValidatingBaseCrossChainStatus || isValidatingBscCrossChainStatus) && (
-              <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.2em]">
-                <div className="w-3 h-3 border-2 border-secondary border-t-transparent rounded-full animate-spin" />
+              <div className="flex items-center gap-2 font-primary text-[10px] uppercase tracking-[0.16em]">
+                <div className="h-3 w-3 animate-spin border-2 border-[color:var(--text-muted)] border-t-transparent" />
                 Syncing
               </div>
             )}
             {isProcessing && (
-              <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-blue-400">
-                <div className="w-3 h-3 border-2 border-blue-400 border-t-transparent rounded-full animate-spin" />
+              <div className="flex items-center gap-2 font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--color-primary)]">
+                <div className="h-3 w-3 animate-spin border-2 border-[color:var(--color-primary)] border-t-transparent" />
                 Processing
               </div>
             )}
-            <span className="text-[11px] tracking-[0.25em]">{userHistory.length} transfers</span>
+            <span className="font-primary text-[10px] uppercase tracking-[0.16em]">{userHistory.length} transfers</span>
           </div>
         </div>
-        <div className="text-[11px] tracking-[0.2em] text-secondary">
+        <div className="font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-muted)]">
           Base: {baseCrossChainStatus?.data?.length || 0} • BSC: {bscCrossChainStatus?.data?.length || 0} • Processed: {processedTxHashes.size}
         </div>
       </div>
 
       {/* Desktop table */}
-      <div className="hidden sm:block border border-border bg-bg-card">
+      <div className="hidden border border-black/10 bg-[color:var(--bg-surface)] sm:block">
         <div className="overflow-x-auto">
           <Table className="w-full min-w-[560px] text-[13px]">
             <TableHeader>
-              <TableRow className="border-b border-border/60">
-                <TableHead className="px-4 py-3 text-left text-secondary uppercase tracking-[0.2em] text-[11px]">Status</TableHead>
-                <TableHead className="px-4 py-3 text-center text-secondary uppercase tracking-[0.2em] text-[11px]">Token</TableHead>
-                <TableHead className="px-3 py-3 text-center text-secondary uppercase tracking-[0.2em] text-[11px]">Route</TableHead>
-                <TableHead className="px-4 py-3 text-center text-secondary uppercase tracking-[0.2em] text-[11px]">Sender</TableHead>
-                <TableHead className="px-4 py-3 text-center text-secondary uppercase tracking-[0.2em] text-[11px]">Receiver</TableHead>
-                <TableHead className="px-4 py-3 text-center text-secondary uppercase tracking-[0.2em] text-[11px]">Transaction</TableHead>
-                <TableHead className="px-4 py-3 text-right text-secondary uppercase tracking-[0.2em] text-[11px]">Time</TableHead>
+              <TableRow className="border-b border-black/10">
+                <TableHead className="px-4 py-3 text-left">Status</TableHead>
+                <TableHead className="px-4 py-3 text-center">Token</TableHead>
+                <TableHead className="px-3 py-3 text-center">Route</TableHead>
+                <TableHead className="px-4 py-3 text-center">Sender</TableHead>
+                <TableHead className="px-4 py-3 text-center">Receiver</TableHead>
+                <TableHead className="px-4 py-3 text-center">Transaction</TableHead>
+                <TableHead className="px-4 py-3 text-right">Time</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {isFirstLoadPending || (isHeaderLoading && userHistory.length === 0) ? (
                 <TableRow>
-                  <TableCell colSpan={7} className="py-12 text-center text-secondary">
+                  <TableCell colSpan={7} className="py-12 text-center text-[color:var(--text-muted)]">
                     <div className="flex flex-col items-center gap-3">
-                      <div className="w-8 h-8 border border-fluxus-primary border-t-transparent rounded-full animate-spin" />
-                      <span className="tracking-[0.2em] uppercase text-[11px]">Loading history</span>
+                      <div className="h-8 w-8 animate-spin border border-[color:var(--color-primary)] border-t-transparent" />
+                      <span className="font-primary text-[10px] uppercase tracking-[0.16em]">Loading history</span>
                     </div>
                   </TableCell>
                 </TableRow>
               ) : userHistory.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={7} className="py-12 text-center text-secondary">
+                  <TableCell colSpan={7} className="py-12 text-center text-[color:var(--text-muted)]">
                     <div className="flex flex-col items-center gap-2">
                       <div className="text-4xl">🌉</div>
-                      <div className="flex items-center gap-2 text-secondary">
-                        <div className="w-4 h-4 border border-secondary border-t-fluxus-primary rounded-full animate-spin" />
+                      <div className="flex items-center gap-2 text-[color:var(--text-muted)]">
+                        <div className="h-4 w-4 animate-spin border border-[color:var(--text-muted)] border-t-[color:var(--color-primary)]" />
                         <span className="text-sm">No history yet — syncing latest data...</span>
                       </div>
-                      <span className="text-xs text-secondary/70">Recent transfers may take up to a minute to appear</span>
+                      <span className="font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-muted)]">Recent transfers may take up to a minute to appear</span>
                     </div>
                   </TableCell>
                 </TableRow>
@@ -602,20 +602,20 @@ export default function CrosschainHistory({
                 paginatedHistory.map((item) => {
                   const statusDisplay = getStatusDisplay(item.status);
                   return (
-                    <TableRow key={item.id} className="border-border/60 hover:bg-bg-elevated transition-colors">
+                    <TableRow key={item.id} className="border-black/10 transition-colors hover:bg-[color:var(--bg-muted)]">
                       <TableCell className="px-4 py-3">
-                        <div className={`inline-flex items-center gap-2 px-3 py-1 text-xs font-semibold rounded-full ${statusDisplay.bgColor} ${statusDisplay.color}`}>
+                        <div className={`inline-flex items-center gap-2 px-3 py-1 font-primary text-[10px] uppercase tracking-[0.16em] ${statusDisplay.bgColor} ${statusDisplay.color}`}>
                           <span>{statusDisplay.icon}</span>
                           {statusDisplay.text}
                         </div>
                       </TableCell>
                       <TableCell className="px-4 py-3 text-center">
-                        <span className="inline-flex font-mono text-xs bg-bg-elevated px-2 py-1 border border-border/70">
+                        <span className="inline-flex border border-black/10 bg-[color:var(--bg-muted)] px-2 py-1 font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-primary)]">
                           #{item.tokenId}
                         </span>
                       </TableCell>
-                      <TableCell className="px-3 py-3 text-center text-secondary">
-                        <div className="flex flex-col items-center gap-1 text-[11px] uppercase tracking-[0.18em] leading-tight">
+                      <TableCell className="px-3 py-3 text-center text-[color:var(--text-muted)]">
+                        <div className="flex flex-col items-center gap-1 font-primary text-[10px] uppercase tracking-[0.16em] leading-tight">
                           <span>{item.sourceChain}</span>
                           <span className="text-border text-[10px] tracking-[0.3em]">↓</span>
                           <span>{item.targetChain}</span>
@@ -624,34 +624,34 @@ export default function CrosschainHistory({
                       <TableCell className="px-4 py-3 text-center">
                         {item.sender ? (
                           <button
-                            className="text-primary font-mono text-[11px] border border-border/70 px-2 py-1 hover:border-fluxus-primary hover:text-fluxus-primary transition-colors"
+                            className="border border-black/10 px-2 py-1 font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-primary)] transition-colors hover:border-[color:var(--color-primary)] hover:text-[color:var(--color-primary)]"
                             onClick={() => copyToClipboard(item.sender!, 'sender address')}
                             title="Copy sender address"
                           >
                             {sliceAddress(item.sender)}
                           </button>
                         ) : (
-                          <span className="text-secondary text-xs">-</span>
+                          <span className="font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-muted)]">-</span>
                         )}
                       </TableCell>
                       <TableCell className="px-4 py-3 text-center">
                         {item.receiver ? (
                           <button
-                            className="text-primary font-mono text-[11px] border border-border/70 px-2 py-1 hover:border-fluxus-primary hover:text-fluxus-primary transition-colors"
+                            className="border border-black/10 px-2 py-1 font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-primary)] transition-colors hover:border-[color:var(--color-primary)] hover:text-[color:var(--color-primary)]"
                             onClick={() => copyToClipboard(item.receiver!, 'receiver address')}
                             title="Copy receiver address"
                           >
                             {sliceAddress(item.receiver)}
                           </button>
                         ) : (
-                          <span className="text-secondary text-xs">-</span>
+                          <span className="font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-muted)]">-</span>
                         )}
                       </TableCell>
                       <TableCell className="px-4 py-3">
                         <div className="flex items-center justify-center gap-2">
-                          <span className="text-primary font-mono text-[11px]">{sliceAddress(item.transactionHash)}</span>
+                          <span className="font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-primary)]">{sliceAddress(item.transactionHash)}</span>
                           <button
-                            className="p-1 border border-transparent hover:border-border/70 hover:bg-bg-elevated transition-colors"
+                            className="border border-transparent p-1 transition-colors hover:border-black/10 hover:bg-[color:var(--bg-muted)]"
                             onClick={() => copyToClipboard(item.transactionHash, 'transaction hash')}
                             title="Copy transaction hash"
                           >
@@ -659,7 +659,7 @@ export default function CrosschainHistory({
                           </button>
                         </div>
                       </TableCell>
-                      <TableCell className="px-4 py-3 text-right text-secondary font-mono text-[11px] whitespace-nowrap">
+                      <TableCell className="whitespace-nowrap px-4 py-3 text-right font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-muted)]">
                         {formatTime(item.blockTimestamp)}
                       </TableCell>
                     </TableRow>
@@ -673,42 +673,42 @@ export default function CrosschainHistory({
       {/* Mobile cards */}
       <div className="sm:hidden space-y-3">
         {isFirstLoadPending || (isHeaderLoading && userHistory.length === 0) ? (
-          <div className="border border-border bg-bg-card py-10 text-center">
+          <div className="border border-black/10 bg-[color:var(--bg-surface)] py-10 text-center">
             <div className="flex flex-col items-center gap-3">
-              <div className="w-8 h-8 border-2 border-fluxus-primary border-t-transparent rounded-full animate-spin"></div>
-              <span className="text-secondary">Loading history...</span>
+              <div className="h-8 w-8 animate-spin border-2 border-[color:var(--color-primary)] border-t-transparent"></div>
+              <span className="font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">Loading history...</span>
             </div>
           </div>
         ) : userHistory.length === 0 ? (
-          <div className="border border-border bg-bg-card py-10 text-center">
+          <div className="border border-black/10 bg-[color:var(--bg-surface)] py-10 text-center">
             <div className="flex flex-col items-center gap-2">
               <div className="text-4xl">🌉</div>
-              <div className="flex items-center gap-2 text-secondary">
-                <div className="w-4 h-4 border-2 border-secondary border-t-fluxus-primary rounded-full animate-spin"></div>
+              <div className="flex items-center gap-2 text-[color:var(--text-muted)]">
+                <div className="h-4 w-4 animate-spin border-2 border-[color:var(--text-muted)] border-t-[color:var(--color-primary)]"></div>
                 <span className="text-sm">No history yet — syncing latest data...</span>
               </div>
-              <span className="text-xs text-secondary">Recent transfers may take up to a minute to appear</span>
+              <span className="font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-muted)]">Recent transfers may take up to a minute to appear</span>
             </div>
           </div>
         ) : (
           paginatedHistory.map((item) => {
             const statusDisplay = getStatusDisplay(item.status);
             return (
-              <div key={item.id} className="border border-border bg-bg-card p-4">
+              <div key={item.id} className="border border-black/10 bg-[color:var(--bg-surface)] p-4">
                 <div className="flex items-start justify-between mb-2">
-                  <div className={`inline-flex items-center gap-2 px-3 py-1.5 text-xs font-bold uppercase tracking-[0.2em] ${statusDisplay.bgColor} ${statusDisplay.color}`}>
+                  <div className={`inline-flex items-center gap-2 px-3 py-1.5 font-primary text-[10px] uppercase tracking-[0.16em] ${statusDisplay.bgColor} ${statusDisplay.color}`}>
                     <span className="text-xs">{statusDisplay.icon}</span>
                     {statusDisplay.text}
                   </div>
-                  <div className="text-secondary text-xs">{formatTime(item.blockTimestamp)}</div>
+                  <div className="font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-muted)]">{formatTime(item.blockTimestamp)}</div>
                 </div>
                 <div className="grid grid-cols-2 gap-3 text-sm">
-                  <div className="border border-border px-3 py-2">
-                    <div className="text-xs text-secondary mb-1 uppercase tracking-[0.2em]">Token</div>
-                    <div className="text-primary font-mono">#{item.tokenId}</div>
+                  <div className="border border-black/10 px-3 py-2">
+                    <div className="mb-1 font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">Token</div>
+                    <div className="font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-primary)]">#{item.tokenId}</div>
                   </div>
-                  <div className="border border-border px-3 py-2">
-                    <div className="text-xs text-secondary mb-1 uppercase tracking-[0.2em]">Route</div>
+                  <div className="border border-black/10 px-3 py-2">
+                    <div className="mb-1 font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">Route</div>
                     <div className="text-primary">
                       {item.sourceChain} → {item.targetChain}
                     </div>
@@ -720,24 +720,24 @@ export default function CrosschainHistory({
                   <div className="grid grid-cols-1 gap-3 mt-3">
                     {item.sender && (
                       <button
-                        className="border border-border px-3 py-2 text-left hover:text-primary"
+                        className="border border-black/10 px-3 py-2 text-left hover:text-[color:var(--color-primary)]"
                         onClick={() => copyToClipboard(item.sender!, 'sender address')}
                         title="Copy sender address"
                       >
-                        <div className="text-xs text-secondary mb-1 uppercase tracking-[0.2em]">Sender</div>
-                        <div className="text-sm text-primary font-mono">
+                        <div className="mb-1 font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">Sender</div>
+                        <div className="font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-primary)]">
                           {sliceAddress(item.sender)}
                         </div>
                       </button>
                     )}
                     {item.receiver && (
                       <button
-                        className="border border-border px-3 py-2 text-left hover:text-primary"
+                        className="border border-black/10 px-3 py-2 text-left hover:text-[color:var(--color-primary)]"
                         onClick={() => copyToClipboard(item.receiver!, 'receiver address')}
                         title="Copy receiver address"
                       >
-                        <div className="text-xs text-secondary mb-1 uppercase tracking-[0.2em]">Receiver</div>
-                        <div className="text-sm text-primary font-mono">
+                        <div className="mb-1 font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">Receiver</div>
+                        <div className="font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-primary)]">
                           {sliceAddress(item.receiver)}
                         </div>
                       </button>
@@ -745,9 +745,9 @@ export default function CrosschainHistory({
                   </div>
                 )}
                 <div className="flex items-center justify-between mt-3">
-                  <div className="text-secondary font-mono text-sm">{sliceAddress(item.transactionHash)}</div>
+                  <div className="font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-muted)]">{sliceAddress(item.transactionHash)}</div>
                   <button
-                    className="p-1 border border-border text-secondary hover:text-primary"
+                    className="border border-black/10 p-1 text-[color:var(--text-muted)] hover:text-[color:var(--color-primary)]"
                     onClick={() => copyToClipboard(item.transactionHash, 'transaction hash')}
                     title="Copy transaction hash"
                   >

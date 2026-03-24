@@ -24,23 +24,23 @@ export default function SearchDemo() {
   } = useSearch(chainId);
 
   return (
-    <div className="max-w-2xl mx-auto p-6 space-y-6">
+    <div className="mx-auto max-w-2xl space-y-6 p-6">
       <div className="text-center">
-        <h1 className="text-2xl font-bold text-white mb-2">
+        <h1 className="mb-2 font-heading text-[34px] leading-none text-[color:var(--text-primary)]">
           Fluxus Collection Search Demo
         </h1>
-        <p className="text-gray-400">
+        <p className="text-[color:var(--text-secondary)]">
           Search for NFT collections by name or contract address
         </p>
       </div>
 
       <div className="space-y-4">
         <div className="flex gap-4 items-center">
-          <label className="text-white text-sm">Chain ID:</label>
+          <label className="font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">Chain ID:</label>
           <select
             value={chainId}
             onChange={(e) => setChainId(Number(e.target.value))}
-            className="bg-[#0f1115] border border-[#2a2f37] rounded-md px-3 py-2 text-white text-sm"
+            className="border border-black/10 bg-[color:var(--bg-surface)] px-3 py-2 text-sm text-[color:var(--text-primary)]"
           >
             <option value={84532}>Base Sepolia (84532)</option>
             <option value={97}>BSC Testnet (97)</option>
@@ -53,11 +53,11 @@ export default function SearchDemo() {
             placeholder="Search collections by name or address..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="w-full bg-[#0f1115]/90 border border-[#2a2f37] rounded-md pl-10 pr-4 py-3 text-white placeholder:text-gray-500 focus-visible:ring-2 focus-visible:ring-[#16A34A] focus-visible:border-transparent"
+            className="w-full border border-black/10 bg-[color:var(--bg-surface)] py-3 pl-10 pr-4 text-[color:var(--text-primary)] placeholder:text-[color:var(--text-muted)] focus-visible:ring-2 focus-visible:ring-[color:var(--color-primary)] focus-visible:border-transparent"
           />
           <div className="absolute inset-y-0 left-0 flex items-center pl-3">
             <svg
-              className="w-5 h-5 text-gray-500"
+              className="h-5 w-5 text-[color:var(--text-muted)]"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -89,7 +89,7 @@ export default function SearchDemo() {
           </Button>
         </div>
 
-        <div className="text-sm text-gray-400">
+        <div className="text-sm text-[color:var(--text-secondary)]">
           <p>Try searching for:</p>
           <ul className="list-disc list-inside mt-1 space-y-1">
             <li>Collection names (e.g., "Test Collection")</li>
@@ -108,15 +108,15 @@ export default function SearchDemo() {
       />
 
       {error && (
-        <div className="bg-red-900/20 border border-red-500/50 rounded-md p-4">
-          <h3 className="text-red-400 font-medium mb-2">Error</h3>
-          <p className="text-red-300 text-sm">{error}</p>
+        <div className="border border-red-200 bg-red-50 p-4">
+          <h3 className="mb-2 text-red-600">Error</h3>
+          <p className="text-sm text-red-500">{error}</p>
         </div>
       )}
 
-      <div className="bg-[#0f1115] border border-[#2a2f37] rounded-md p-4">
-        <h3 className="text-white font-medium mb-2">Search Status</h3>
-        <div className="text-sm text-gray-400 space-y-1">
+      <div className="border border-black/10 bg-[color:var(--bg-surface)] p-4">
+        <h3 className="mb-2 font-heading text-[24px] leading-none text-[color:var(--text-primary)]">Search Status</h3>
+        <div className="space-y-1 text-sm text-[color:var(--text-secondary)]">
           <p>Query: "{query}"</p>
           <p>Loading: {loading ? "Yes" : "No"}</p>
           <p>Results: {results.length}</p>

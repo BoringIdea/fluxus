@@ -9,16 +9,15 @@ export interface TraitItem {
 export default function NFTTraits({ traits }: { traits?: TraitItem[] }) {
   const hasTraits = Array.isArray(traits) && traits.length > 0;
   return (
-    <div className="rounded-xl border border-neutral-800 bg-neutral-900 p-4 h-72 overflow-y-auto">
-      {/* <div className="text-sm font-semibold text-gray-300 mb-3">TRAITS</div> */}
+    <div className="h-72 overflow-y-auto border border-black/10 bg-[color:var(--bg-surface)] p-4">
       {!hasTraits ? (
-        <div className="w-full h-full flex items-center justify-center text-gray-500">No traits</div>
+        <div className="flex h-full w-full items-center justify-center font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">No traits</div>
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
           {traits!.map((t, idx) => (
-            <div key={idx} className="rounded-lg border border-neutral-800 bg-neutral-800/50 p-3">
-              <div className="text-xs text-gray-400 mb-1">{t.trait_type || 'Trait'}</div>
-              <div className="text-sm text-white break-all">{String(t.value ?? '-') }</div>
+            <div key={idx} className="border border-black/10 bg-[color:var(--bg-muted)] p-3">
+              <div className="mb-1 font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">{t.trait_type || 'Trait'}</div>
+              <div className="break-all text-sm text-[color:var(--text-primary)]">{String(t.value ?? '-') }</div>
             </div>
           ))}
         </div>
@@ -26,5 +25,4 @@ export default function NFTTraits({ traits }: { traits?: TraitItem[] }) {
     </div>
   );
 }
-
 

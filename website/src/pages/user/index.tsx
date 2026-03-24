@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { useUserProfile } from '@/src/api/hooks';
 import { sliceAddress, getChainSymbol } from '@/src/utils';
 import { ethers } from 'ethers';
+import Loading from '@/components/ui/Loading';
 
 export default function UserPage() {
   const { address } = useAccount();
@@ -37,107 +38,105 @@ export default function UserPage() {
 
   return (
     <div className="w-full min-h-screen bg-transparent text-primary">
-      <div className="max-w-5xl mx-auto px-4 pb-12 sm:pb-20 pt-8 sm:pt-16 space-y-8">
-        {/* Header Section */}
-        <div className="border border-border bg-black/60 px-5 py-6">
-          <p className="text-[11px] uppercase tracking-[0.35em] text-secondary mb-2">Dashboard</p>
-          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
-            <h1 className="text-3xl sm:text-4xl font-bold text-white">MY PORFOLIO</h1>
-            <p className="text-[11px] uppercase tracking-[0.25em] text-secondary">
-              Track holdings & manage collections
+      <div className="mx-auto max-w-5xl space-y-8 px-4 pb-12 pt-8 sm:space-y-10 sm:pb-20 sm:pt-16">
+        <div className="border-b border-black/10 pb-5">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="flux-kicker mb-3">Portfolio</p>
+              <h1 className="flux-title text-[clamp(2.25rem,4.2vw,3.75rem)]">My Portfolio</h1>
+            </div>
+            <p className="font-primary text-[10px] uppercase tracking-[0.18em] text-[color:var(--text-muted)]">
+              {address ? sliceAddress(address) : 'Wallet not connected'}
             </p>
           </div>
         </div>
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {statCards.map((card) => (
             <div
               key={card.label}
-              className="border border-border bg-gradient-to-b from-black/70 to-bg-card/30 px-5 py-5 flex flex-col gap-3"
+              className="flux-panel flex flex-col gap-4 px-5 py-5"
             >
               <div className="flex items-center justify-between">
-                <div className="text-[11px] uppercase tracking-[0.35em] text-secondary">{card.label}</div>
+                <div className="font-primary text-[10px] uppercase tracking-[0.18em] text-[color:var(--text-muted)]">{card.label}</div>
                 <div className="text-xl">{card.icon}</div>
               </div>
-              <div className="text-4xl font-extrabold text-white">{card.value}</div>
-              <div className="text-[11px] uppercase tracking-[0.25em] text-secondary/90">{card.helper}</div>
+              <div className="font-heading text-[42px] leading-none text-[color:var(--text-primary)]">{card.value}</div>
+              <div className="font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">{card.helper}</div>
             </div>
           ))}
         </div>
 
-        {/* Collections Section */}
-        <div className="border border-border px-5 py-4">
+        <div className="border-b border-black/10 pb-4">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div>
-              <p className="text-[11px] uppercase tracking-[0.35em] text-secondary">Section</p>
-              <h2 className="text-2xl font-bold text-white">YOUR COLLECTIONS</h2>
+              <p className="flux-kicker mb-2">Holdings</p>
+              <h2 className="flux-h2">Your Collections</h2>
             </div>
-            <p className="text-[11px] uppercase tracking-[0.25em] text-secondary">
+            <p className="font-primary text-[10px] uppercase tracking-[0.18em] text-[color:var(--text-muted)]">
               {collections?.length || 0} tracked
             </p>
           </div>
         </div>
 
-        {/* Collections List */}
         {isLoading ? (
-          <div className="border border-border bg-bg-card py-12 text-center">
+          <div className="flux-panel py-12 text-center">
             <div className="flex flex-col items-center gap-3">
-              <div className="w-8 h-8 border-2 border-fluxus-primary border-t-transparent rounded-full animate-spin"></div>
-              <span className="text-secondary uppercase tracking-[0.25em] text-[11px]">
+              <Loading className="py-0" />
+              <span className="font-primary text-[10px] uppercase tracking-[0.18em] text-[color:var(--text-muted)]">
                 Loading your collections...
               </span>
             </div>
           </div>
         ) : !collections || collections.length === 0 ? (
-          <div className="border border-border bg-bg-card py-12 text-center">
+          <div className="flux-panel py-12 text-center">
             <div className="flex flex-col items-center gap-4">
               <div className="text-5xl">📦</div>
-              <span className="text-secondary uppercase tracking-[0.3em] text-[11px]">
+              <span className="font-primary text-[10px] uppercase tracking-[0.18em] text-[color:var(--text-muted)]">
                 No collections found
               </span>
-              <p className="text-secondary/70 text-[11px] tracking-[0.2em]">
+              <p className="font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">
                 Start collecting NFTs to see them here
               </p>
             </div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
             {collections.map((col) => (
               <div
                 key={col.address}
                 onClick={() => handleCardClick(col.address)}
-                className="border border-border bg-gradient-to-b from-black via-bg-card to-bg-card/60 px-5 py-5 cursor-pointer hover:border-fluxus-primary/70 hover:bg-black/70 transition-all duration-200 group flex flex-col gap-5"
+                className="flux-panel group flex cursor-pointer flex-col gap-5 px-5 py-5 transition-colors hover:bg-[color:var(--bg-card-hover)]"
               >
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <p className="text-[11px] uppercase tracking-[0.35em] text-secondary">Collection</p>
-                    <div className="font-bold text-2xl text-white group-hover:text-fluxus-primary transition-colors">
+                    <p className="mb-2 font-primary text-[10px] uppercase tracking-[0.18em] text-[color:var(--text-muted)]">Collection</p>
+                    <div className="font-heading text-[28px] leading-none text-[color:var(--text-primary)] transition-colors group-hover:text-[color:var(--color-primary)]">
                       {col.name}
                     </div>
-                    <div className="mt-2 text-xs font-mono text-primary bg-black/50 border border-border px-3 py-1 inline-flex items-center gap-2">
+                    <div className="mt-3 inline-flex items-center gap-2 border border-black/10 bg-[color:var(--bg-muted)] px-3 py-2 font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">
                       {sliceAddress(col.address)}
-                      <span className="text-[9px] uppercase tracking-[0.3em] text-secondary">ID</span>
+                      <span className="text-[9px] tracking-[0.18em] text-[color:var(--color-primary)]">ID</span>
                     </div>
                   </div>
-                  <div className="text-2xl opacity-60 group-hover:opacity-100 transition-opacity text-fluxus-primary">
+                  <div className="font-primary text-[14px] uppercase tracking-[0.14em] text-[color:var(--color-primary)] opacity-70 transition-opacity group-hover:opacity-100">
                     →
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3 text-sm">
-                  <div className="border border-border/70 bg-black/40 px-4 py-3">
-                    <div className="text-[10px] uppercase tracking-[0.3em] text-secondary mb-1">
+                  <div className="border border-black/10 bg-[color:var(--bg-muted)] px-4 py-3">
+                    <div className="mb-1 font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">
                       Holding NFTs
                     </div>
-                    <div className="text-2xl font-bold text-white">{col.nftCount}</div>
+                    <div className="font-heading text-[26px] leading-none text-[color:var(--text-primary)]">{col.nftCount}</div>
                   </div>
 
-                  <div className="border border-border/70 bg-black/40 px-4 py-3">
-                    <div className="text-[10px] uppercase tracking-[0.3em] text-secondary mb-1">
+                  <div className="border border-black/10 bg-[color:var(--bg-muted)] px-4 py-3">
+                    <div className="mb-1 font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">
                       Floor Price
                     </div>
-                    <div className="text-xl font-bold text-white">{formatFloorPrice(col.floorPrice)}</div>
+                    <div className="font-heading text-[22px] leading-none text-[color:var(--text-primary)]">{formatFloorPrice(col.floorPrice)}</div>
                   </div>
                 </div>
               </div>

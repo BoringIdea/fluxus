@@ -30,31 +30,19 @@ const Pagination: React.FC<PaginationProps> = ({
     const showLeftDots = leftSiblingIndex > 2;
     const showRightDots = rightSiblingIndex < totalPages - 2;
 
-    const firstPage = 1;
-    const lastPage = totalPages;
-
     if (!showLeftDots && showRightDots) {
-      const leftRange = Array.from(
-        { length: siblingCount * 2 + 3 },
-        (_, i) => i + 1
-      );
+      const leftRange = Array.from({ length: siblingCount * 2 + 3 }, (_, i) => i + 1);
       return [...leftRange, DOTS, totalPages];
     }
 
     if (showLeftDots && !showRightDots) {
-      const rightRange = Array.from(
-        { length: siblingCount * 2 + 3 },
-        (_, i) => totalPages - (siblingCount * 2 + 2) + i
-      );
-      return [firstPage, DOTS, ...rightRange];
+      const rightRange = Array.from({ length: siblingCount * 2 + 3 }, (_, i) => totalPages - (siblingCount * 2 + 2) + i);
+      return [1, DOTS, ...rightRange];
     }
 
     if (showLeftDots && showRightDots) {
-      const middleRange = Array.from(
-        { length: siblingCount * 2 + 1 },
-        (_, i) => leftSiblingIndex + i
-      );
-      return [firstPage, DOTS, ...middleRange, DOTS, lastPage];
+      const middleRange = Array.from({ length: siblingCount * 2 + 1 }, (_, i) => leftSiblingIndex + i);
+      return [1, DOTS, ...middleRange, DOTS, totalPages];
     }
 
     return [];
@@ -62,42 +50,29 @@ const Pagination: React.FC<PaginationProps> = ({
 
   const pageNumbers = getPageNumbers();
 
-  const baseButton =
-    'h-9 w-9 border border-border flex items-center justify-center text-[10px] font-bold uppercase tracking-[0.15em] text-secondary transition-colors disabled:text-muted disabled:cursor-not-allowed disabled:border-border/40 rounded-none';
-  const activeButton = 'bg-fluxus-primary text-black border-fluxus-primary';
-  const inactiveButton = 'hover:bg-bg-card-hover';
+  const baseButton = 'flex h-9 w-9 items-center justify-center border border-black/10 bg-[color:var(--bg-surface)] font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)] transition-colors disabled:cursor-not-allowed disabled:opacity-40';
+  const activeButton = 'border-black/12 bg-[color:var(--fg-strong)] text-white';
+  const inactiveButton = 'hover:bg-[color:var(--bg-muted)] hover:text-[color:var(--text-primary)]';
 
   return (
     <div className="flex items-center gap-2">
-      <button
-        onClick={() => onPageChange(currentPage - 1)}
-        disabled={currentPage === 1}
-        className={`${baseButton} ${currentPage === 1 ? '' : inactiveButton}`}
-      >
+      <button onClick={() => onPageChange(currentPage - 1)} disabled={currentPage === 1} className={`${baseButton} ${currentPage === 1 ? '' : inactiveButton}`}>
         &lt;
       </button>
 
       {pageNumbers.map((page, index) =>
         page === DOTS ? (
-          <span key={index} className="px-2 text-secondary text-xs tracking-[0.2em]">
+          <span key={index} className="px-2 font-primary text-[10px] uppercase tracking-[0.18em] text-[color:var(--text-muted)]">
             ...
           </span>
         ) : (
-          <button
-            key={index}
-            onClick={() => onPageChange(Number(page))}
-            className={`${baseButton} ${page === currentPage ? activeButton : inactiveButton}`}
-          >
+          <button key={index} onClick={() => onPageChange(Number(page))} className={`${baseButton} ${page === currentPage ? activeButton : inactiveButton}`}>
             {page}
           </button>
         )
       )}
 
-      <button
-        onClick={() => onPageChange(currentPage + 1)}
-        disabled={currentPage === totalPages}
-        className={`${baseButton} ${currentPage === totalPages ? '' : inactiveButton}`}
-      >
+      <button onClick={() => onPageChange(currentPage + 1)} disabled={currentPage === totalPages} className={`${baseButton} ${currentPage === totalPages ? '' : inactiveButton}`}>
         &gt;
       </button>
     </div>

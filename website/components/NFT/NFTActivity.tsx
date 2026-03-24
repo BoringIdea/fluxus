@@ -7,19 +7,19 @@ import { getChainSymbol, sliceAddress } from '@/src/utils';
 function getActionDisplay(type: number) {
   switch (type) {
     case 1: 
-      return { text: 'Mint', color: 'text-blue-400', bgColor: 'bg-blue-400/10', icon: '🎨' };
+      return { text: 'Mint', color: 'text-[color:var(--text-secondary)]', bgColor: 'bg-[color:var(--bg-muted)]', icon: 'MN' };
     case 2: 
-      return { text: 'Buy', color: 'text-green-400', bgColor: 'bg-green-400/10', icon: '🛒' };
+      return { text: 'Buy', color: 'text-[color:var(--color-primary-dark)]', bgColor: 'bg-[color:var(--color-primary)]/8', icon: 'BY' };
     case 3: 
-      return { text: 'Sell', color: 'text-red-400', bgColor: 'bg-red-400/10', icon: '💰' };
+      return { text: 'Sell', color: 'text-[color:var(--text-secondary)]', bgColor: 'bg-[color:var(--bg-muted)]', icon: 'SL' };
     case 4: 
-      return { text: 'Bulk Buy', color: 'text-green-400', bgColor: 'bg-green-400/10', icon: '📦' };
+      return { text: 'Bulk Buy', color: 'text-[color:var(--color-primary-dark)]', bgColor: 'bg-[color:var(--color-primary)]/8', icon: 'BB' };
     case 5: 
-      return { text: 'Bulk Sell', color: 'text-red-400', bgColor: 'bg-red-400/10', icon: '📦' };
+      return { text: 'Bulk Sell', color: 'text-[color:var(--text-secondary)]', bgColor: 'bg-[color:var(--bg-muted)]', icon: 'BS' };
     case 6: 
-      return { text: 'Bulk Mint', color: 'text-blue-400', bgColor: 'bg-blue-400/10', icon: '🎨' };
+      return { text: 'Bulk Mint', color: 'text-[color:var(--text-secondary)]', bgColor: 'bg-[color:var(--bg-muted)]', icon: 'BM' };
     default: 
-      return { text: 'Other', color: 'text-gray-400', bgColor: 'bg-gray-400/10', icon: '❓' };
+      return { text: 'Other', color: 'text-[color:var(--text-muted)]', bgColor: 'bg-[color:var(--bg-muted)]', icon: 'OT' };
   }
 }
 
@@ -52,36 +52,33 @@ export default function NFTActivity({ collectionAddress, tokenId }: { collection
   const { data: txs, isLoading } = useTokenTxs(chainId, collectionAddress, tokenId, 50, 1);
 
   return (
-    <div className="rounded-xl border border-neutral-800 bg-neutral-900 p-4 h-72 overflow-y-auto">
-      {/* <div className="text-sm font-semibold text-gray-300 mb-3">ACTIVITY</div> */}
+    <div className="h-72 overflow-y-auto border border-black/10 bg-[color:var(--bg-surface)] p-4">
       {isLoading ? (
-        <div className="text-gray-500 text-sm">Loading...</div>
+        <div className="font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">Loading...</div>
       ) : txs && txs.length > 0 ? (
         <div className="flex flex-col gap-2">
           {txs.map((row: CollectionTx, idx: number) => {
             const actionDisplay = getActionDisplay(row.txType);
             return (
-              <div key={row.txHash || idx} className="rounded-lg border border-neutral-800 bg-neutral-800/50 p-3 text-sm text-white">
+              <div key={row.txHash || idx} className="border border-black/10 bg-[color:var(--bg-muted)] p-3">
                 <div className="flex items-start justify-between mb-1">
-                  <div className={`inline-flex items-center gap-2 px-2.5 py-1 rounded-md text-xs font-medium ${actionDisplay.bgColor} ${actionDisplay.color}`}>
-                    <span className="text-xs">{actionDisplay.icon}</span>
+                  <div className={`inline-flex items-center gap-2 px-2.5 py-1 font-primary text-[10px] uppercase tracking-[0.16em] ${actionDisplay.bgColor} ${actionDisplay.color}`}>
+                    <span className="text-[10px]">{actionDisplay.icon}</span>
                     {actionDisplay.text}
                   </div>
-                  <div className="text-gray-500 text-xs">{formatTime(row.createdAt.toString())}</div>
+                  <div className="font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-muted)]">{formatTime(row.createdAt.toString())}</div>
                 </div>
                 <div className="flex items-center justify-between mt-1">
-                  <div className="text-gray-300 font-mono">{sliceAddress(row.sender)}</div>
-                  <div className="text-gray-200 font-semibold">{formatPriceWeiToSymbol(row.price, chainId)}</div>
+                  <div className="font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-muted)]">{sliceAddress(row.sender)}</div>
+                  <div className="font-serif text-[16px] font-semibold leading-none tracking-[-0.01em] text-[color:var(--text-secondary)]">{formatPriceWeiToSymbol(row.price, chainId)}</div>
                 </div>
               </div>
             );
           })}
         </div>
       ) : (
-        <div className="text-gray-500 text-sm">No activity</div>
+        <div className="font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">No activity</div>
       )}
     </div>
   );
 }
-
-

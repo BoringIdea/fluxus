@@ -22,10 +22,10 @@ function formatTime(iso: string) {
 }
 
 function getHolderTier(count: number) {
-  if (count >= 100) return { tier: "Whale", badge: "bg-purple-500 text-black" };
-  if (count >= 10) return { tier: "Dolphin", badge: "bg-blue-500 text-black" };
-  if (count >= 5) return { tier: "Fish", badge: "bg-[#16A34A] text-black" };
-  return { tier: "Shrimp", badge: "bg-fluxus-primary/15 text-fluxus-primary" };
+  if (count >= 100) return { tier: "Whale", badge: "border border-black/10 bg-[color:var(--fg-strong)] text-white" };
+  if (count >= 10) return { tier: "Dolphin", badge: "border border-black/10 bg-[color:var(--bg-muted)] text-[color:var(--text-primary)]" };
+  if (count >= 5) return { tier: "Fish", badge: "border border-transparent bg-[color:var(--color-primary)] text-white" };
+  return { tier: "Shrimp", badge: "border border-black/10 bg-[color:var(--bg-muted)] text-[color:var(--color-primary)]" };
 }
 
 const getFirstAcquiredAt = (row: CollectionHolder) => {
@@ -55,8 +55,8 @@ export default function Holders({ collectionAddress }: { collectionAddress: stri
   const renderRows = (rows: CollectionHolder[], isMobile = false) => {
     if (isLoading) {
       return (
-        <div className="flex flex-col items-center justify-center py-12 text-secondary gap-3">
-          <div className="w-8 h-8 border-2 border-fluxus-primary border-t-transparent rounded-full animate-spin" />
+        <div className="flex flex-col items-center justify-center gap-3 py-12 text-[color:var(--text-muted)]">
+          <div className="h-8 w-8 animate-spin border-2 border-[color:var(--color-primary)] border-t-transparent" />
           <span>Loading holders...</span>
         </div>
       );
@@ -64,7 +64,7 @@ export default function Holders({ collectionAddress }: { collectionAddress: stri
 
     if (rows.length === 0) {
       return (
-        <div className="flex flex-col items-center justify-center py-12 text-secondary gap-3">
+        <div className="flex flex-col items-center justify-center gap-3 py-12 text-[color:var(--text-muted)]">
           <div className="text-4xl">👥</div>
           <span>No holders found</span>
         </div>
@@ -77,33 +77,33 @@ export default function Holders({ collectionAddress }: { collectionAddress: stri
         const firstAcquiredAt = getFirstAcquiredAt(row);
         const lastAcquiredAt = getLastAcquiredAt(row);
         return (
-          <div key={row.owner || idx} className="border border-border bg-bg-card p-4 space-y-3">
+          <div key={row.owner || idx} className="space-y-3 border border-black/10 bg-[color:var(--bg-surface)] p-4">
             <div className="flex items-start justify-between">
               <div>
-                <p className="text-sm font-bold text-primary">{sliceAddress(row.owner)}</p>
-                <p className="text-xs text-secondary">First: {formatTime(firstAcquiredAt)}</p>
+                <p className="font-heading text-[22px] leading-none text-[color:var(--text-primary)]">{sliceAddress(row.owner)}</p>
+                <p className="font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">First: {formatTime(firstAcquiredAt)}</p>
               </div>
               <button
-                className="p-1 border border-border text-secondary"
+                className="border border-black/10 p-1 text-[color:var(--text-muted)]"
                 onClick={() => handleCopy(row.owner, idx)}
                 aria-label="Copy address"
               >
-                {copiedIdx === idx ? <CheckIcon className="w-4 h-4 text-fluxus-primary" /> : <CopyIcon className="w-4 h-4" />}
+                {copiedIdx === idx ? <CheckIcon className="h-4 w-4 text-[color:var(--color-primary)]" /> : <CopyIcon className="h-4 w-4" />}
               </button>
             </div>
             <div className="grid grid-cols-2 gap-3 text-sm">
               <div>
-                <p className="text-xs text-secondary uppercase tracking-[0.2em] mb-1">Holdings</p>
-                <p className="text-primary font-bold">{row.nft_count}</p>
+                <p className="mb-1 font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">Holdings</p>
+                <p className="font-heading text-[22px] leading-none text-[color:var(--text-primary)]">{row.nft_count}</p>
               </div>
               <div>
-                <p className="text-xs text-secondary uppercase tracking-[0.2em] mb-1">Tier</p>
-                <span className={`inline-flex px-3 py-1 text-xs font-bold uppercase tracking-[0.2em] ${tier.badge}`}>
+                <p className="mb-1 font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">Tier</p>
+                <span className={`inline-flex px-3 py-1 font-primary text-[10px] uppercase tracking-[0.16em] ${tier.badge}`}>
                   {tier.tier}
                 </span>
               </div>
             </div>
-            <div className="flex items-center justify-between text-xs text-secondary">
+            <div className="flex items-center justify-between font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-muted)]">
               <span>Last: {formatTime(lastAcquiredAt)}</span>
             </div>
           </div>
@@ -114,12 +114,12 @@ export default function Holders({ collectionAddress }: { collectionAddress: stri
     return (
       <Table>
         <TableHeader>
-          <TableRow className="border-border">
-            <TableHead className="text-primary">Holder</TableHead>
-            <TableHead className="text-primary text-center">Holdings</TableHead>
-            <TableHead className="text-primary text-center">Tier</TableHead>
-            <TableHead className="text-primary text-right">First Acquired</TableHead>
-            <TableHead className="text-primary text-right">Last Acquired</TableHead>
+          <TableRow className="border-black/10">
+            <TableHead>Holder</TableHead>
+            <TableHead className="text-center">Holdings</TableHead>
+            <TableHead className="text-center">Tier</TableHead>
+            <TableHead className="text-right">First Acquired</TableHead>
+            <TableHead className="text-right">Last Acquired</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -128,31 +128,31 @@ export default function Holders({ collectionAddress }: { collectionAddress: stri
             const firstAcquiredAt = getFirstAcquiredAt(row);
             const lastAcquiredAt = getLastAcquiredAt(row);
             return (
-              <TableRow key={row.owner || idx} className="border-border">
+              <TableRow key={row.owner || idx} className="border-black/10">
                 <TableCell>
                   <div className="flex items-center gap-3">
-                    <span className="font-mono text-secondary text-sm">{sliceAddress(row.owner)}</span>
+                    <span className="font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-muted)]">{sliceAddress(row.owner)}</span>
                     <button
-                      className="p-1 border border-border text-secondary"
+                      className="border border-black/10 p-1 text-[color:var(--text-muted)]"
                       onClick={(e) => { e.stopPropagation(); handleCopy(row.owner, idx); }}
                       aria-label="Copy address"
                     >
-                      {copiedIdx === idx ? <CheckIcon className="w-4 h-4 text-fluxus-primary" /> : <CopyIcon className="w-4 h-4" />}
+                      {copiedIdx === idx ? <CheckIcon className="h-4 w-4 text-[color:var(--color-primary)]" /> : <CopyIcon className="h-4 w-4" />}
                     </button>
                   </div>
                 </TableCell>
-                <TableCell className="text-center text-primary font-bold">
+                <TableCell className="text-center font-heading text-[20px] leading-none text-[color:var(--text-primary)]">
                   {row.nft_count}
                 </TableCell>
                 <TableCell className="text-center">
-                  <span className={`inline-flex px-3 py-1 text-xs font-bold uppercase tracking-[0.2em] ${tier.badge}`}>
+                  <span className={`inline-flex px-3 py-1 font-primary text-[10px] uppercase tracking-[0.16em] ${tier.badge}`}>
                     {tier.tier}
                   </span>
                 </TableCell>
-                <TableCell className="text-right text-secondary text-sm">
+                <TableCell className="text-right font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-muted)]">
                   {formatTime(firstAcquiredAt)}
                 </TableCell>
-                <TableCell className="text-right text-secondary text-sm">
+                <TableCell className="text-right font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-muted)]">
                   {formatTime(lastAcquiredAt)}
                 </TableCell>
               </TableRow>
@@ -164,13 +164,13 @@ export default function Holders({ collectionAddress }: { collectionAddress: stri
   };
 
   return (
-    <div className="w-full px-2 sm:px-4 py-6 pb-24 space-y-6">
+    <div className="w-full space-y-6 px-2 py-6 pb-24 sm:px-4">
       <div className="flex flex-col gap-1">
-        <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-secondary">Top Holders</h2>
-        <p className="text-xs text-secondary">Wallets holding this collection.</p>
+        <h2 className="flux-kicker mb-2">Top Holders</h2>
+        <p className="text-sm text-[color:var(--text-secondary)]">Wallets holding this collection.</p>
       </div>
 
-      <div className="hidden sm:block border border-border bg-bg-card">
+      <div className="hidden border border-black/10 bg-[color:var(--bg-surface)] sm:block">
         {renderRows(pagedData)}
       </div>
 

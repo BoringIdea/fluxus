@@ -29,7 +29,7 @@ const formSchema = z.object({
   initialPrice: z.string().min(1, 'Enter the initial price'),
   maxPrice: z.string().default('0'),
   creatorFee: z.number()
-    .min(1, 'Creator fee must be at least 1')
+    .min(0, 'Creator fee cannot be negative')
     .max(100, 'Creator fee cannot exceed 100')
     .multipleOf(0.1, 'Creator fee must be a multiple of 0.1'),
   uri: z.string().min(1, 'Enter the URI'),
@@ -38,11 +38,11 @@ const formSchema = z.object({
 
 // Set input style
 const inputClassName =
-  "w-full h-12 sm:h-14 border border-border bg-black/40 px-3 text-sm text-primary placeholder-secondary tracking-[0.12em] uppercase focus:border-fluxus-primary focus:outline-none focus:ring-0 transition-colors";
+  "h-12 w-full border border-black/10 bg-[color:var(--bg-surface)] px-3 font-primary text-[11px] tracking-[0.02em] text-[color:var(--text-secondary)] outline-none transition-colors placeholder:normal-case placeholder:tracking-normal placeholder:text-[color:var(--text-muted)]/70 focus:border-black/20";
 
 // Set label style
 const labelClassName =
-  "block text-[11px] uppercase tracking-[0.3em] text-secondary mb-2";
+  "mb-2 block font-primary text-[10px] uppercase tracking-[0.18em] text-[color:var(--text-muted)]";
 
 // Cross-chain default values (hardcoded as requested)
 const DEFAULT_GATEWAY_ADDRESS = "0x0c487a766110c85d301d96e33579c5b317fa4995";
@@ -66,6 +66,7 @@ export default function CreateCollection() {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    mode: 'onChange',
     defaultValues: {
       name: '',
       symbol: '',
@@ -217,33 +218,33 @@ export default function CreateCollection() {
     isHideHomeAndLaunchPage ? (
       <ComingSoon />
     ) : (
-      <div className="bg-black min-h-screen w-full text-primary">
-        <div className="max-w-6xl mx-auto px-4 sm:px-10 pt-16 pb-20 space-y-8">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border border-border bg-gradient-to-r from-black via-bg-card to-bg-card/60 px-5 py-5 gap-4">
+      <div className="min-h-screen w-full bg-transparent text-primary">
+        <div className="mx-auto max-w-6xl space-y-8 px-4 pb-20 pt-16 sm:px-10">
+          <div className="flex flex-col gap-4 border-b border-black/10 pb-5 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <p className="text-[11px] uppercase tracking-[0.35em] text-secondary">Launchpad</p>
-              <h1 className="text-3xl sm:text-4xl font-bold text-white">CREATE COLLECTION</h1>
+              <p className="flux-kicker mb-3">Launchpad</p>
+              <h1 className="flux-title text-[clamp(2.25rem,4.2vw,3.75rem)]">Create Collection</h1>
             </div>
             <Link href={'/docs/creation-guide'}>
-              <button className="inline-flex items-center gap-2 border border-fluxus-primary/60 bg-fluxus-primary/10 px-4 py-2 text-[11px] uppercase tracking-[0.3em] text-fluxus-primary hover:bg-fluxus-primary/20 transition-colors">
+              <button className="inline-flex h-10 items-center gap-2 border border-black/10 bg-[color:var(--bg-surface)] px-4 font-primary text-[10px] uppercase tracking-[0.18em] text-[color:var(--text-primary)] transition-colors hover:bg-[color:var(--bg-muted)]">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none">
-                  <path d="M17.1328 15.5918H12.9199L10.6289 18.0488C10.2793 18.3984 9.71484 18.4004 9.36328 18.0508L9.36133 18.0488L7.06055 15.5918H2.85156C2.11328 15.5918 1.51367 15.1582 1.51367 14.4199V3.09375C1.51367 2.35547 2.11133 1.75781 2.84961 1.75586H17.1348C17.873 1.75586 18.4727 2.35547 18.4727 3.09375V14.4199C18.4707 15.1602 17.873 15.5918 17.1328 15.5918ZM12.2832 14.7148L12.5801 14.4355H16.7285C16.9629 14.4355 17.1504 14.4043 17.1504 14.1738V3.48633C17.1504 3.25391 16.9609 3.06641 16.7285 3.06641H3.25586C3.02148 3.06641 2.83398 3.25391 2.83398 3.48633V14.1719C2.83398 14.4023 3.02344 14.4336 3.25586 14.4336H7.41016L7.70703 14.7129C7.70703 14.7129 9.99414 17 9.99609 16.998L12.2832 14.7148ZM9.42188 12.4707C9.42188 12.1562 9.67383 11.9023 9.98828 11.9004H9.99219C10.0669 11.9001 10.1409 11.9147 10.21 11.9431C10.2791 11.9716 10.3418 12.0135 10.3947 12.0663C10.4475 12.1191 10.4893 12.1819 10.5178 12.2509C10.5463 12.32 10.5608 12.394 10.5605 12.4688V13.0391C10.5605 13.3535 10.3066 13.6074 9.99414 13.6074H9.99219C9.91748 13.6077 9.84345 13.5932 9.77438 13.5647C9.70531 13.5362 9.64255 13.4944 9.58972 13.4415C9.53689 13.3887 9.49504 13.3259 9.46657 13.2569C9.4381 13.1878 9.42357 13.1138 9.42383 13.0391V12.4707H9.42188ZM11.0059 10.2891C10.9121 10.3242 10.8184 10.3652 10.7285 10.4102C10.5625 10.4863 10.457 10.6504 10.459 10.834C10.457 10.916 10.459 11 10.4414 11.0781C10.3906 11.3066 10.1719 11.4629 9.94922 11.4395C9.70703 11.4199 9.51953 11.2207 9.51367 10.9766C9.48828 10.3086 9.76562 9.82227 10.373 9.53125C10.4551 9.49023 10.5391 9.45508 10.623 9.42383C11.4453 9.12695 11.959 8.31445 11.8691 7.45312C11.7773 6.58789 11.0957 5.88477 10.2402 5.77148C9.20117 5.63281 8.24609 6.36328 8.10742 7.40234C8.09961 7.4668 8.09375 7.5332 8.0918 7.59766C8.08984 7.66016 8.08789 7.72266 8.07031 7.7832C8.00586 8.00586 7.78906 8.15039 7.56055 8.12109C7.31836 8.0918 7.13867 7.88281 7.14648 7.63867C7.1543 6.94141 7.37305 6.31445 7.83984 5.79492C8.60547 4.94141 9.56641 4.61914 10.6758 4.89844C11.7949 5.18164 12.4902 5.92969 12.7598 7.05859C12.8066 7.25195 12.8145 7.45313 12.8398 7.65039C12.8145 8.83398 12.1055 9.86133 11.0059 10.2891Z" fill="#3AF73E" />
+                  <path d="M17.1328 15.5918H12.9199L10.6289 18.0488C10.2793 18.3984 9.71484 18.4004 9.36328 18.0508L9.36133 18.0488L7.06055 15.5918H2.85156C2.11328 15.5918 1.51367 15.1582 1.51367 14.4199V3.09375C1.51367 2.35547 2.11133 1.75781 2.84961 1.75586H17.1348C17.873 1.75586 18.4727 2.35547 18.4727 3.09375V14.4199C18.4707 15.1602 17.873 15.5918 17.1328 15.5918Z" fill="currentColor" />
                 </svg>
                 Creation Guide
               </button>
             </Link>
           </div>
 
-          <div className="border border-border bg-bg-card/40">
+          <div className="border border-black/10 bg-[color:var(--bg-surface)]">
             <div className="flex flex-col md:flex-row">
-              <div className="w-full md:w-1/2 border-b md:border-b-0 md:border-r border-border px-4 sm:px-8 py-8">
+              <div className="w-full border-b border-black/10 px-4 py-8 md:w-1/2 md:border-b-0 md:border-r sm:px-8">
                 <Card className="bg-transparent border-none shadow-none">
                   <CardContent>
                     <Form {...form}>
                       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                         {contractAddress && showContractAddress && (
-                          <div className="p-4 border border-border bg-black/40">
-                            <div className="flex items-center justify-between text-[11px] uppercase tracking-[0.3em] text-secondary">
+                          <div className="border border-black/10 bg-[color:var(--bg-muted)] p-4">
+                            <div className="flex items-center justify-between font-primary text-[10px] uppercase tracking-[0.18em] text-[color:var(--text-muted)]">
                               <span>Contract Address</span>
                               <button
                                 onClick={(e) => {
@@ -252,12 +253,12 @@ export default function CreateCollection() {
                                   navigator.clipboard.writeText(contractAddress);
                                 }}
                                 type="button"
-                                className="px-3 py-1 text-[10px] border border-fluxus-primary text-fluxus-primary tracking-[0.3em]"
+                                className="border border-black/10 bg-[color:var(--bg-surface)] px-3 py-1 text-[10px] tracking-[0.16em] text-[color:var(--color-primary)]"
                               >
                                 Copy
                               </button>
                             </div>
-                            <p className="font-mono text-xs text-primary mt-2 break-all">{contractAddress}</p>
+                            <p className="mt-2 break-all font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-primary)]">{contractAddress}</p>
                           </div>
                         )}
 
@@ -313,14 +314,14 @@ export default function CreateCollection() {
                               <input
                                 type="number"
                                 {...form.register('creatorFee', {
-                                  min: 1,
+                                  min: 0,
                                   max: 100,
                                   valueAsNumber: true,
                                 })}
                                 className={inputClassName}
                                 placeholder="10"
                                 step="0.1"
-                                min="1"
+                                min="0"
                                 max="100"
                               />
                             </div>
@@ -343,35 +344,37 @@ export default function CreateCollection() {
                             <input {...form.register('uri')} className={inputClassName} placeholder="https://..." />
                           </div>
 
-                          <div className="space-y-3 border border-border bg-black/30 p-4">
+                          <div className="space-y-3 border border-black/10 bg-[color:var(--bg-muted)] p-4">
                             <div className="flex items-center justify-between">
                               <div>
-                                <p className="text-[11px] uppercase tracking-[0.3em] text-secondary">Cross-Chain Support</p>
-                                <p className="text-xs text-secondary/70">
+                                <p className="font-primary text-[10px] uppercase tracking-[0.18em] text-[color:var(--text-muted)]">Cross-Chain Support</p>
+                                <p className="mt-2 text-sm text-[color:var(--text-secondary)]">
                                   Enable cross-chain functionality for your NFT collection
                                 </p>
                               </div>
-                              <label className="relative inline-flex items-center cursor-pointer">
+                              <label className="relative inline-flex cursor-pointer items-center">
                                 <input type="checkbox" {...form.register('supportCrossChain')} className="sr-only peer" />
-                                <span className="w-12 h-6 border border-border rounded-full bg-black peer-checked:bg-fluxus-primary peer-checked:border-fluxus-primary transition-all after:content-[''] after:absolute after:left-1 after:top-1 after:h-4 after:w-4 after:bg-white after:rounded-full after:transition-all peer-checked:after:translate-x-5"></span>
+                                <span className="relative h-7 w-14 rounded-full border border-black/10 bg-[color:var(--bg-surface)] shadow-[inset_0_0_0_1px_rgba(17,24,39,0.03)] transition-all after:absolute after:left-1 after:top-1 after:h-5 after:w-5 after:rounded-full after:border after:border-black/10 after:bg-white after:shadow-sm after:transition-all after:content-[''] peer-checked:border-[#16A34A] peer-checked:bg-[#16A34A] peer-checked:after:translate-x-7 peer-checked:after:border-white/60 peer-checked:after:bg-white" />
                               </label>
                             </div>
-                            <div className="text-xs text-secondary space-y-1 font-mono">
+                            <div className="space-y-1 font-primary text-[10px] uppercase tracking-[0.14em] text-[color:var(--text-muted)]">
                               <p>Gateway: {DEFAULT_GATEWAY_ADDRESS}</p>
                               <p>Gas Limit: {DEFAULT_GAS_LIMIT.toString()}</p>
                               <p>Support Mint: {DEFAULT_SUPPORT_MINT ? 'Enabled' : 'Disabled'}</p>
                             </div>
                           </div>
 
-                          <div className="border border-yellow-500/40 bg-yellow-500/5 text-yellow-300 px-4 py-3 text-xs tracking-[0.2em] uppercase">
+                          <div className="border border-black/10 bg-[color:var(--bg-muted)] px-4 py-3 font-primary text-[10px] uppercase tracking-[0.16em] text-[color:var(--text-secondary)]">
                             Verify your BaseURI is accessible; otherwise the collection will not display.
                           </div>
 
                           <button
                             type="submit"
                             disabled={isPending || !form.formState.isValid}
-                            className={`w-full border border-fluxus-primary bg-fluxus-primary text-black text-sm font-bold uppercase tracking-[0.3em] h-12 flex items-center justify-center gap-2 ${
-                              isPending || !form.formState.isValid ? 'opacity-60 cursor-not-allowed' : 'hover:bg-[#1FB455]'
+                            className={`flex h-12 w-full items-center justify-center gap-2 border font-primary text-[11px] uppercase tracking-[0.18em] ${
+                              isPending || !form.formState.isValid
+                                ? 'cursor-not-allowed border-black/10 bg-[color:var(--bg-muted)] text-[color:var(--text-muted)]'
+                                : 'border-[#16A34A] bg-[#16A34A] text-white hover:border-[#15803D] hover:bg-[#15803D]'
                             }`}
                           >
                             {isPending ? 'Creating...' : 'Create Collection'}
@@ -391,15 +394,16 @@ export default function CreateCollection() {
                 </Card>
               </div>
 
-              <div className="w-full md:w-1/2 px-4 sm:px-8 py-8">
-                <div className="border border-border bg-black/40 p-4 mb-6">
-                  <h2 className="text-lg font-semibold text-white">PRICE CURVE PREVIEW</h2>
-                  <p className="text-sm text-secondary mt-2">
+              <div className="w-full px-4 py-8 md:w-1/2 sm:px-8">
+                <div className="mb-6 border-b border-black/10 pb-4">
+                  <p className="flux-kicker mb-2">Preview</p>
+                  <h2 className="flux-h2">Price Curve</h2>
+                  <p className="mt-3 text-sm text-[color:var(--text-secondary)]">
                     Based on the set price and supply, the generated price curve
                   </p>
                 </div>
 
-                <div className="h-[640px] flex flex-col sm:mb-40 border border-border bg-black/20 overflow-hidden p-4">
+                <div className="flex h-[640px] flex-col overflow-hidden border border-black/10 bg-[color:var(--bg-muted)] p-4 sm:mb-40">
                   {Number(s) > 0 && Number(i) > 0 ? (
                     <div className="relative w-full flex-1">
                       <div className="absolute inset-0 overflow-hidden pr-2 pb-4">
@@ -415,7 +419,7 @@ export default function CreateCollection() {
                       </div>
                     </div>
                   ) : (
-                    <div className="flex flex-col items-center justify-center h-full text-center px-4 text-secondary">
+                    <div className="flex h-full flex-col items-center justify-center px-4 text-center text-[color:var(--text-muted)]">
                       <p>[Fill the form on the left to preview the curve]</p>
                     </div>
                   )}

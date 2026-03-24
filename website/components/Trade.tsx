@@ -21,9 +21,9 @@ export default function Trade({ contractAddress, collection }: TradeProps) {
   const [activeTradeTab, setActiveTradeTab] = useState<typeof tabs[number]['key']>('buy');
 
   return (
-    <div className="px-3 sm:px-6 pb-24 mt-4">
-      <div className="border border-border bg-bg-card flex flex-col lg:flex-row">
-        <aside className="lg:w-40 border-b lg:border-b-0 lg:border-r border-border">
+    <div className="mt-4 px-3 pb-24 sm:px-6">
+      <div className="flex flex-col border border-black/10 bg-[color:var(--bg-surface)] lg:flex-row">
+        <aside className="border-b border-black/10 lg:w-40 lg:border-b-0 lg:border-r">
           {tabs.map((tab) => {
             const isActive = activeTradeTab === tab.key;
             return (
@@ -31,8 +31,8 @@ export default function Trade({ contractAddress, collection }: TradeProps) {
                 key={tab.key}
                 onClick={() => setActiveTradeTab(tab.key)}
                 className={cn(
-                  'w-full text-left px-4 py-4 border-l-2 uppercase tracking-[0.3em] text-[11px]',
-                  isActive ? 'border-fluxus-primary text-fluxus-primary bg-bg-tertiary' : 'border-transparent text-secondary'
+                  'w-full border-l-2 px-4 py-4 text-left font-primary text-[10px] uppercase tracking-[0.18em]',
+                  isActive ? 'border-[color:var(--fg-strong)] bg-[color:var(--bg-muted)] text-[color:var(--text-primary)]' : 'border-transparent text-[color:var(--text-muted)]'
                 )}
                 type="button"
               >

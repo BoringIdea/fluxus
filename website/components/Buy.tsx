@@ -402,16 +402,16 @@ export default function Buy({ contractAddress, collection }: BuyProps) {
   return (
     <div className="flex flex-col pb-32">
       {/* Header with quick buy controls */}
-      <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 border-b border-border px-3 sm:px-4 py-4 bg-bg-card">
+      <div className="flex flex-col justify-between gap-3 border-b border-black/10 bg-[color:var(--bg-muted)] px-3 py-4 sm:flex-row sm:items-center sm:px-4">
         <div>
-          <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-secondary">Listed NFTs</p>
-          <p className="text-lg font-black text-primary">{listedTokens.length}</p>
+          <p className="font-primary text-[10px] uppercase tracking-[0.18em] text-[color:var(--text-muted)]">Listed NFTs</p>
+          <p className="font-heading text-[26px] leading-none text-[color:var(--text-primary)]">{listedTokens.length}</p>
         </div>
         <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto sm:ml-auto text-xs">
-          <div className="flex items-center border border-border bg-bg-tertiary text-primary w-full sm:w-auto">
+          <div className="flex w-full items-center border border-black/10 bg-[color:var(--bg-surface)] text-primary sm:w-auto">
             <button
               type="button"
-              className="h-8 w-8 border-r border-border font-black hover:bg-bg-card-hover transition-colors"
+              className="h-8 w-8 border-r border-black/10 font-primary text-[12px] transition-colors hover:bg-[color:var(--bg-card-hover)]"
               onClick={() => setQuickBuyCount(prev => {
                 if (typeof prev === 'number') return Math.max(1, prev - 1);
                 return 1;
@@ -432,11 +432,11 @@ export default function Buy({ contractAddress, collection }: BuyProps) {
                   setQuickBuyCount(value);
                 }
               }}
-              className="w-full sm:w-14 bg-transparent text-primary text-center font-semibold focus:outline-none focus:ring-0 text-sm border-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              className="w-full border-0 bg-transparent text-center font-primary text-[11px] uppercase tracking-[0.14em] text-[color:var(--text-primary)] focus:outline-none focus:ring-0 sm:w-14 [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
             />
             <button
               type="button"
-              className="h-8 w-8 border-l border-border font-black hover:bg-bg-card-hover transition-colors"
+              className="h-8 w-8 border-l border-black/10 font-primary text-[12px] transition-colors hover:bg-[color:var(--bg-card-hover)]"
               onClick={() => setQuickBuyCount(prev => {
                 if (typeof prev === 'number') return Math.min(Math.min(20, maxSweep), prev + 1);
                 return 1;
@@ -446,7 +446,7 @@ export default function Buy({ contractAddress, collection }: BuyProps) {
             </button>
           </div>
           <Button
-            className="w-full sm:w-auto text-xs tracking-[0.2em] px-3 py-2"
+            className="w-full px-3 py-2 text-[10px] tracking-[0.18em] sm:w-auto"
             onClick={quickBuyToken}
           >
             Quick buy ({formatNumberWithMaxDecimalsAndRounding(Number(getBatchBuyPrice(
